@@ -1,0 +1,91 @@
+.field {
+  --color-atmosphere-day-shadow: 9, 18, 28;
+  --color-atmosphere-density-shadow: 3, 7, 13;
+  --color-atmosphere-day-ambient: 22, 36, 46;
+  --color-atmosphere-daylight: 139, 139, 113;
+  --color-atmosphere-warm: 94, 84, 54;
+  --color-atmosphere-sunset-top: 35, 38, 64;
+  --color-atmosphere-sunset-middle: 105, 84, 86;
+  --color-atmosphere-sunset-bottom: 128, 109, 83;
+  --color-atmosphere-moon: 44, 80, 94;
+  --color-atmosphere-night-shadow: 4, 9, 17;
+  --color-atmosphere-night-ambient: 10, 23, 33;
+  --color-atmosphere-cloud: 64, 74, 88;
+  --color-atmosphere-cloud-light: 88, 90, 84;
+  --color-atmosphere-cloud-shadow: 30, 44, 57;
+  --color-atmosphere-star: 213, 228, 239;
+  --color-atmosphere-rain: 22, 44, 45;
+  --color-atmosphere-rain-streak: 197, 218, 229;
+  --color-atmosphere-flash: 181, 218, 239;
+  --atmosphere-grain-opacity: 0.025;
+  --duration-atmosphere-transition: 12000;
+}
+
+:global(html[data-theme="light"]) .field {
+  --color-atmosphere-day-shadow: 151, 190, 215;
+  --color-atmosphere-density-shadow: 134, 159, 177;
+  --color-atmosphere-day-ambient: 221, 242, 249;
+  --color-atmosphere-daylight: 255, 250, 224;
+  --color-atmosphere-warm: 255, 240, 195;
+  --color-atmosphere-sunset-top: 190, 205, 220;
+  --color-atmosphere-sunset-middle: 229, 200, 197;
+  --color-atmosphere-sunset-bottom: 245, 224, 195;
+  --color-atmosphere-moon: 100, 137, 154;
+  --color-atmosphere-night-shadow: 12, 23, 38;
+  --color-atmosphere-night-ambient: 28, 47, 61;
+  --color-atmosphere-cloud: 214, 220, 234;
+  --color-atmosphere-cloud-light: 255, 251, 241;
+  --color-atmosphere-cloud-shadow: 174, 201, 217;
+  --color-atmosphere-star: 255, 255, 248;
+  --color-atmosphere-rain: 161, 191, 194;
+  --color-atmosphere-rain-streak: 244, 250, 252;
+  --color-atmosphere-flash: 244, 252, 255;
+  --atmosphere-grain-opacity: 0.025;
+}
+
+/* The material is owned by the experiment; removing its canvas restores the core card. */
+:global(body):has(.field) {
+  --color-atmosphere-card: color-mix(in srgb, var(--color-surface-card) 48%, transparent);
+  --color-atmosphere-card-reading: color-mix(in srgb, var(--color-surface-card) 84%, transparent);
+  --color-atmosphere-card-hover: color-mix(in srgb, var(--color-surface-hover) 56%, transparent);
+  --color-atmosphere-thumbnail: color-mix(in srgb, var(--color-surface-thumbnail) 20%, transparent);
+  --color-atmosphere-card-border: color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+  --color-atmosphere-card-copy: var(--color-text-secondary);
+  --atmosphere-card-blur: 40px;
+}
+
+:global(body):has(.field) :global(main a[aria-label^="View "]) {
+  background: linear-gradient(to bottom, var(--color-atmosphere-card) 0%, var(--color-atmosphere-card) 58%, var(--color-atmosphere-card-reading) 74%);
+  border-color: var(--color-atmosphere-card-border);
+  --color-text-muted: var(--color-atmosphere-card-copy);
+  --color-text-detail: var(--color-atmosphere-card-copy);
+  --color-surface-thumbnail: var(--color-atmosphere-thumbnail);
+  -webkit-backdrop-filter: blur(var(--atmosphere-card-blur));
+  backdrop-filter: blur(var(--atmosphere-card-blur));
+}
+
+:global(body):has(.field) :global(aside) {
+  --color-sidebar-material: color-mix(in srgb, var(--color-surface-app) 50%, transparent);
+  --sidebar-material-blur: 40px;
+  --color-text-muted: var(--color-text-secondary);
+}
+
+:global(html[data-theme="light"] body):has(.field[data-atmosphere-night="true"]) :global(aside) {
+  --color-text-secondary: var(--color-text-primary);
+}
+
+:global(body):has(.field) :global(main a[aria-label^="View "]:hover),
+:global(body):has(.field) :global(main a[aria-label^="View "]:focus-visible) {
+  background: linear-gradient(to bottom, var(--color-atmosphere-card-hover) 0%, var(--color-atmosphere-card-hover) 58%, var(--color-atmosphere-card-reading) 74%);
+}
+
+/* Exposed copy follows the environment; text inside Light cards retains its own palette. */
+:global(body):has(.field[data-atmosphere-night="true"]) :global(main header) {
+  --color-text-primary: #eff3f4;
+  --color-text-secondary: #dae2e7;
+  --color-text-muted: #c1cdd5;
+  --color-border-subtle: #728591;
+  --color-surface-thumbnail: #405667;
+  --color-overlay-hover: #344958;
+  color: var(--color-text-primary);
+}

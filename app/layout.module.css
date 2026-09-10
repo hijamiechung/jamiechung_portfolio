@@ -1,0 +1,25 @@
+.shell {
+  display: flex;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.main {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 0;
+}
+
+.content {
+  min-width: 0;
+  transition: max-width var(--duration-layout) var(--ease-standard), margin var(--duration-layout) var(--ease-standard);
+}
+
+/* Re-balance content when the sidebar is collapsed — otherwise it clings to
+   the left edge of the much wider remaining space instead of reading as
+   centered. Expanded composition is untouched. */
+:global(aside[data-collapsed="true"]) ~ .main .content {
+  max-width: 1240px;
+  margin-inline: auto;
+}

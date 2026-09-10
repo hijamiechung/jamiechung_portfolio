@@ -1,0 +1,11 @@
+import {LineIcon} from "./LineIcon";
+import styles from "./ConnectPopover.module.css";
+const links=[
+  {name:"LinkedIn",meta:"in/",href:"https://www.linkedin.com/in/hijamiechung/",icon:"briefcase"},
+  {name:"Medium",meta:"@jc",href:"https://medium.com/@jamie_chung",icon:"pencil"},
+  {name:"Email",meta:"hi@",href:"mailto:hi.jamiechung@gmail.com",icon:"envelope"},
+] as const;
+export function ConnectPopover(){return <div id="connect-links" className={styles.popover} aria-label="Connect links">
+  {links.map(l=><a className={styles.item} key={l.name} href={l.href} {...(l.href.startsWith("https:")?{target:"_blank",rel:"noopener noreferrer"}:{})}><span className={styles.icon}><LineIcon name={l.icon}/></span><span className={styles.name}>{l.name}</span><span className={styles.meta}>{l.meta}</span></a>)}
+  <span className={styles.item} aria-disabled="true"><span className={styles.icon}><LineIcon name="document"/></span><span className={styles.name}>Resume</span><span className={styles.meta}>PDF</span></span>
+</div>;}

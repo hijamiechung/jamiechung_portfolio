@@ -1,0 +1,17 @@
+/* Neutral, high-blur "frozen" glass — the calm counterpart to the homepage's
+   colorful weather glass, meant for focused/reading surfaces like Ask Jamie. */
+.frozen {
+  --frozen-glass-blur: 56px;
+}
+
+.frozen form {
+  background: color-mix(in srgb, var(--color-surface-popover) 66%, transparent);
+  -webkit-backdrop-filter: blur(var(--frozen-glass-blur)) saturate(0.85);
+  backdrop-filter: blur(var(--frozen-glass-blur)) saturate(0.85);
+}
+
+.frozen button:not([aria-label="Send question"]) {
+  background: color-mix(in srgb, var(--color-surface-popover) 40%, transparent);
+  -webkit-backdrop-filter: blur(var(--frozen-glass-blur)) saturate(0.85);
+  backdrop-filter: blur(var(--frozen-glass-blur)) saturate(0.85);
+}

@@ -1,0 +1,26 @@
+.home {
+  padding: 88px 56px 120px;
+}
+
+.content {
+  max-width: var(--layout-content-max-width);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 22px 40px;
+  flex-wrap: wrap;
+}
+
+.introduction {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+.heading {
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-display);
+}

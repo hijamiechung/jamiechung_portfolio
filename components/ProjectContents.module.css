@@ -1,0 +1,57 @@
+.toc {
+  position: sticky;
+  top: 96px;
+  flex: 0 0 168px;
+  padding-top: 4px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border-subtle);
+  font-size: var(--font-size-control);
+  color: var(--color-text-detail);
+  letter-spacing: var(--tracking-display);
+}
+
+.title span {
+  letter-spacing: 2px;
+  color: var(--color-text-detail);
+}
+
+.toc ul {
+  padding-top: var(--space-2);
+}
+
+.toc a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 8px 6px 6px;
+  margin-bottom: 1px;
+  border-radius: var(--radius-icon);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-label-sm);
+  letter-spacing: var(--tracking-display);
+  transition: background var(--duration-fast) ease, color var(--duration-standard) ease;
+}
+
+.toc a:hover,.toc a[aria-current] {
+  background: var(--color-overlay-hover);
+  color: var(--color-text-primary);
+}
+
+.toc i {
+  width: 3px;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--color-border-strong);
+  transition: width var(--duration-standard) var(--ease-standard);
+}
+
+.toc a[aria-current] i {
+  width: 10px;
+  background: var(--color-text-primary);
+}

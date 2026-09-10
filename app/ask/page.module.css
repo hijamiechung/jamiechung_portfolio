@@ -1,0 +1,72 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding: 0 56px;
+}
+
+.welcome {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 0 8px;
+}
+
+.emptyState {
+  width: 100%;
+  max-width: 560px;
+  text-align: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px 5px 8px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-popover);
+  font-size: var(--font-size-detail);
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-display);
+}
+
+.badge>span {
+  letter-spacing: 2px;
+  color: var(--color-text-detail);
+}
+
+.badgeMark {
+  display: grid;
+  place-items: center;
+  color: var(--color-text-detail);
+}
+
+.badgeMark svg {
+  width: 13px;
+  height: 13px;
+}
+
+.heading {
+  margin-top: 22px;
+  font-size: var(--font-size-ask-heading);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-display);
+}
+
+.subheading {
+  margin: 10px auto 0;
+  max-width: 400px;
+  font-size: var(--font-size-intro);
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  text-wrap: pretty;
+}
+
+.composerWrap {
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  padding-bottom: var(--space-9);
+}

@@ -1,0 +1,97 @@
+.composer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 6px 6px 20px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-popover);
+  transition: border-color var(--duration-standard) ease;
+}
+
+.composer:focus-within {
+  border-color: var(--color-border-strong);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 34px;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: var(--font-size-prose);
+  color: var(--color-text-primary);
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.input:focus-visible {
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+.send {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+  background: var(--color-text-primary);
+  color: var(--color-surface-app);
+  cursor: pointer;
+  transition: background var(--duration-slow) ease;
+}
+
+.send:disabled {
+  background: var(--color-overlay-hover);
+  color: var(--color-text-disabled);
+  cursor: default;
+}
+
+.send svg {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--duration-layout) var(--ease-standard);
+}
+
+.send:disabled svg {
+  transform: rotate(135deg);
+}
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: var(--space-3);
+  justify-content: center;
+}
+
+.suggestions button {
+  padding: 6px 12px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-size: var(--font-size-label-sm);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: background var(--duration-fast) ease;
+}
+
+.suggestions button:hover {
+  background: var(--color-overlay-hover);
+  color: var(--color-text-primary);
+}
+
+.note {
+  margin-top: 14px;
+  text-align: center;
+  font-size: var(--font-size-detail);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-text-detail);
+}

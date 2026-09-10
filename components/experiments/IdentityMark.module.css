@@ -1,0 +1,16 @@
+.mark {
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.mark rect {
+  transition: transform var(--duration-fast) steps(2, end);
+}
+
+a:hover .mark .top {
+  transform: translate(.6px, -.4px);
+}
+
+a:hover .mark .bottom {
+  transform: translate(.6px, .4px);
+}

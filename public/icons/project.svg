@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Project">
+<rect id="Rectangle 2" x="2.8" y="6.8" width="12.4" height="14.4" rx="2.2" stroke="#1A1A1A" stroke-width="1.6"/>
+<path id="Rectangle 3" d="M15.2 18.8H18.2C19.8569 18.8 21.2 17.4569 21.2 15.8V4.8C21.2 3.69543 20.3046 2.8 19.2 2.8H11.2C10.0954 2.8 9.2 3.69543 9.2 4.8V6" stroke="#1A1A1A" stroke-width="1.6"/>
+<g id="Frame 6">
+<path id="Vector 1" d="M11 11H6" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round"/>
+<path id="Vector 4" d="M10 15H6" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round"/>
+</g>
+</g>
+</svg>

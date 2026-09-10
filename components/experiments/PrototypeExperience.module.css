@@ -1,0 +1,152 @@
+.field {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.controls, .environment {
+  --control-target: 44px;
+  --control-icon: 18px;
+  --font-size-environment-control: 12px;
+}
+
+.controls {
+  --color-control-selected: color-mix(in srgb, var(--color-text-primary) 8%, var(--color-surface-app));
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) 6px 2px;
+  margin-top: var(--space-2);
+  justify-content: flex-start;
+}
+
+.themeOption, .cartridge, .tray button {
+  min-height: var(--control-target);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
+}
+
+.themeOption {
+  border-radius: var(--radius-pill);
+  border-color: transparent;
+  background: transparent;
+}
+
+.themeOption svg {
+  width: var(--control-icon);
+  height: var(--control-icon);
+  flex-shrink: 0;
+}
+
+.themeOption svg path { stroke-width: .95; }
+
+.themes { display: flex; gap: var(--space-2); }
+
+.themeOption {
+  display: grid;
+  place-items: center;
+  width: var(--control-target);
+  min-width: var(--control-target);
+  height: var(--control-target);
+  padding: 0;
+}
+
+.themeOption:hover, .cartridge:hover, .tray button:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-text-primary);
+}
+
+.themeOption[aria-pressed="true"] {
+  background: var(--color-control-selected);
+  color: var(--color-text-primary);
+  border-color: color-mix(in srgb, var(--color-text-primary) 15%, transparent);
+}
+
+.themeOption:focus-visible, .cartridge:focus-visible, .tray button:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: -4px;
+}
+
+.environment {
+  --font-size-environment-control: var(--font-size-control);
+  --color-weather-material: color-mix(in srgb, var(--color-surface-app) 76%, transparent);
+  position: fixed;
+  top: var(--space-6);
+  right: var(--space-6);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+}
+.trayWrap { position: relative; flex-shrink: 0; }
+
+.cartridge {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-size: var(--font-size-environment-control);
+  letter-spacing: var(--tracking-display);
+}
+
+.cartridge::before {
+  content: "";
+  position: absolute;
+  inset: 6px 0;
+  z-index: -1;
+  border: 1px solid color-mix(in srgb, var(--color-text-primary) 7%, transparent);
+  border-radius: inherit;
+  background: var(--color-weather-material);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+.cartridge:hover { background: transparent; }
+.cartridge:hover::before { background: color-mix(in srgb, var(--color-surface-hover) 84%, transparent); }
+.weatherSymbol { width: 16px; height: 16px; flex-shrink: 0; color: var(--color-text-primary); }
+.readout { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.readout span:first-child { color: var(--color-text-primary); font-weight: var(--font-weight-medium); }
+.separator { color: var(--color-text-muted); }
+.chevron { transform: rotate(90deg); flex-shrink: 0; transition: transform var(--duration-fast) var(--ease-standard); }
+.cartridge[aria-expanded="true"] .chevron { transform: rotate(-90deg); }
+
+.tray {
+  position: absolute;
+  right: 0;
+  top: calc(100% + var(--space-2));
+  z-index: 6;
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-popover);
+  background: var(--color-surface-popover);
+  box-shadow: 0 8px 24px var(--color-shadow);
+}
+
+.tray button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 0 var(--space-3);
+  border-color: transparent;
+  background: transparent;
+  font-size: var(--font-size-environment-control);
+  white-space: nowrap;
+}
+
+.tray button[aria-pressed="true"] { color: var(--color-text-primary); background: var(--color-surface-hover); }
+.selectionMark { width: 14px; }

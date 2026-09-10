@@ -1,0 +1,120 @@
+.footer {
+  --profile-icon-size: 28px;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.connect {
+  position: relative;
+}
+
+.connectButton {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px;
+  border: 0;
+  width: 100%;
+  min-height: 44px;
+  background: transparent;
+  color: inherit;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--duration-fast) ease;
+}
+
+.connectButton:hover, .identity:hover, .identity[aria-current="page"] {
+  background: var(--color-overlay-hover);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: var(--profile-icon-size);
+  height: var(--profile-icon-size);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-avatar);
+  flex-shrink: 0;
+}
+
+.icon svg { width: 16px; height: 16px; }
+
+.label {
+  font-size: var(--font-size-body);
+  letter-spacing: var(--tracking-display);
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 160px;
+  opacity: 1;
+  transition: max-width var(--duration-layout) var(--ease-standard), opacity var(--duration-standard) ease;
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 6px;
+  border-radius: var(--radius-profile);
+  transition: background var(--duration-fast) ease, transform var(--duration-fast) var(--ease-standard);
+}
+
+.identity:active {
+  background: var(--color-surface-thumbnail);
+  transform: scale(.978);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: var(--profile-icon-size);
+  height: var(--profile-icon-size);
+  flex-shrink: 0;
+  border-radius: var(--radius-avatar);
+  background: var(--color-surface-thumbnail);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-control);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-display);
+}
+
+.identityText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 160px;
+  opacity: 1;
+  transition: max-width var(--duration-layout) var(--ease-standard), opacity var(--duration-standard) ease;
+}
+
+.name {
+  font-size: var(--font-size-name);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-display);
+}
+
+.role {
+  font-size: var(--font-size-detail);
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-display);
+}
+
+.arrow {
+  margin-left: auto;
+  flex-shrink: 0;
+  overflow: hidden;
+  max-width: 22px;
+  opacity: 1;
+  color: var(--color-text-muted);
+  transition: max-width var(--duration-layout) var(--ease-standard), opacity var(--duration-standard) ease;
+}
+
+:global(aside[data-collapsed="true"]) .label, :global(aside[data-collapsed="true"]) .identityText, :global(aside[data-collapsed="true"]) .arrow {
+  max-width: 0;
+  opacity: 0;
+  pointer-events: none;
+}
