@@ -74,8 +74,16 @@
 .nav {
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
   gap: 2px;
   margin-top: 22px;
+}
+
+:global(#appearance-controls) {
+  flex-shrink: 0;
+  min-height: 50px;
 }
 
 .sidebar[data-collapsed="true"] {
@@ -93,15 +101,3 @@
   pointer-events: none;
 }
 
-:global(#appearance-controls) {
-  overflow: hidden;
-  max-height: 64px;
-  opacity: 1;
-  transition: max-height var(--duration-layout) var(--ease-standard), opacity var(--duration-standard) ease;
-}
-
-:global(aside[data-collapsed="true"]) :global(#appearance-controls) {
-  max-height: 0;
-  opacity: 0;
-  pointer-events: none;
-}

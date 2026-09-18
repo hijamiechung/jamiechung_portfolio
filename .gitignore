@@ -39,6 +39,13 @@ yarn-error.log*
 # private source material (interview notes, meeting notes, papers) — not for the public repo
 /portfolio material/
 
+# private portfolio positioning/strategy — never for the public repo
+/PORTFOLIO_STRATEGY.md
+
+# internal-only resume reference files — not linked from the site (the live resume the
+# site serves lives in /public/resume/); don't ignore a resume file the site actually serves
+/reference/*.pdf
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

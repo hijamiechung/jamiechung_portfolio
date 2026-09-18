@@ -25,8 +25,12 @@
   transition: background var(--duration-fast) ease;
 }
 
-.connectButton:hover, .identity:hover, .identity[aria-current="page"] {
+.connectButton:hover, .identity:not([aria-disabled]):hover, .identity[aria-current="page"] {
   background: var(--color-overlay-hover);
+}
+
+.identity[aria-disabled] {
+  cursor: default;
 }
 
 .icon {
@@ -60,7 +64,7 @@
   transition: background var(--duration-fast) ease, transform var(--duration-fast) var(--ease-standard);
 }
 
-.identity:active {
+.identity:not([aria-disabled]):active {
   background: var(--color-surface-thumbnail);
   transform: scale(.978);
 }

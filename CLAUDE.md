@@ -12,6 +12,29 @@ in [`docs/figma-reference.md`](./docs/figma-reference.md). Read both before
 making a design or implementation call — this file assumes their content and
 should not duplicate it.
 
+Two other documents split public from private:
+
+- **`DESIGN_DECISIONS.md`** — public-safe. Visual system, layout,
+  interaction, components, and public-facing storytelling principles. Safe
+  to expose in the public GitHub repo.
+- **`PORTFOLIO_STRATEGY.md`** — private, gitignored, never committed.
+  Portfolio positioning, project selection, recruiter-facing narrative
+  strategy, and project-specific critique. Read it before writing or
+  restructuring case-study content, project copy, or homepage narrative.
+
+For visual design, interaction, layout, components, and public-safe design
+decisions, refer to `DESIGN_DECISIONS.md`. For portfolio strategy,
+positioning, project selection, and recruiter-facing narrative, refer to
+`PORTFOLIO_STRATEGY.md`. Never copy private strategy content from
+`PORTFOLIO_STRATEGY.md` into public-facing files (`DESIGN_DECISIONS.md`,
+site copy, commit messages, etc.) unless explicitly instructed.
+
+Portfolio review agents (`senior-product-design-reviewer`,
+`design-recruiter`, `contrarian-critic`) live in `.claude/agents/`, backed by
+skills in `.claude/skills/`; run all three together with `/portfolio-review`.
+Each reads `PORTFOLIO_STRATEGY.md` read-only for positioning context and
+never writes to it or quotes it verbatim.
+
 ## Tech stack
 
 - Next.js (App Router), TypeScript, plain CSS with custom-property design

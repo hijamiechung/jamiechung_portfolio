@@ -60,8 +60,14 @@ imperfection.
 - Sticky 260px sidebar card, collapsed 64px rail, inset 8px from the left/top/bottom
   with a 16px radius; bottom-pinned Connect and profile.
 - Home: 88px top, 56px horizontal, 120px bottom padding; 940px content maximum.
-- Removed the introductory tagline and the “Rather ask a question?” link by request.
-  Ask Jamie remains accessible through the sidebar profile.
+- Removed the “Rather ask a question?” link by request; Ask Jamie remains
+  accessible through the sidebar profile. **Revised 2026-09-11:** the
+  introductory tagline was reinstated by request, now as the page's primary
+  heading (replacing the plain "Projects" label) rather than a secondary line
+  under it — "I untangle complex systems for the people living inside them."
+  with "I'm especially interested in the parts of human life those systems
+  struggle to represent." as the description beneath. Content is provisional
+  like the rest of the homepage introduction (see `lib/projects.ts` note above).
 - Two featured cards, 24px gap, 4:3 dotted image placeholders, 14px card padding,
   16px card radius, and 2px upward hover movement.
 - Desktop-first; use the prototype's fluid grid without inventing mobile layouts.
@@ -359,6 +365,27 @@ still power this experiment across every route when `ENABLE_ATMOSPHERE_EXPERIMEN
 is switched off in `app/layout.tsx` (`PrototypeExperience` is then used
 directly, and its own default `fieldFactory` is unchanged) — only
 `AtmosphereExperience`'s own wiring changed.
+
+## Bloom botanical material (Experimental)
+
+The homepage's Bloom source uses the approved hand-painted daisy viewed from
+below, extracted onto transparency: creamy white petals with yellow/peach light,
+an ochre center, a slender green stem and visible chalk/print texture.
+Exactly one bloom is shown, with no additional bud. Its image box is at most
+300px high, placed at the lower right. The source illustration's sky and separate
+grass blades are excluded from the moving flower layer.
+Glass merges distant color into broad, soft areas. Diffusion increases continuously
+from one fixed focus point near the flower center (0.35px to 16px blur), with no
+visible lens boundary or rectangular samples. A 14-second breeze bends the upper
+flower and stem behind this field while keeping the base fixed. Reduced motion
+freezes movement, and hidden tabs pause.
+Cursor interaction stays disabled. The existing Bloom backdrop and core layout
+are unchanged. Its light backdrop in Dark appearance still has low exposed-title
+contrast; that existing issue remains outside this flower-only revision.
+
+Implementation: `components/experiments/atmosphere/createBloomField.ts`;
+asset and generation provenance: `components/experiments/atmosphere/bloom-asset.md`.
+This is a visual prototype awaiting review, not a permanent feature decision.
 
 ## Stepped/pixel motion accents (Experimental)
 

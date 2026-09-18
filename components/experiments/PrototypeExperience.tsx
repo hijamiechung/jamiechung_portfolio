@@ -21,10 +21,6 @@ function subscribePreferences(callback: () => void) {
 }
 function read(key: string, fallback: string) {try {return localStorage.getItem(key) ?? fallback;} catch {return fallback;}}
 function save(key: string, value: string) {try {localStorage.setItem(key,value);} catch {} window.dispatchEvent(new Event("portfolio-preferences"));}
-const themes = [
-  {id: "light", label: "Light", icon: "sun"},
-  {id: "dark", label: "Dark", icon: "moon"},
-] as const;
 type Source = "pittsburgh" | "mine";
 export type Environment = {label: string; cond: string; code: string; phase: string; windDir: number; windSpeed: number; tz?: string; weatherCode?: number; solarDays?: {date: string; sunrise?: string; sunset?: string}[]};
 export type FieldFactory = (canvas: () => HTMLCanvasElement | null, options: {reduced: boolean; density: number; thinning: boolean; integration: string; rects: () => {cards: DOMRect[]}}) => {
@@ -37,7 +33,7 @@ export function PrototypeExperience({fieldFactory = createEnvField, fieldClassNa
   const header = useTarget("environment-control");
   const pathname = usePathname();
   const storedTheme = useSyncExternalStore(subscribePreferences, () => read("jc-theme","dark"), () => "dark");
-  const theme = themes.some(t => t.id === storedTheme) ? storedTheme : "dark";
+  const theme = storedTheme === "light" ? "light" : "dark";
   const [source,setSource] = useState<Source>("pittsburgh");
   const [env,setEnv] = useState(initial);
   const [tray,setTray] = useState(false);
@@ -98,7 +94,11 @@ export function PrototypeExperience({fieldFactory = createEnvField, fieldClassNa
   return <>
     <canvas ref={canvas} className={`${styles.field} ${fieldClassName}`} aria-hidden="true"/>
     {controls && createPortal(<div className={styles.controls}>
-      <div className={styles.themes} role="group" aria-label="Appearance">{themes.map(t=><button key={t.id} className={styles.themeOption} aria-label={t.label} title={t.label} aria-pressed={theme===t.id} onClick={()=>save("jc-theme",t.id)}><LineIcon name={t.icon}/></button>)}</div>
+      <button type="button" role="switch" aria-checked={theme==="dark"} aria-label="Appearance" title={theme==="dark" ? "Dark" : "Light"} className={styles.themeToggle} onClick={()=>save("jc-theme", theme==="dark" ? "light" : "dark")}>
+        <span className={styles.themeThumb} aria-hidden="true"/>
+        <span className={styles.themeTrackIcon} data-side="light"><LineIcon name="sun"/></span>
+        <span className={styles.themeTrackIcon} data-side="dark"><LineIcon name="moon"/></span>
+      </button>
     </div>,controls)}
     {header && pathname === "/" && createPortal(<div className={styles.environment}>
       <div className={styles.trayWrap}>

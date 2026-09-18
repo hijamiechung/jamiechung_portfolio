@@ -23,4 +23,14 @@
   font-size: var(--font-size-heading);
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--tracking-display);
+  max-width: 640px;
+}
+
+.description {
+  margin: 10px 0 0;
+  font-size: var(--font-size-intro);
+  letter-spacing: var(--tracking-body);
+  color: var(--color-text-secondary);
+  max-width: 460px;
+  line-height: 1.6;
 }
