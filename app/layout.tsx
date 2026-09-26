@@ -3,6 +3,7 @@ import { PrototypeExperience } from "@/components/experiments/PrototypeExperienc
 import { AtmosphereExperience } from "@/components/experiments/atmosphere/AtmosphereExperience";
 import type { Metadata } from "next";
 import { Sidebar } from "@/components/Sidebar";
+import { neueMontreal } from "./fonts";
 import "./globals.css";
 import styles from "./layout.module.css";
 
@@ -20,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={neueMontreal.variable} suppressHydrationWarning>
       <body>
         <div className={styles.shell}>
           <Sidebar brand={IDENTITY_MARK_ENABLED ? <IdentityMark /> : undefined} />

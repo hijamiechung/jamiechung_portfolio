@@ -33,11 +33,11 @@
   --focus-ring-width: 2px;
   --focus-ring-color: var(--color-text-muted);
   --text-scale: 1;
-  --font-family-base: "Neue Montreal", -apple-system, BlinkMacSystemFont,
+  --font-family-base: var(--font-neue-montreal), -apple-system, BlinkMacSystemFont,
     "Segoe UI", Helvetica, Arial, sans-serif;
   --line-height-default: 1.32;
   --font-weight-medium: 500;
-  --font-weight-semibold: 600;
+  --font-weight-semibold: 500;
   --font-size-heading: calc(34px * var(--text-scale));
   --font-size-ask-heading: calc(28px * var(--text-scale));
   --font-size-detail-heading: calc(38px * var(--text-scale));
