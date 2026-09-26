@@ -34,6 +34,8 @@ export function PrototypeExperience({fieldFactory = createEnvField, fieldClassNa
   const pathname = usePathname();
   const storedTheme = useSyncExternalStore(subscribePreferences, () => read("jc-theme","dark"), () => "dark");
   const theme = storedTheme === "light" ? "light" : "dark";
+  const storedA11y = useSyncExternalStore(subscribePreferences, () => read("jc-a11y","off"), () => "off");
+  const boosted = storedA11y === "boost";
   const [source,setSource] = useState<Source>("pittsburgh");
   const [env,setEnv] = useState(initial);
   const [tray,setTray] = useState(false);
@@ -44,6 +46,7 @@ export function PrototypeExperience({fieldFactory = createEnvField, fieldClassNa
   const field = useRef<ReturnType<FieldFactory> | null>(null);
 
   useEffect(() => {document.documentElement.dataset.theme = theme; field.current?.resize(); return () => {delete document.documentElement.dataset.theme;};}, [theme]);
+  useEffect(() => {if(boosted) document.documentElement.dataset.a11y = "boost"; else delete document.documentElement.dataset.a11y; return () => {delete document.documentElement.dataset.a11y;};}, [boosted]);
   useEffect(() => {
     const media=matchMedia("(prefers-reduced-motion: reduce)");
     function start() {
@@ -99,6 +102,7 @@ export function PrototypeExperience({fieldFactory = createEnvField, fieldClassNa
         <span className={styles.themeTrackIcon} data-side="light"><LineIcon name="sun"/></span>
         <span className={styles.themeTrackIcon} data-side="dark"><LineIcon name="moon"/></span>
       </button>
+      <button type="button" aria-pressed={boosted} aria-label="Accessibility mode: higher contrast and larger text" title="Accessibility mode" className={styles.a11yToggle} onClick={()=>save("jc-a11y", boosted ? "off" : "boost")}>Aa</button>
     </div>,controls)}
     {header && pathname === "/" && createPortal(<div className={styles.environment}>
       <div className={styles.trayWrap}>

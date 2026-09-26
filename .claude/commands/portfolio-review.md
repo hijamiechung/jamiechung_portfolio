@@ -1,30 +1,35 @@
 ---
-description: Run a full multi-agent portfolio review — Senior Product Design Reviewer, Design Recruiter, and Contrarian Critic in parallel, then a synthesis.
+description: Review portfolio design, hiring signal, evidence, and English copy with four specialist agents, then synthesize.
 ---
 
-Run the three portfolio review agents independently against the current
+Run the four portfolio review agents independently against the current
 state of the portfolio, then synthesize their findings.
 
 ## Steps
 
-1. Launch these three agents in parallel, in a single message with three
-   Agent tool calls:
+1. Launch these agents independently, in parallel when capacity permits.
+   If concurrency is limited, run the remaining reviewer when a slot opens:
    - `senior-product-design-reviewer`
    - `design-recruiter`
    - `contrarian-critic`
+   - `english-copy-editor`
 
    Give each the same scope: the homepage (`app/page.tsx`), project data
    (`lib/projects.ts`), and project detail pages
    (`app/projects/[slug]/page.tsx`), unless the user's invocation of this
    command names a narrower scope (e.g. one specific project) — in that
-   case, pass that scope to all three agents instead so they're reviewing
+   case, pass that scope to all four agents instead so they're reviewing
    the same material.
 
-2. Wait for all three to finish. Do not synthesize from only one or two.
+   For Figma requests, provide the same fresh frame extraction to all reviewers,
+   distinguishing body copy from revision notes. The English editor reviews
+   English passages only; if none exist, report that this pass is not applicable.
 
-3. Synthesize. The synthesis is not an average of the three opinions. It
+2. Wait for all four to finish. Do not present a partial review as a full one.
+
+3. Synthesize. The synthesis is not an average of the four opinions. It
    must identify:
-   - where all three agree
+   - where the reviewers agree
    - where they disagree, and preserve that disagreement rather than
      smoothing it over — differing verdicts from different vantage points
      are useful signal, not noise to resolve

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {LineIcon} from "./LineIcon";
 import styles from "./ConnectPopover.module.css";
 const links=[
@@ -7,5 +8,5 @@ const links=[
 ] as const;
 export function ConnectPopover(){return <div id="connect-links" className={styles.popover} aria-label="Connect links">
   {links.map(l=><a className={styles.item} key={l.name} href={l.href} {...(l.href.startsWith("https:")?{target:"_blank",rel:"noopener noreferrer"}:{})}><span className={styles.icon}><LineIcon name={l.icon}/></span><span className={styles.name}>{l.name}</span><span className={styles.meta}>{l.meta}</span></a>)}
-  <a className={styles.item} href="/resume/jamie-chung-resume.pdf" target="_blank" rel="noopener noreferrer"><span className={styles.icon}><LineIcon name="document"/></span><span className={styles.name}>Resume</span><span className={styles.meta}>PDF</span></a>
+  <Link className={styles.item} href="/resume"><span className={styles.icon}><LineIcon name="document"/></span><span className={styles.name}>Resume</span></Link>
 </div>;}

@@ -1,5 +1,6 @@
 type Name = "project" | "archive" | "connect" | "panel" | "chevron" | "arrow" | "back" | "send"
-  | "sun" | "moon" | "soundOn" | "soundOff" | "briefcase" | "pencil" | "envelope" | "document";
+  | "sun" | "moon" | "soundOn" | "soundOff" | "briefcase" | "pencil" | "envelope" | "document"
+  | "hamburger" | "close" | "download" | "phone";
 const paths: Record<Name, string> = {
   project: "M1.5 3.2c0-.6.5-1 1-1h2l1 1.2h3.9c.6 0 1 .4 1 1v4.4c0 .6-.4 1-1 1H2.5c-.5 0-1-.4-1-1V3.2z",
   archive: "M1.6 4.4h8.8M2.4 4.4v5.2c0 .5.4.9.9.9h5.4c.5 0 .9-.4.9-.9V4.4M1.6 4.4l1-2.4h6.8l1 2.4",
@@ -14,7 +15,11 @@ const paths: Record<Name, string> = {
   briefcase: "M2 4.4c0-.6.5-1 1-1h6c.5 0 1 .4 1 1v4.2c0 .6-.5 1-1 1H3c-.5 0-1-.4-1-1V4.4z M4.6 3.4V2.7c0-.4.3-.7.7-.7h1.4c.4 0 .7.3.7.7v.7M2 6.5h8",
   pencil: "M2.3 9.7l.4-2.1 5-5a1 1 0 011.4 0l.3.3a1 1 0 010 1.4l-5 5-2.1.4z M6.7 3.6l1.7 1.7",
   envelope: "M1.5 3.3c0-.5.4-.9.9-.9h7.2c.5 0 .9.4.9.9v5.4c0 .5-.4.9-.9.9H2.4c-.5 0-.9-.4-.9-.9V3.3z M1.7 3.5L6 6.6l4.3-3.1",
-  document: "M3.4 1.8h3.4L8.6 3.6v6a.7.7 0 01-.7.7H3.4a.7.7 0 01-.7-.7V2.5a.7.7 0 01.7-.7z M6.8 1.8v1.8h1.8"
+  document: "M3.4 1.8h3.4L8.6 3.6v6a.7.7 0 01-.7.7H3.4a.7.7 0 01-.7-.7V2.5a.7.7 0 01.7-.7z M6.8 1.8v1.8h1.8",
+  hamburger: "M2 3.6h8M2 6h8M2 8.4h8",
+  close: "M3 3l6 6M9 3l-6 6",
+  download: "M6 1.5v6.2M3.4 5.3L6 7.9l2.6-2.6M2 9.2h8",
+  phone: "M2.4 1.8L4.1 2c.3 0 .5.2.6.5l.5 1.8c.1.3 0 .5-.2.7l-1 .8c.6 1.3 1.6 2.3 2.9 2.9l.8-1c.2-.2.4-.3.7-.2l1.8.5c.3.1.5.3.5.6l.2 1.7c0 .4-.3.7-.7.6-3.9-.4-6.9-3.4-7.3-7.3-.1-.4.2-.7.6-.6z"
 };
 export function LineIcon({name, className}: {name: Name; className?: string}) {
   return <svg aria-hidden="true" className={className} width="12" height="12" viewBox="0 0 12 12" fill="none"><path d={paths[name]} stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" /></svg>;

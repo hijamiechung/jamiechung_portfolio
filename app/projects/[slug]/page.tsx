@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { projects } from "@/lib/projects";
 import { LineIcon } from "@/components/LineIcon";
 import { ProjectContents } from "@/components/ProjectContents";
+import { ProjectVisitTracker } from "@/components/ProjectVisitTracker";
 import styles from "./page.module.css";
 export function generateStaticParams() {return projects.map(p=>({slug:p.id}));}
 export async function generateMetadata({params}: {params:Promise<{slug:string}>}) {
@@ -23,5 +24,7 @@ export default async function ProjectPage({params}: {params:Promise<{slug:string
     <div className={styles.sections}>{project.sections.map((s,i)=><section key={s.label} id={`section-${i}`} className={styles.section}><span className={styles.label}>{s.label}</span><div><h2>{s.heading}</h2><p>{s.body}</p></div></section>)}</div>
     <div className={styles.images} aria-hidden="true"><div/><div/></div>
     <Link href={`/projects/${next.id}`} className={styles.next} id="next-project"><span><small>Next project</small><strong>{next.title}</strong></span><span className={styles.nextArrow}><LineIcon name="back"/></span></Link>
-  </div><ProjectContents key={slug} sections={sections}/></section>;
+  </div><ProjectContents key={slug} sections={sections}/>
+  <ProjectVisitTracker key={`visit-${slug}`} id={project.id}/>
+  </section>;
 }

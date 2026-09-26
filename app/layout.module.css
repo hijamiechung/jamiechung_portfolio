@@ -23,3 +23,9 @@
   max-width: 1240px;
   margin-inline: auto;
 }
+
+@media (max-width: 640px) {
+  .main {
+    padding-top: 52px;
+  }
+}

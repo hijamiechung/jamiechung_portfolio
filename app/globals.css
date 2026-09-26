@@ -41,7 +41,7 @@ h3 {
   margin: 0;
 }
 
-:focus-visible { outline: 2px solid var(--color-text-muted); outline-offset: 4px; }
+:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: 4px; }
 ::selection { background: var(--color-border-subtle); color: var(--color-text-primary); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }

@@ -10,7 +10,7 @@ export type Project = {
 export const projects: Project[] = [
       {
         id: 'guidelight', title: 'Guidelight', tag: 'Concept · Mobile app', year: '2026',
-        blurb: 'A CMU studio project for a Pittsburgh nonprofit: what happens after a referral is made, and whether anyone ever finds out.',
+        blurb: 'A mobile service that helps school staff connect students to community support, such as counseling and medical care, and track progress and next steps.',
         lede: 'A mobile concept built with Homewood Children’s Village, a Pittsburgh nonprofit that connects students to medical, social, and food-security services. Staff could refer a family for help. Nobody could say afterward whether it reached them.',
         meta: [
           { k: 'Role', v: 'Product design, UI, flow shared with team' },

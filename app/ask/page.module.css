@@ -70,3 +70,19 @@
   margin: 0 auto;
   padding-bottom: var(--space-9);
 }
+
+@media (max-width: 1024px) {
+  .chat {
+    padding: 0 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .chat {
+    padding: 0 16px;
+  }
+
+  .welcome {
+    padding: 32px 0 8px;
+  }
+}

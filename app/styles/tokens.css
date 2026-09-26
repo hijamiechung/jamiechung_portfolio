@@ -12,31 +12,49 @@
     --color-dot: #A7ABAA; --color-accent: #121212; --color-on-accent: #F9F9F9;
   }
 
+  /* Accessibility mode: boosts low-vision-relevant tokens only (contrast, focus rings, text size) — orthogonal to light/dark, never a third theme. */
+  [data-theme="dark"][data-a11y="boost"] {
+    --color-text-detail: #7E7E7E; /* 3.55:1 -> 4.88:1 on #0A0A0A */
+  }
+  [data-theme="light"][data-a11y="boost"] {
+    --color-text-detail: #707070; /* 3.15:1 -> 4.70:1 on #F9F9F9 */
+    --color-text-muted: #6B6B6B; /* 4.19:1 -> 5.06:1 on #F9F9F9 */
+  }
+  :root[data-a11y="boost"] {
+    --text-scale: 1.15;
+    --focus-ring-width: 3px;
+    --focus-ring-color: var(--color-focus-ring);
+  }
+
 
 :root {
   --color-shadow: rgb(0 0 0 / 22%);
   --color-focus-ring: var(--color-text-primary);
+  --focus-ring-width: 2px;
+  --focus-ring-color: var(--color-text-muted);
+  --text-scale: 1;
   --font-family-base: "Neue Montreal", -apple-system, BlinkMacSystemFont,
     "Segoe UI", Helvetica, Arial, sans-serif;
   --line-height-default: 1.32;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
-  --font-size-heading: 34px;
-  --font-size-ask-heading: 28px;
-  --font-size-detail-heading: 38px;
-  --font-size-section-heading: 19px;
-  --font-size-card-title: 20px;
-  --font-size-body: 13.5px;
-  --font-size-intro: 14px;
-  --font-size-prose: 14.5px;
-  --font-size-lede: 17px;
-  --font-size-detail: 11.5px;
-  --font-size-name: 13px;
-  --font-size-label-sm: 12.5px;
-  --font-size-label-xs: 10.5px;
-  --font-size-control: 11px;
+  --font-size-heading: calc(34px * var(--text-scale));
+  --font-size-ask-heading: calc(28px * var(--text-scale));
+  --font-size-detail-heading: calc(38px * var(--text-scale));
+  --font-size-section-heading: calc(19px * var(--text-scale));
+  --font-size-card-title: calc(20px * var(--text-scale));
+  --font-size-body: calc(13.5px * var(--text-scale));
+  --font-size-intro: calc(14px * var(--text-scale));
+  --font-size-prose: calc(14.5px * var(--text-scale));
+  --font-size-lede: calc(17px * var(--text-scale));
+  --font-size-detail: calc(11.5px * var(--text-scale));
+  --font-size-name: calc(13px * var(--text-scale));
+  --font-size-label-sm: calc(12.5px * var(--text-scale));
+  --font-size-label-xs: calc(10.5px * var(--text-scale));
+  --font-size-control: calc(11px * var(--text-scale));
   --tracking-body: 0em;
   --tracking-display: -0.01em;
+  --tracking-display-lg: -0.025em;
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
   --space-5: 20px; --space-6: 24px; --space-7: 30px; --space-8: 36px; --space-9: 40px;
   --radius-xs: 5px; --radius-icon: 7px; --radius-sm: 8px; --radius-avatar: 9px;

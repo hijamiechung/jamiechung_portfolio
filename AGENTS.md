@@ -30,8 +30,10 @@ positioning, project selection, and recruiter-facing narrative, refer to
 site copy, commit messages, etc.) unless explicitly instructed.
 
 Portfolio review agents (`senior-product-design-reviewer`,
-`design-recruiter`, `contrarian-critic`) live in `.claude/agents/`, backed by
-skills in `.claude/skills/`; run all three together with `/portfolio-review`.
+`design-recruiter`, `contrarian-critic`, `english-copy-editor`) live in
+`.claude/agents/`, backed by skills in `.claude/skills/`; run all four with
+`/portfolio-review`, in batches if agent capacity is limited. The English
+editor's canonical instructions live in `.cursor/agents/english-copy-editor.md`.
 Each reads `PORTFOLIO_STRATEGY.md` read-only for positioning context and
 never writes to it or quotes it verbatim.
 
