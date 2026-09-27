@@ -59,7 +59,7 @@ export default function OfflinePreview() {
   }, []);
 
   return (
-    <div style={{ position: "fixed", inset: 0, background: "#0A0A0A", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 28 }}>
+    <div style={{ position: "fixed", inset: 0, background: "var(--color-surface-app)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 28 }}>
       <DiscoBall/>
       <div className={styles.crew} style={{ transform: `translateX(${offset}px)` }}>
         {CREW.map(accessory => <DancingCharacter key={accessory} pose={pose} accessory={accessory}/>)}

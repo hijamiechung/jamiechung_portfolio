@@ -27,7 +27,7 @@ export default function WeatherPreview() {
   }, [code, phase]);
 
   return (
-    <div style={{ position: "fixed", inset: 0, background: "#0A0A0A" }}>
+    <div style={{ position: "fixed", inset: 0, background: "var(--color-surface-app)" }}>
       <canvas ref={canvasRef} style={{ position: "fixed", inset: 0, width: "100%", height: "100%" }} />
       <div style={{ position: "fixed", top: 16, left: 320, zIndex: 999, display: "flex", gap: 8, flexWrap: "wrap", fontFamily: "sans-serif" }}>
         {CODES.map(c => (

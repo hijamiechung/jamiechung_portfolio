@@ -17,7 +17,7 @@ export default function SeaPreview() {
   }, []);
 
   return (
-    <div style={{ position: "fixed", inset: 0, background: "#0A0A0A" }}>
+    <div style={{ position: "fixed", inset: 0, background: "var(--color-surface-app)" }}>
       <canvas ref={canvasRef} style={{ position: "fixed", inset: 0, width: "100%", height: "100%" }} />
     </div>
   );

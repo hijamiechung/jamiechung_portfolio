@@ -33,7 +33,9 @@ export function DiscoBall() {
     const cx = SIZE / 2, cy = SIZE / 2;
     function render(t: number) {
       ctx!.clearRect(0, 0, SIZE, SIZE);
-      ctx!.fillStyle = "#ffffff";
+      // Read live so it stays legible against the ball's own surface color in
+      // both themes, instead of a fixed white that washes out in light mode.
+      ctx!.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--color-text-primary").trim() || "#ffffff";
       for (let row = 0; row < cells; row++) {
         for (let col = 0; col < cells; col++) {
           const hv = hash(col, row, 11);
