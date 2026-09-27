@@ -30,7 +30,7 @@
 
 .description {
   margin: 10px 0 0;
-  font-size: var(--font-size-intro);
+  font-size: var(--font-size-lede);
   letter-spacing: var(--tracking-body);
   color: var(--color-text-secondary);
   max-width: 460px;

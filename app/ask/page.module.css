@@ -58,7 +58,7 @@
 .subheading {
   margin: 10px auto 0;
   max-width: 400px;
-  font-size: var(--font-size-intro);
+  font-size: var(--font-size-lede);
   line-height: 1.6;
   color: var(--color-text-muted);
   text-wrap: pretty;

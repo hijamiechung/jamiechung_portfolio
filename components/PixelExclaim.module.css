@@ -1,0 +1,58 @@
+.row {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  color: var(--color-text-detail);
+}
+
+.mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  animation: shake 260ms infinite;
+}
+
+.mark2 { animation: shake 260ms infinite 90ms, reveal2 3000ms steps(1, end) infinite; }
+.mark3 { animation: shake 260ms infinite 170ms, reveal3 3000ms steps(1, end) infinite; }
+
+.bar {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.bar span {
+  width: 5px;
+  height: 5px;
+  background: currentColor;
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  background: currentColor;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(-1px, 1px) rotate(-5deg); }
+  40% { transform: translate(1px, -1px) rotate(4deg); }
+  60% { transform: translate(-1px, -1px) rotate(-4deg); }
+  80% { transform: translate(1px, 1px) rotate(5deg); }
+}
+
+@keyframes reveal2 {
+  0%, 33% { opacity: 0; }
+  33.01%, 100% { opacity: 1; }
+}
+
+@keyframes reveal3 {
+  0%, 66% { opacity: 0; }
+  66.01%, 100% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark, .mark2, .mark3 { animation: none; }
+  .mark2, .mark3 { opacity: 1; }
+}

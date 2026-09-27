@@ -14,3 +14,19 @@ a:hover .mark .top {
 a:hover .mark .bottom {
   transform: translate(.6px, .4px);
 }
+
+/* Offline: the two colon dots (already read as the mark's "eyes") tilt into a
+   sleepy, dozing squint instead of an alarm — no connection, taking a nap. */
+.mark.offline {
+  animation: doze 2.6s ease-in-out infinite;
+}
+
+
+@keyframes doze {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark.offline { animation: none; }
+}

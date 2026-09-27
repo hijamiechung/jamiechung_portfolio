@@ -1,0 +1,80 @@
+.character {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--color-text-primary);
+}
+
+.body {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-surface-thumbnail);
+  transition: transform 120ms steps(2, end);
+}
+
+.faceSvg {
+  width: 32px;
+  height: 32px;
+}
+
+.mouth {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: square;
+}
+
+/* A limb is just a stack of hard-edged pixel squares — no rounded corners — same
+   blocky-segment language as the site's other pixel bits (weather field, "!" marks). */
+.limb {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.limb span {
+  width: 5px;
+  height: 5px;
+  background: currentColor;
+}
+
+.legs {
+  display: flex;
+  gap: 10px;
+  margin-top: -1px;
+}
+
+.legLeft, .legRight {
+  transform-origin: top center;
+  transition: transform 120ms steps(2, end);
+}
+
+.armLeft, .armRight {
+  position: absolute;
+  top: 24px;
+}
+
+.armLeft { left: -5px; transform-origin: top center; transition: transform 120ms steps(2, end); }
+.armRight { right: -5px; transform-origin: top center; transition: transform 120ms steps(2, end); }
+
+.left .body { transform: rotate(-10deg); }
+.left .legLeft { transform: rotate(-30deg) translateX(-2px); }
+.left .legRight { transform: rotate(12deg); }
+.left .armLeft { transform: rotate(35deg); }
+.left .armRight { transform: rotate(-70deg) translateX(1px); }
+
+.right .body { transform: rotate(10deg); }
+.right .legRight { transform: rotate(30deg) translateX(2px); }
+.right .legLeft { transform: rotate(-12deg); }
+.right .armRight { transform: rotate(-35deg); }
+.right .armLeft { transform: rotate(70deg) translateX(-1px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .body, .legLeft, .legRight, .armLeft, .armRight { transition: none; }
+}

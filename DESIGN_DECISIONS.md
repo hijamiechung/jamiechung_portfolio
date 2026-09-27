@@ -144,6 +144,8 @@ original fallback stack: `"Neue Montreal", -apple-system, BlinkMacSystemFont,
 
 - Headline 34px; project titles 20px; sidebar 13.5px; body 13.5–14.5px.
 - Ask title 28px; detail title 38px; metadata 10.5–12.5px.
+- Lede (homepage intro, ask subheading, project detail lede) 17px — a distinct
+  role from body text, not the same size by coincidence.
 - Body tracking 0; headings, names, metadata and small labels -1%.
 
 ## Color tokens (Settled reference — not treated as final; visual identity, not a locked decision)

@@ -1,0 +1,23 @@
+.crew {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
+  max-width: 480px;
+}
+
+.copy {
+  text-align: center;
+}
+
+.message {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-prose);
+}
+
+.hint {
+  margin-top: 4px;
+  color: var(--color-text-detail);
+  font-size: var(--font-size-body);
+  letter-spacing: var(--tracking-body);
+}
