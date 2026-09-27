@@ -19,6 +19,25 @@ function smoothstep(t: number) {
   return c * c * (3 - 2 * c);
 }
 
+// A tapered wedge from A (wide) to B (narrow/pointed) — used for the tail fluke's
+// two blades, which read far more like an actual fin than round lobes.
+function bladeValue(lx: number, ly: number, ax: number, ay: number, bx: number, by: number, widthA: number, widthB: number, scale: number): number {
+  const segX = bx - ax, segY = by - ay;
+  const len = Math.hypot(segX, segY) || 1;
+  const ux = segX / len, uy = segY / len;
+  const vx = lx - ax, vy = ly - ay;
+  const s = vx * ux + vy * uy;
+  if (s < -0.3 * scale || s > len + 0.15 * scale) return 0;
+  const sClamped = Math.max(0, Math.min(len, s));
+  const perpX = vx - ux * sClamped, perpY = vy - uy * sClamped;
+  const perp = Math.hypot(perpX, perpY);
+  const width = widthA + (widthB - widthA) * (sClamped / len);
+  const half = width / 2;
+  if (perp < half) return 1;
+  if (perp < half + 0.5 * scale) return 0.5;
+  return 0;
+}
+
 const CLOUD_BITMAPS = [
   ["0001111100000", "0011111111000", "0111111111110", "1111111111111", "1111111111111", "0111111111110"],
   ["0000111110000", "0001111111100", "0111111111110", "1111111111111", "0111111111110", "0011111111100"],
@@ -67,17 +86,19 @@ function dolphinShapeValue(lx: number, ly: number, scale: number): number {
     else if (d < thickness * 0.5 + 0.6 * scale) best = Math.max(best, 0.55);
   }
 
-  // Tail fluke: two small lobes either side of the tangent at the tail end.
+  // Tail fluke: two tapered blades fanning out from the same body-attachment point
+  // to two separate tips (spread along the radial axis, reach along the tangent) —
+  // wide at the body, pointed at the tips, with a natural notch between them where
+  // they're far apart. Reads as an actual fin silhouette, not two round lobes.
   const tangentX = -Math.sin(THETA_MIN), tangentY = Math.cos(THETA_MIN);
   const radialX = Math.cos(THETA_MIN), radialY = Math.sin(THETA_MIN);
   const tailX = R * radialX, tailY = cyLocal + R * radialY;
-  const lobeReach = 1.05 * scale, radialExtra = 0.55 * scale, lobeR = 1.05 * scale;
+  const tipLen = 1.4 * scale, tipSpread = 1.7 * scale;
+  const baseW = 1.15 * scale, tipW = 0.35 * scale;
   for (const sign of [1, -1]) {
-    const lobeX = tailX + tangentX * lobeReach * sign + radialX * radialExtra;
-    const lobeY = tailY + tangentY * lobeReach * sign + radialY * radialExtra;
-    const d = Math.hypot(lx - lobeX, ly - lobeY);
-    if (d < lobeR) best = Math.max(best, 1);
-    else if (d < lobeR + 0.5 * scale) best = Math.max(best, 0.5);
+    const tipX = tailX + tangentX * tipLen + radialX * tipSpread * sign;
+    const tipY = tailY + tangentY * tipLen + radialY * tipSpread * sign;
+    best = Math.max(best, bladeValue(lx, ly, tailX, tailY, tipX, tipY, baseW, tipW, scale));
   }
 
   // Dorsal fin: a small bump just outside the peak of the arc.

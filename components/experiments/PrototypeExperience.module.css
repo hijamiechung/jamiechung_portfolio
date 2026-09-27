@@ -241,6 +241,10 @@
   background: transparent;
   font-size: var(--font-size-environment-control);
   letter-spacing: var(--tracking-display);
+  /* Sized to comfortably fit "Pittsburgh · Partly Cloudy" — stops the pill from
+     visibly resizing every time the condition text changes length. Rare longer
+     strings (e.g. "Permission Denied") can still grow past this, that's fine. */
+  min-width: 172px;
 }
 
 .cartridge::before {

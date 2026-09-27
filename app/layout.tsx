@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import { IdentityMark, IDENTITY_MARK_ENABLED } from "@/components/experiments/IdentityMark";
 import { PrototypeExperience } from "@/components/experiments/PrototypeExperience";
 import { AtmosphereExperience } from "@/components/experiments/atmosphere/AtmosphereExperience";
@@ -31,6 +32,7 @@ export default function RootLayout({
         </div>
         <div id="environment-control" />
         {ENABLE_ENVIRONMENT_EXPERIMENT && (ENABLE_ATMOSPHERE_EXPERIMENT ? <AtmosphereExperience /> : <PrototypeExperience />)}
+        <Analytics />
       </body>
     </html>
   );
