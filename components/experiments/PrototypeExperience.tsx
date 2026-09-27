@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
 import { LineIcon } from "../LineIcon";
@@ -22,6 +22,8 @@ function subscribePreferences(callback: () => void) {
 function read(key: string, fallback: string) {try {return localStorage.getItem(key) ?? fallback;} catch {return fallback;}}
 function save(key: string, value: string) {try {localStorage.setItem(key,value);} catch {} window.dispatchEvent(new Event("portfolio-preferences"));}
 type Source = "pittsburgh" | "mine";
+const WEATHER_CODES = ["clear", "clouds", "rain", "snow", "wind", "storm"] as const;
+type WeatherCode = typeof WEATHER_CODES[number];
 export type Environment = {label: string; cond: string; code: string; phase: string; windDir: number; windSpeed: number; tz?: string; weatherCode?: number; solarDays?: {date: string; sunrise?: string; sunset?: string}[]};
 export type FieldFactory = (canvas: () => HTMLCanvasElement | null, options: {reduced: boolean; density: number; thinning: boolean; integration: string; rects: () => {cards: DOMRect[]}}) => {
   setEnv: (env: Environment) => void; setMouse: (x: number, y: number) => void; resize: () => void; stop: () => void;
@@ -38,6 +40,8 @@ export function PrototypeExperience({fieldFactory = createEnvField, fieldClassNa
   const boosted = storedA11y === "boost";
   const [source,setSource] = useState<Source>("pittsburgh");
   const [env,setEnv] = useState(initial);
+  const [manualCode,setManualCode] = useState<WeatherCode | null>(null);
+  const displayEnv = useMemo(() => manualCode ? {...env, code: manualCode, cond: manualCode.toUpperCase()} : env, [env, manualCode]);
   const [tray,setTray] = useState(false);
   const canvas = useRef<HTMLCanvasElement>(null);
   const trayRef = useRef<HTMLDivElement>(null);
@@ -61,7 +65,7 @@ export function PrototypeExperience({fieldFactory = createEnvField, fieldClassNa
     window.addEventListener("pointermove",move); document.addEventListener("pointerleave",leave); window.addEventListener("resize",resize); media.addEventListener("change",start);
     return ()=>{field.current?.stop();field.current=null;window.removeEventListener("pointermove",move);document.removeEventListener("pointerleave",leave);window.removeEventListener("resize",resize);media.removeEventListener("change",start);};
   }, [fieldFactory]);
-  useEffect(() => {latestEnvironment.current=env; field.current?.setEnv(env);}, [env]);
+  useEffect(() => {latestEnvironment.current=displayEnv; field.current?.setEnv(displayEnv);}, [displayEnv]);
   useEffect(() => {
     let abort: AbortController | null = null, active=true;
     let timeout: ReturnType<typeof setTimeout> | undefined, refresh: ReturnType<typeof setTimeout> | undefined;
@@ -93,7 +97,7 @@ export function PrototypeExperience({fieldFactory = createEnvField, fieldClassNa
     return ()=>{document.removeEventListener("pointerdown",outside);document.removeEventListener("keydown",escape);};
   },[tray]);
   const display = (value: string) => value.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
-  const unavailable = ["—", "LOCATING", "NO SIGNAL", "UNAVAILABLE", "PERMISSION DENIED"].includes(env.cond);
+  const unavailable = ["—", "LOCATING", "NO SIGNAL", "UNAVAILABLE", "PERMISSION DENIED"].includes(displayEnv.cond);
   return <>
     <canvas ref={canvas} className={`${styles.field} ${fieldClassName}`} aria-hidden="true"/>
     {controls && createPortal(<div className={styles.controls}>
@@ -106,12 +110,19 @@ export function PrototypeExperience({fieldFactory = createEnvField, fieldClassNa
     </div>,controls)}
     {header && pathname === "/" && createPortal(<div className={styles.environment}>
       <div className={styles.trayWrap}>
-        <button ref={trigger} className={styles.cartridge} aria-label={`Change location: ${display(env.label)}, ${display(env.cond)}`} aria-expanded={tray} aria-controls="environment-options" onClick={()=>setTray(!tray)}>
-          <WeatherIcon className={styles.weatherSymbol} code={env.code} phase={env.phase} weatherCode={env.weatherCode} unavailable={unavailable}/>
-          <span className={styles.readout} aria-live="polite"><span>{display(env.label)}</span><span className={styles.separator} aria-hidden="true">·</span><span>{display(env.cond)}</span></span>
+        <button ref={trigger} className={styles.cartridge} aria-label={`Change location: ${display(displayEnv.label)}, ${display(displayEnv.cond)}`} aria-expanded={tray} aria-controls="environment-options" onClick={()=>setTray(!tray)}>
+          <WeatherIcon className={styles.weatherSymbol} code={displayEnv.code} phase={displayEnv.phase} weatherCode={displayEnv.weatherCode} unavailable={unavailable}/>
+          <span className={styles.readout} aria-live="polite"><span>{display(displayEnv.label)}</span><span className={styles.separator} aria-hidden="true">·</span><span>{display(displayEnv.cond)}</span></span>
           <LineIcon name="chevron" className={styles.chevron}/>
         </button>
-        {tray && <div ref={trayRef} className={styles.tray} id="environment-options" role="group" aria-label="Environment sources">{([['pittsburgh','PITTSBURGH'],['mine','MY LOCATION']] as const).map(([id,label])=><button key={id} aria-pressed={source===id} onClick={()=>{setSource(id);setTray(false);trigger.current?.focus();}}><span>{display(label)}</span><span className={styles.selectionMark} aria-hidden="true">{source===id ? "✓" : ""}</span></button>)}</div>}
+        {tray && <div ref={trayRef} className={styles.tray} id="environment-options">
+          <div role="group" aria-label="Environment sources">{([['pittsburgh','PITTSBURGH'],['mine','MY LOCATION']] as const).map(([id,label])=><button key={id} aria-pressed={source===id} onClick={()=>{setSource(id);setTray(false);trigger.current?.focus();}}><span>{display(label)}</span><span className={styles.selectionMark} aria-hidden="true">{source===id ? "✓" : ""}</span></button>)}</div>
+          <div className={styles.traySection} role="group" aria-label="Preview a weather condition">
+            <span className={styles.traySectionLabel}>Weather</span>
+            <button aria-pressed={manualCode===null} onClick={()=>{setManualCode(null);}}><span>Live</span><span className={styles.selectionMark} aria-hidden="true">{manualCode===null ? "✓" : ""}</span></button>
+            {WEATHER_CODES.map(code=><button key={code} aria-pressed={manualCode===code} onClick={()=>{setManualCode(code);}}><span>{display(code)}</span><span className={styles.selectionMark} aria-hidden="true">{manualCode===code ? "✓" : ""}</span></button>)}
+          </div>
+        </div>}
       </div>
     </div>,header)}
   </>;

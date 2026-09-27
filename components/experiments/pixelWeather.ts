@@ -28,6 +28,15 @@ const CODE_TINT: Record<string, string> = {
   storm: "#8b7aa8",
 };
 
+// Brief rainbow after rain clears — same muted-pastel logic as everything else here
+// (a hint of color, not saturated primaries), triggered once on the rain/storm -> other
+// transition and left to fade on its own; it doesn't loop or re-trigger while dry.
+const RAINBOW_COLORS = ["#d98a8a", "#d9a880", "#d9c980", "#9bc98a", "#8ab0c9", "#8a8ac9", "#b08ac9"];
+const RAINBOW_DURATION = 9000;
+const RAINBOW_FADE_IN = 900;
+const RAINBOW_FADE_OUT = 2600;
+const RAINBOW_PEAK_ALPHA = 0.5;
+
 // A horizontal band, not a radial spot: full strength for the top `inner` fraction of
 // the viewport height (across the *entire* width), fading to zero by `outer` — weather
 // happens up in the sky and fades out toward the ground, the same amount at every x
@@ -91,6 +100,7 @@ export const createPixelField: FieldFactory = (getCanvas, options) => {
   const reduced = !!options.reduced;
 
   let gridPath: Path2D | null = null;
+  let rainbowStart = -Infinity;
 
   function color() {
     return getComputedStyle(document.documentElement).getPropertyValue("--color-dot").trim() || "#888";
@@ -303,6 +313,48 @@ export const createPixelField: FieldFactory = (getCanvas, options) => {
     return 0;
   }
 
+  // A circular arc centered well below the canvas — screen cells above it fall into
+  // 7 concentric rings (red outermost/highest to violet innermost, closest to the
+  // horizon), same as a real rainbow's geometry. Cells are still hard-edged squares;
+  // only their alpha varies, so this stays consistent with the rest of the grid.
+  function renderRainbow(t: number) {
+    const elapsed = t - rainbowStart;
+    if (elapsed < 0 || elapsed > RAINBOW_DURATION) return;
+    const envelope = Math.min(smoothstep(elapsed / RAINBOW_FADE_IN), smoothstep((RAINBOW_DURATION - elapsed) / RAINBOW_FADE_OUT));
+    if (envelope <= 0.01) return;
+    // A much larger radius than the visible grid keeps the curve shallow (a real
+    // rainbow's arc is gentle, not a tight dome) — only a thin sliver of the circle,
+    // high up, ever intersects the screen. A vertical fade (same "sky band" idea as
+    // the other conditions) keeps it confined near the top instead of sweeping down
+    // toward the ground.
+    const cx = cols / 2, cy = rows * 2;
+    const thickness = Math.max(1.2, rows * 0.016);
+    const baseRadius = cy - rows * 0.13;
+    const innerY = h * 0.22, outerY = h * 0.5;
+    for (let row = 0; row < rows; row++) {
+      const cyPix = row * CELL;
+      const vFalloff = 1 - smoothstep((cyPix - innerY) / (outerY - innerY));
+      if (vFalloff <= 0.015) continue;
+      for (let col = 0; col < cols; col++) {
+        const dx = col - cx, dy = row - cy;
+        const dist = Math.hypot(dx, dy);
+        for (let i = 0; i < RAINBOW_COLORS.length; i++) {
+          const bandRadius = baseRadius - i * thickness;
+          const d = Math.abs(dist - bandRadius);
+          if (d >= thickness * 0.5) continue;
+          const intensity = 1 - d / (thickness * 0.5);
+          const a = intensity * envelope * vFalloff * RAINBOW_PEAK_ALPHA;
+          if (a <= 0.02) break;
+          ctx!.globalAlpha = a;
+          ctx!.fillStyle = RAINBOW_COLORS[i];
+          ctx!.fillRect(col * CELL + 1.25, row * CELL + 1.25, CELL - 2.5, CELL - 2.5);
+          break;
+        }
+      }
+    }
+    ctx!.globalAlpha = 1;
+  }
+
   function render(t: number) {
     if (!ctx || !canvas) return;
     ctx.clearRect(0, 0, w, h);
@@ -353,6 +405,7 @@ export const createPixelField: FieldFactory = (getCanvas, options) => {
       }
     }
     ctx.globalAlpha = 1;
+    renderRainbow(t);
   }
 
   function frame(now: number) {
@@ -370,7 +423,16 @@ export const createPixelField: FieldFactory = (getCanvas, options) => {
   }, 700);
 
   return {
-    setEnv(next) { env = { ...env, ...next }; if (reduced) render(0); },
+    setEnv(next) {
+      // Snow counts as still-precipitating for this check too — clearing into snow
+      // shouldn't cue a rainbow, only clearing into something dry (clouds/clear/wind).
+      const wasRaining = env.code === "rain" || env.code === "storm";
+      const prevCode = env.code;
+      env = { ...env, ...next };
+      const stillWet = env.code === "rain" || env.code === "storm" || env.code === "snow";
+      if (wasRaining && !stillWet && env.code !== prevCode) rainbowStart = performance.now();
+      if (reduced) render(0);
+    },
     setMouse(x, y) { mouse.x = x; mouse.y = y; },
     resize,
     stop() {
