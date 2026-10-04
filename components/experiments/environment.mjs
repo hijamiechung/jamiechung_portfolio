@@ -9,13 +9,13 @@ export function createEnvField(canvasOrGetter, cfg) {
   const getRects = c.rects || (() => ({ cards: [] }));
   const reduced = !!c.reduced;
 
-  const DENS = { clear: 1, clouds: 1.35, rain: 1.25, snow: 1.1, wind: 1.0, storm: 1.4, orbit: 1.15 };
+  const DENS = { clear: 1, clouds: 1.35, rain: 1.25, snow: 1.1, wind: 1.0, orbit: 1.15 };
   const PH_DENS = { morning: 0.85, day: 1, evening: 0.9, night: 0.6 };
   const PH_SPEED = { morning: 0.9, day: 1, evening: 0.85, night: 0.6 };
   const PH_ALPHA = { morning: 0.78, day: 0.86, evening: 0.82, night: 0.92 };
-  const FLOW = { rain: 1, snow: 1, wind: 1, storm: 1 };
+  const FLOW = { rain: 1, snow: 1, wind: 1 };
 
-  let pts = [], w = 0, h = 0, raf = 0, t = 0, gustAt = 4000, gust = 0, running = true;
+  let pts = [], w = 0, h = 0, raf = 0, t = 0, running = true;
   function tone(name) { return getComputedStyle(document.documentElement).getPropertyValue('--color-light-' + name).trim().split(',').map(Number); }
   const LIGHT = {
     morning: { x: 0.08, y: 0.82, a: 0.050, c: tone('morning') },
@@ -23,7 +23,7 @@ export function createEnvField(canvasOrGetter, cfg) {
     evening: { x: 0.95, y: 0.70, a: 0.060, c: tone('evening') },
     night:   { x: 0.35, y: -0.05, a: 0.034, c: tone('night') }
   };
-  const DIFFUSE = { clear: [1.00, 0.95], clouds: [0.62, 1.50], rain: [0.50, 1.70], snow: [0.72, 1.60], wind: [0.85, 1.15], storm: [0.80, 1.20], orbit: [1.00, 1.30] };
+  const DIFFUSE = { clear: [1.00, 0.95], clouds: [0.62, 1.50], rain: [0.50, 1.70], snow: [0.72, 1.60], wind: [0.85, 1.15], orbit: [1.00, 1.30] };
   let darkGround = false;
   let env = { code: 'clear', windDir: 270, windSpeed: 4, phase: 'day' };
   const mouse = { x: -9999, y: -9999 };
@@ -41,7 +41,7 @@ export function createEnvField(canvasOrGetter, cfg) {
     const rot = orbit ? t * 0.000022 : 0;
     const sx = orbit ? w * (0.5 + Math.cos(rot) * 0.42) : w * base.x;
     const sy = orbit ? h * (0.32 + Math.sin(rot) * 0.38) : h * base.y;
-    let a = base.a * aMul * (env.code === 'storm' ? 1 + gust * 0.5 : 1);
+    let a = base.a * aMul;
     if (orbit) a = 0.085;
     if (darkGround) a *= 1.7;
     return {
@@ -152,11 +152,6 @@ export function createEnvField(canvasOrGetter, cfg) {
     const wx = Math.sin(rad) * -1, wy = Math.cos(rad); // meteorological dir -> vector
     const wMag = Math.min(1.4, 0.08 + (env.windSpeed || 0) * 0.022);
 
-    if (code === 'storm' && !reduced) {
-      if (t > gustAt) { gust = 1; gustAt = t + 6500 + Math.random() * 5500; }
-      gust *= 0.972;
-    } else gust = 0;
-
     const L = lightModel();
     drawLight(ctx, L);
     const col = (getComputedStyle(document.documentElement).getPropertyValue('--color-dot')).trim();
@@ -176,7 +171,6 @@ export function createEnvField(canvasOrGetter, cfg) {
         if (code === 'rain') { p.x += wx * wMag * 0.5 * sp; p.y += 0.5 * sp; }
         else if (code === 'snow') { p.x += (Math.sin(t * 0.0009 + p.s * 7) * 0.16 + wx * wMag * 0.12) * sp; p.y += 0.17 * sp; }
         else if (code === 'wind') { p.x += wx * wMag * 0.9 * sp; p.y += wy * wMag * 0.35 * sp; }
-        else { const g = 0.18 + gust * 1.1; p.x += wx * wMag * g * sp; p.y += wy * wMag * g * 0.4 * sp; }
         if (p.x < -4) p.x = w + 4; if (p.x > w + 4) p.x = -4;
         if (p.y < -4) p.y = h + 4; if (p.y > h + 4) p.y = -4;
       } else if (code === 'orbit' && !reduced) {
@@ -270,7 +264,7 @@ const CODE_MAP = [
   [[3], 'clouds', 'OVERCAST'], [[45, 48], 'clouds', 'FOG'],
   [[51, 53, 55, 56, 57], 'rain', 'DRIZZLE'], [[61, 63, 65, 66, 67], 'rain', 'RAIN'],
   [[80, 81, 82], 'rain', 'SHOWERS'], [[71, 73, 75, 77, 85, 86], 'snow', 'SNOW'],
-  [[95, 96, 99], 'storm', 'STORM']
+  [[95, 96, 99], 'wind', 'WINDY']
 ];
 
 export function mapWeather(wmo, windSpeed) {

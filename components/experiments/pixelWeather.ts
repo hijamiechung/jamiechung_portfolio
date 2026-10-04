@@ -12,7 +12,7 @@ const CELL = 9; // px, before device-pixel-ratio scaling
 
 const PHASE_DENSITY: Record<string, number> = { morning: 0.85, day: 1, evening: 0.92, night: 0.62 };
 const PHASE_ALPHA: Record<string, number> = { morning: 0.4, day: 0.45, evening: 0.42, night: 0.55 };
-const CODE_ALPHA: Record<string, number> = { clear: 1.3, clouds: 0.85, rain: 0.6, snow: 0.55, wind: 0.5, storm: 0.65, orbit: 0.5 };
+const CODE_ALPHA: Record<string, number> = { clear: 1.3, clouds: 0.85, rain: 0.55, snow: 0.55, wind: 0.5, orbit: 0.5 };
 
 // Muted, desaturated per-condition tints — a hint of color, not saturated weather-app
 // primaries. The base grid stays neutral grey; only the active weather cells carry it,
@@ -22,14 +22,13 @@ const CODE_ALPHA: Record<string, number> = { clear: 1.3, clouds: 0.85, rain: 0.6
 const CODE_TINT: Record<string, string> = {
   clear: "#ffffff",
   clouds: "#9aa4b0",
-  rain: "#7ba0c4",
+  rain: "#a9c2d6",
   snow: "#c9dce6",
   wind: "#9bb3a0",
-  storm: "#8b7aa8",
 };
 
 // Brief rainbow after rain clears — same muted-pastel logic as everything else here
-// (a hint of color, not saturated primaries), triggered once on the rain/storm -> other
+// (a hint of color, not saturated primaries), triggered once on the rain -> other
 // transition and left to fade on its own; it doesn't loop or re-trigger while dry.
 const RAINBOW_COLORS = ["#d98a8a", "#d9a880", "#d9c980", "#9bc98a", "#8ab0c9", "#8a8ac9", "#b08ac9"];
 const RAINBOW_DURATION = 9000;
@@ -45,7 +44,6 @@ const RAINBOW_PEAK_ALPHA = 0.5;
 const CODE_VERTICAL_REACH: Record<string, { inner: number; outer: number }> = {
   clouds: { inner: 0.32, outer: 0.68 },
   rain: { inner: 0.3, outer: 0.6 },
-  storm: { inner: 0.32, outer: 0.64 },
   snow: { inner: 0.3, outer: 0.62 },
   wind: { inner: 0.3, outer: 0.65 },
   orbit: { inner: 0.4, outer: 0.85 },
@@ -235,33 +233,6 @@ export const createPixelField: FieldFactory = (getCanvas, options) => {
       const distance = ((t * speed + offset - row) % period + period) % period;
       return distance < stack ? 1 : 0;
     }
-    if (code === "storm") {
-      // Rain blown sideways by wind. A shared sway value (same for every drop at a
-      // given instant) drives how far each stack tilts, so the whole sheet leans one
-      // way together, eases back toward vertical, then leans again — a gust shoving it
-      // over and releasing, not a fixed diagonal. Each stacked cell is offset sideways
-      // from the one below it by `sway` columns, so an individual drop actually reads
-      // as a slanted streak instead of a straight vertical bar with a shifted phase.
-      const gust = 0.5 + 0.5 * Math.sin(t * 0.00024);
-      const flutter = Math.sin(t * 0.0009 + 3.1) * 0.12;
-      const sway = 0.15 + gust * 0.85 + flutter;
-      for (let k = 0; k < 3; k++) {
-        const baseCol = col - Math.round(k * sway);
-        const colSeed = hash(baseCol, 0, 11);
-        const cyclePeriod = 2200 + colSeed * 2600;
-        const cyclePhaseShift = hash(baseCol, 1, 12) * 9000;
-        const cycle = Math.floor((t + cyclePhaseShift) / cyclePeriod);
-        if (hash(baseCol, cycle, 3) > 0.5) continue;
-        const stack = 1 + Math.floor(hash(baseCol, cycle, 16) * 3); // 1, 2, or 3 cells tall
-        if (k >= stack) continue;
-        const speed = 0.02 + hash(baseCol, cycle, 13) * 0.012;
-        const period = 9 + hash(baseCol, cycle, 14) * 6;
-        const offset = hash(baseCol, cycle + 1, 5) * period;
-        const distance = ((t * speed + offset - row) % period + period) % period;
-        if (Math.floor(distance) === k) return 1;
-      }
-      return 0;
-    }
     if (code === "snow") {
       const colSeed = hash(col, 0, 11);
       const cyclePeriod = 3400 + colSeed * 4000;
@@ -426,10 +397,10 @@ export const createPixelField: FieldFactory = (getCanvas, options) => {
     setEnv(next) {
       // Snow counts as still-precipitating for this check too — clearing into snow
       // shouldn't cue a rainbow, only clearing into something dry (clouds/clear/wind).
-      const wasRaining = env.code === "rain" || env.code === "storm";
+      const wasRaining = env.code === "rain";
       const prevCode = env.code;
       env = { ...env, ...next };
-      const stillWet = env.code === "rain" || env.code === "storm" || env.code === "snow";
+      const stillWet = env.code === "rain" || env.code === "snow";
       if (wasRaining && !stillWet && env.code !== prevCode) rainbowStart = performance.now();
       if (reduced) render(0);
     },

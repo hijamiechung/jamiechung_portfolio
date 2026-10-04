@@ -1,0 +1,61 @@
+.root { margin-top: var(--space-7); }
+.figure { padding: var(--space-5); background: var(--color-surface-card); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-popover); }
+.figure > figcaption { font-size: var(--font-size-lede); color: var(--color-text-primary); }
+.figure figcaption span { margin-left: var(--space-2); font-size: var(--font-size-detail); color: var(--guidelight-accent-text); }
+.root .meta, .root .hint { font-size: var(--font-size-label-sm); margin-top: var(--space-3); }
+.scroll { overflow-x: auto; margin-block: var(--space-5); }
+.chart { min-width: 600px; }
+.steps { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
+.steps li { padding: var(--space-3) var(--space-2); border: 1px solid var(--color-border-strong); border-radius: var(--radius-xs); display: flex; flex-direction: column; gap: var(--space-2); transition: background var(--duration-standard) ease, border-color var(--duration-standard) ease; }
+.steps li[data-limited="true"] { border-style: dashed; }
+.steps li > span { font-size: var(--font-size-body); color: var(--color-text-secondary); }
+.steps strong { font-size: var(--font-size-label-sm); font-weight: var(--font-weight-medium); min-height: 54px; }
+.steps small { font-size: var(--font-size-label-xs); }
+.steps li[data-highlighted="true"] { background: var(--guidelight-highlight); border-color: var(--guidelight-highlight); color: var(--guidelight-ink); }
+.steps li[data-highlighted="true"] span, .steps li[data-highlighted="true"] small { color: var(--guidelight-ink); }
+.roleLabel { font-size: var(--font-size-detail); color: var(--color-text-secondary); margin: var(--space-3) 0 var(--space-2); }
+.roles { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--space-1) var(--space-2); }
+.roles > div { padding: var(--space-2) var(--space-1); text-align: center; background: var(--color-surface-hover); color: var(--color-text-secondary); border-radius: var(--radius-xs); font-size: var(--font-size-label-xs); }
+
+.bands { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--space-2); margin-top: var(--space-3); }
+.bands span { border-top: 2px solid var(--color-border-strong); padding-top: var(--space-2); color: var(--color-text-secondary); font-size: var(--font-size-detail); transition: border-color var(--duration-slow) ease, color var(--duration-slow) ease; }
+.bands span[data-active="true"] { border-color: var(--guidelight-highlight); color: var(--guidelight-accent-text); }
+.findings { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin: var(--space-5) 0 var(--space-3); }
+.finding { padding: var(--space-5); border-top: 3px solid var(--color-border-strong); background: var(--color-surface-card); border-radius: var(--radius-sm); transition: border-color var(--duration-slow) ease, background var(--duration-slow) ease; }
+.finding[data-active="true"] { border-top-color: var(--guidelight-highlight); background: var(--guidelight-ink); color: var(--guidelight-on-ink); }
+.findingTop { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-4); }
+.findingTop > span { font-size: var(--font-size-card-title); color: var(--guidelight-accent-text); }
+.finding .range { font-size: var(--font-size-detail); color: var(--color-text-secondary); }
+.finding[data-active="true"] .range, .finding[data-active="true"] p { color: var(--guidelight-on-ink); }
+.finding[data-active="true"] .findingTop > span { color: var(--guidelight-highlight); }
+.playback { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6); color: var(--color-text-secondary); font-size: var(--font-size-detail); }
+.playback button { padding: var(--space-2); min-height: 36px; border: 0; border-radius: var(--radius-xs); background: transparent; color: var(--color-text-secondary); font: inherit; cursor: pointer; }
+.playback button:hover { background: var(--color-surface-hover); color: var(--color-text-primary); }
+@media (prefers-reduced-motion: reduce) { .steps li, .finding, .bands span { transition: none; } }
+
+/* Stable colors identify the two findings; motion changes emphasis only. */
+.root { --problem-color: var(--guidelight-highlight); --problem-on-color: var(--guidelight-ink); }
+.root[data-problem="1"], .root [data-problem="1"] { --problem-color: var(--guidelight-ink); --problem-on-color: var(--guidelight-on-ink); }
+.root [data-problem="0"] { --problem-color: var(--guidelight-highlight); --problem-on-color: var(--guidelight-ink); }
+.steps li[data-highlighted="true"] { background: color-mix(in srgb, var(--problem-color) 12%, var(--color-surface-card)); border-color: var(--problem-color); box-shadow: inset 0 -3px var(--problem-color); color: var(--color-text-primary); }
+.steps li[data-highlighted="true"] span { color: var(--color-text-primary); }
+.bands span, .bands span[data-active="true"] { border-color: var(--problem-color); color: var(--color-text-primary); border-top-width: 4px; }
+.bands span { opacity: 0.75; }
+.bands span[data-active="true"] { opacity: 1; }
+.finding, .finding[data-active="true"] { border-top-color: var(--problem-color); background: var(--color-surface-card); color: var(--color-text-primary); }
+.finding[data-active="true"] { background: var(--color-surface-hover); }
+.findingTop > span, .finding[data-active="true"] .findingTop > span { align-self: flex-start; display: grid; place-items: center; min-width: 36px; height: 30px; border-radius: var(--radius-xs); background: var(--problem-color); color: var(--problem-on-color); font-size: var(--font-size-body); }
+.finding[data-active="true"] .range { color: var(--color-text-secondary); }
+.finding[data-active="true"] p { color: var(--color-text-secondary); }
+.roleLabel { font-size: var(--font-size-body); font-weight: var(--font-weight-medium); color: var(--color-text-primary); margin-top: var(--space-6); }
+.roles { gap: var(--space-2); }
+.roles > div { display: grid; place-items: center; min-height: 38px; padding: var(--space-2); border: 1px solid var(--color-border-strong); background: var(--color-surface-hover); color: var(--color-text-primary); font-size: var(--font-size-label-sm); line-height: 1.35; }
+
+/* Role spans share the stage columns; the small gap keeps both layers connected. */
+.chart { --role-school-surface: #DCE9F0; --role-family-surface: #EDF3BC; --role-provider-surface: #E6DFF1; --role-on-light: #26313C; }
+.roles { margin-top: var(--space-1); padding-bottom: var(--space-3); background: repeating-linear-gradient(to right, transparent 0, transparent calc((100% + var(--space-2)) / 7 - var(--space-2) - 1px), var(--color-border-subtle) calc((100% + var(--space-2)) / 7 - var(--space-2) - 1px), var(--color-border-subtle) calc((100% + var(--space-2)) / 7 - var(--space-2)), transparent calc((100% + var(--space-2)) / 7 - var(--space-2)), transparent calc((100% + var(--space-2)) / 7)); }
+.roles > div { border: 0; color: var(--role-on-light); }
+.roles > [data-role="manager"] { background: var(--guidelight-ink); color: var(--guidelight-on-ink); }
+.roles > [data-role="school"] { background: var(--role-school-surface); }
+.roles > [data-role="family"] { background: var(--role-family-surface); }
+.roles > [data-role="provider"] { background: var(--role-provider-surface); }

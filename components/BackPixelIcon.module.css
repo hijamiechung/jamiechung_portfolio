@@ -1,0 +1,32 @@
+.icon {
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.pixel {
+  fill: currentColor;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Triggered by hovering the enclosing link (not just the small icon itself) —
+   `a` is a plain tag selector so it isn't scoped to this module, letting whatever
+   link wraps the icon drive the animation the same way it drives its own hover state.
+   Descendant (not direct-child) so it still fires when a styled wrapper (e.g. the
+   "next project" arrow's circular badge) sits between the link and the icon. */
+a:hover .icon .pixel, .icon:hover .pixel {
+  animation: pixel-nudge var(--duration-standard) var(--ease-standard) both;
+  animation-delay: calc(var(--delay) * 16ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a:hover .icon .pixel, .icon:hover .pixel {
+    animation: none;
+  }
+}
+
+@keyframes pixel-nudge {
+  0% { transform: translateX(0); }
+  45% { transform: translateX(-0.6px); }
+  100% { transform: translateX(0); }
+}

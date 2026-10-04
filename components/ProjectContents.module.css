@@ -51,6 +51,10 @@
   transition: width var(--duration-standard) var(--ease-standard);
 }
 
+.toc a:hover:not([aria-current]) i {
+  width: 6px;
+}
+
 .toc a[aria-current] i {
   width: 10px;
   background: var(--color-text-primary);

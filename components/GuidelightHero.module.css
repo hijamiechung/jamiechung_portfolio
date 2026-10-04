@@ -1,0 +1,26 @@
+.hero {
+  --preview-width: 25%;
+  --preview-top: 5%;
+  position: relative;
+  aspect-ratio: 2;
+  margin-top: var(--space-6);
+  overflow: hidden;
+  background-color: var(--color-surface-thumbnail);
+  border-radius: var(--radius-image);
+}
+.video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.control {
+  position: absolute;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-app);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: var(--font-size-label-sm);
+  cursor: pointer;
+}
+.control:hover { background: var(--color-surface-hover); }
+.control:focus-visible { outline: var(--focus-ring-width) solid var(--color-focus-ring); outline-offset: 3px; }

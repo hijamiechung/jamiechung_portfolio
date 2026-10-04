@@ -32,7 +32,7 @@ export function Sidebar({brand}: {brand?: ReactNode}) {
 
   return <>
     <div className={styles.mobileBar}>
-      <button className={styles.hamburger} aria-label="Open navigation" aria-expanded={mobileOpen} aria-controls="primary-sidebar" onClick={() => setMobileOpen(true)}><LineIcon name="hamburger" /></button>
+      <button className={styles.hamburger} aria-label={mobileOpen ? "Close navigation" : "Open navigation"} aria-expanded={mobileOpen} aria-controls="primary-sidebar" onClick={() => setMobileOpen(!mobileOpen)}><LineIcon name={mobileOpen ? "close" : "hamburger"} /></button>
       <Link href="/" className={styles.mobileLogo} aria-label="Jamie Chung — home">{brand ?? "J"}<span>Jamie Chung</span></Link>
     </div>
     {mobileOpen && <div className={styles.backdrop} onClick={() => setMobileOpen(false)} aria-hidden="true" />}
@@ -40,7 +40,6 @@ export function Sidebar({brand}: {brand?: ReactNode}) {
       <div className={styles.header}>
         <Link href="/" className={styles.logo} aria-label="Jamie Chung — home" aria-hidden={collapsed} tabIndex={collapsed ? -1 : undefined}>{brand ?? "J"}<span className={styles.logoName}>Jamie Chung</span></Link>
         <button className={styles.tabButton} aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"} aria-expanded={!collapsed} onClick={() => setManualCollapsed(!collapsed)}><LineIcon name="panel" /></button>
-        <button className={styles.closeButton} aria-label="Close navigation" onClick={() => setMobileOpen(false)}><LineIcon name="close" /></button>
       </div>
       <nav className={styles.nav}><SidebarNavSection /></nav>
       <ProfileFooter />

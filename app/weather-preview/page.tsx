@@ -4,7 +4,7 @@ import { createPixelField } from "@/components/experiments/pixelWeather";
 
 // Dev-only preview so weather states can be checked directly without waiting on real
 // weather to change. Not linked from anywhere; remove once the tuning is settled.
-const CODES = ["clear", "clouds", "rain", "snow", "wind", "storm"] as const;
+const CODES = ["clear", "clouds", "rain", "snow", "wind"] as const;
 const PHASES = ["morning", "day", "evening", "night"] as const;
 
 export default function WeatherPreview() {

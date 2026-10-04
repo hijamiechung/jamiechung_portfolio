@@ -1,0 +1,3 @@
+.crop { --radius-device-preview: 24px; position: absolute; inset: 0; display: flex; justify-content: center; align-items: flex-start; padding-top: var(--preview-top, 7%); overflow: hidden; border-radius: inherit; pointer-events: none; }
+.screen { width: var(--preview-width, 44%); flex: none; overflow: hidden; border-radius: var(--radius-device-preview); isolation: isolate; box-shadow: 0 12px 32px var(--color-shadow); }
+.video { display: block; width: 100%; height: auto; }

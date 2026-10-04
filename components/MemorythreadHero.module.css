@@ -1,0 +1,13 @@
+.frame {
+  position: absolute;
+  inset: 9% 0;
+  width: 78%;
+  max-height: 82%;
+  aspect-ratio: 40 / 21;
+  margin: auto;
+  overflow: hidden;
+  border-radius: var(--radius-thumbnail);
+  box-shadow: 0 12px 32px var(--color-shadow);
+  pointer-events: none;
+}
+.screen { display: block; width: 100%; height: 100%; object-fit: contain; }

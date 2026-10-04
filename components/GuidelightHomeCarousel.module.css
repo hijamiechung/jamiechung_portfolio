@@ -1,0 +1,18 @@
+.carousel { margin-top: var(--space-7); }
+.viewport { height: 440px; position: relative; overflow: hidden; background: var(--color-surface-card); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-image); }
+.screen { position: absolute; top: 0; left: 50%; width: 350px; max-width: 90%; transition: transform 1100ms var(--ease-standard); }
+.screen img { display: block; width: 100%; height: auto; }
+.controls { display: flex; align-items: center; justify-content: center; gap: 0; margin-top: var(--space-2); }
+.controls button { display: grid; place-items: center; min-width: 32px; min-height: 36px; border: 1px solid transparent; border-radius: var(--radius-pill); background: transparent; color: var(--color-text-secondary); font-size: var(--font-size-body); cursor: pointer; }
+.controls button:hover { background: var(--color-surface-hover); color: var(--color-text-primary); }
+.controls button:focus-visible { outline: var(--focus-ring-width) solid var(--color-focus-ring); outline-offset: 2px; }
+.dots { display: flex; gap: 0; }
+.dots button { min-width: 28px; padding: 0; }
+.dots button span { width: 6px; height: 6px; border-radius: var(--radius-pill); background: var(--color-text-muted); }
+.dots button[aria-current] span { width: 22px; background: var(--guidelight-accent-text); }
+.controls .play { font-size: var(--font-size-label-sm); padding-inline: var(--space-3); }
+.caption { text-align: center; min-height: 110px; max-width: 600px; margin: var(--space-2) auto 0; }
+.count { display: block; font-size: var(--font-size-detail); color: var(--color-text-muted); margin-bottom: var(--space-2); }
+.carousel .caption p { margin-top: var(--space-2); color: var(--color-text-primary); font-size: var(--font-size-lede); line-height: 1.5; }
+.carousel .caption h3 { font-size: var(--font-size-card-title); }
+@media (prefers-reduced-motion: reduce) { .screen { transition: none; } }

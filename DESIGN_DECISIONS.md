@@ -36,7 +36,16 @@ The Next.js port retains App Router, CSS Modules, semantic tokens, data-driven
 cards, and independent navigation/footer components. Prototype project narratives,
 metadata, and homepage introduction remain provisional in `lib/projects.ts`.
 Project detail pages identify this status; none of their claims are verified.
-The prototype's Archive row still has no destination. No archive content is invented.
+The sidebar's Archive row expands (same disclosure pattern as Projects) to five
+internal pages at `/archive/[slug]` (`lib/archive.ts`), reusing the generic
+project-detail layout. Content — copy, metadata, images — is migrated in from
+Jamie's original Framer pages (earlier CMU coursework and personal
+explorations), not invented; images are downloaded locally rather than
+hotlinked. One known gap: the "Human Factors" page's source had a sentence
+cut off mid-thought in its Background section ("filmed on campus, late at
+night, to reflect the physical and"); it was trimmed at the last complete
+sentence rather than guessed at — worth finishing from the original if Jamie
+remembers how it ended.
 
 ## Concept
 

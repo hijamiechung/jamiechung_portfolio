@@ -22,7 +22,7 @@ function subscribePreferences(callback: () => void) {
 function read(key: string, fallback: string) {try {return localStorage.getItem(key) ?? fallback;} catch {return fallback;}}
 function save(key: string, value: string) {try {localStorage.setItem(key,value);} catch {} window.dispatchEvent(new Event("portfolio-preferences"));}
 type Source = "pittsburgh" | "mine";
-const WEATHER_CODES = ["clear", "clouds", "rain", "snow", "wind", "storm"] as const;
+const WEATHER_CODES = ["clear", "clouds", "rain", "snow", "wind"] as const;
 type WeatherCode = typeof WEATHER_CODES[number];
 export type Environment = {label: string; cond: string; code: string; phase: string; windDir: number; windSpeed: number; tz?: string; weatherCode?: number; solarDays?: {date: string; sunrise?: string; sunset?: string}[]};
 export type FieldFactory = (canvas: () => HTMLCanvasElement | null, options: {reduced: boolean; density: number; thinning: boolean; integration: string; rects: () => {cards: DOMRect[]}}) => {

@@ -47,6 +47,22 @@ a.item:hover {
   color: var(--color-text-muted);
 }
 
+/* Same blocky, stepped hop as the sidebar nav icons — a small tilt instead of a
+   lift since these sit in a tight list rather than a taller row. */
+.icon svg {
+  transition: transform var(--duration-fast) steps(2, jump-end);
+}
+
+.item:hover .icon svg {
+  transform: rotate(-10deg) scale(1.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon svg {
+    transition: none;
+  }
+}
+
 .name {
   flex: 1;
   min-width: 0;

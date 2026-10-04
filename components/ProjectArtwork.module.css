@@ -1,0 +1,8 @@
+.guidelight {
+  background-image: url('/images/guidelight/background.webp');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.memorythread { background-image: url("/images/memorythread/background.webp"); background-position: center; background-size: cover; background-repeat: no-repeat; }

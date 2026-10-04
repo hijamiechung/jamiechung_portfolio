@@ -7,7 +7,7 @@ test("weather selects appropriate particle behavior, including wind override",()
   assert.deepEqual(mapWeather(3,20),["wind","WINDY"]);
   assert.deepEqual(mapWeather(65,24),["rain","RAIN"]);
   assert.deepEqual(mapWeather(85,4),["snow","SNOW"]);
-  assert.deepEqual(mapWeather(99,4),["storm","STORM"]);
+  assert.deepEqual(mapWeather(99,4),["wind","WINDY"]);
   assert.deepEqual(mapWeather(999,0),["clouds","CLOUDY"]);
 });
 test("day phase boundaries match the canonical environment",()=>{

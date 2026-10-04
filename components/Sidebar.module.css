@@ -101,7 +101,7 @@
   pointer-events: none;
 }
 
-.mobileBar, .closeButton, .backdrop {
+.mobileBar, .backdrop {
   display: none;
 }
 
@@ -109,14 +109,14 @@
   .mobileBar {
     position: fixed;
     inset: 0 0 auto 0;
-    z-index: 10;
+    z-index: 21;
     display: flex;
     align-items: center;
     gap: var(--space-3);
     height: 52px;
     padding: 0 var(--space-4);
     border-bottom: 1px solid var(--color-border-subtle);
-    background: var(--color-sidebar-material, var(--color-surface-app));
+    background: var(--color-surface-app);
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
   }
@@ -146,62 +146,69 @@
   .backdrop {
     display: block;
     position: fixed;
-    inset: 0;
+    inset: 52px 0 0 0;
     z-index: 19;
     background: rgb(0 0 0 / 45%);
   }
 
+  /* Drops down from directly under the fixed top bar instead of sliding in from
+     the side. The top bar's own hamburger/logo double as the panel's toggle and
+     brand mark, so the panel doesn't need (and no longer has) its own header —
+     nothing left to visually overlap with it mid-transition. Opaque background
+     (not the desktop glass material) since this now sits full-width over real
+     page content instead of floating as a small accent. */
   .sidebar {
+    --color-sidebar-material: var(--color-surface-app);
     position: fixed;
-    inset: 0 auto 0 0;
+    inset: 52px 0 auto 0;
     z-index: 20;
-    width: min(300px, 82vw);
-    height: 100dvh;
+    width: auto;
+    height: auto;
+    max-height: min(70dvh, calc(100dvh - 68px));
     margin: 0;
-    border-radius: 0;
-    border-right: 1px solid var(--color-border-subtle);
-    border-left: none; border-top: none; border-bottom: none;
-    transform: translateX(-100%);
-    transition: transform var(--duration-layout) var(--ease-standard);
+    overflow-y: auto;
+    border-radius: 0 0 var(--radius-sidebar) var(--radius-sidebar);
+    border-top: none; border-left: none; border-right: none;
+    transform-origin: top center;
+    transform: translateY(-6px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform var(--duration-layout) var(--ease-standard),
+      opacity var(--duration-standard) ease,
+      visibility 0s linear var(--duration-layout);
   }
 
   .sidebar[data-mobile-open="true"] {
-    transform: translateX(0);
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: transform var(--duration-layout) var(--ease-standard),
+      opacity var(--duration-standard) ease,
+      visibility 0s linear 0s;
   }
 
-  /* On mobile the drawer always shows full content, regardless of the
+  /* On mobile the panel always shows full content, regardless of the
      tablet-only collapsed default carried over from a resize. */
   .sidebar[data-collapsed="true"] {
-    width: min(300px, 82vw);
+    width: auto;
   }
 
-  .sidebar[data-collapsed="true"] .logo {
-    max-width: 200px;
-    opacity: 1;
-    pointer-events: auto;
+  /* The top bar already carries the logo and the open/close toggle, so the
+     panel's own header (desktop-only: logo + collapse button) would just repeat
+     them — hide it outright rather than give it a redundant close button. */
+  .header {
+    display: none;
   }
 
-  .sidebar[data-collapsed="true"] .header {
-    padding-right: 4px;
-    gap: var(--space-2);
+  .nav {
+    margin-top: 0;
+    padding-top: var(--space-2);
   }
 
   .tabButton {
     display: none;
-  }
-
-  .closeButton {
-    display: grid;
-    place-items: center;
-    width: 28px;
-    height: 28px;
-    padding: 0;
-    border: 1px solid var(--color-border-subtle);
-    border-radius: var(--radius-icon);
-    color: var(--color-text-secondary);
-    background: transparent;
-    cursor: pointer;
-    flex-shrink: 0;
   }
 }
 

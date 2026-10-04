@@ -1,0 +1,11 @@
+node_modules
+.next
+.git
+.env*
+portfolio material
+PORTFOLIO_STRATEGY.md
+reference
+.claude
+.cursor
+onboarding_1.mov
+*.tsbuildinfo

@@ -2,7 +2,7 @@ type Props = { code: string; phase: string; weatherCode?: number; unavailable?: 
 
 export function WeatherIcon({ code, phase, weatherCode, unavailable, className }: Props) {
   const night = phase === "night";
-  const cloudy = ["clouds", "rain", "snow", "storm"].includes(code);
+  const cloudy = ["clouds", "rain", "snow"].includes(code);
   const partly = weatherCode === 2;
   const sun = <><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></>;
   const moon = <path d="M20.4 14.1A8.5 8.5 0 0 1 9.9 3.6 8.5 8.5 0 1 0 20.4 14.1Z"/>;
@@ -14,7 +14,6 @@ export function WeatherIcon({ code, phase, weatherCode, unavailable, className }
         {partly && <g transform="translate(3 -1) scale(.65)">{night ? moon : sun}</g>}
         <path d="M6 16a4 4 0 1 1 .3-8A5.5 5.5 0 0 1 17 9a3.5 3.5 0 1 1 1 7H6Z"/>
         {code === "rain" && <path d="m8 19-1 2m6-2-1 2m6-2-1 2"/>}
-        {code === "storm" && <path d="m13 16-3 4h4l-2 3"/>}
         {code === "snow" && <path d="M8 20h.01M12 22h.01M17 20h.01"/>}
       </> : night ? moon : sun}
   </svg>;
