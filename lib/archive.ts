@@ -90,10 +90,17 @@ export const archive: ArchiveEntry[] = [
       { label: 'Development', heading: 'Research-first, then hand-drawn', body: [
         'I took this project to deliberately confront a relatively abstract Sustainable Development Goal and to practice research-led design rather than rushing to visuals. After a previous studio project (a poster series) where shallow research followed by premature visual execution produced thin concepts, I used this brief to test a research-first workflow — exploring how a focused subtopic of SDG 16, specifically public access to information, could be embodied through concise, voice-driven animation.',
         'I kept visuals open for interpretation rather than fixing them early into literal symbols through several storyboard iterations.',
-      ], images: [{ src: '/images/archive/un-sustainable-development-goal-16/storyboard.png', alt: 'Storyboard iteration for the SDG 16 animation' }] },
+      ], images: [
+        { src: '/images/archive/un-sustainable-development-goal-16/storyboard-2.png', alt: 'Storyboard page, iteration 1' },
+        { src: '/images/archive/un-sustainable-development-goal-16/storyboard-3.png', alt: 'Storyboard page, iteration 2' },
+        { src: '/images/archive/un-sustainable-development-goal-16/storyboard.png', alt: 'Storyboard grid for the SDG 16 animation' },
+        { src: '/images/archive/un-sustainable-development-goal-16/storyboard-photo-1.jpg', alt: 'Storyboard pages laid out in process' },
+        { src: '/images/archive/un-sustainable-development-goal-16/storyboard-photo-2.jpg', alt: 'Storyboard iteration, process photo' },
+      ] },
       { label: 'Animatic', heading: 'From After Effects to hand-drawn', body: [
         'I shifted from a planned After Effects approach to hand-drawn frame-by-frame animation, to put a more humanized characteristic into the piece.',
-      ], video: { thumbnail: '/images/archive/un-sustainable-development-goal-16/video-sketch-thumb.jpg', alt: 'Animatic sketch video thumbnail', href: 'https://vimeo.com/1128322303', title: 'sketch', duration: '0:58' } },
+      ], images: [{ src: '/images/archive/un-sustainable-development-goal-16/animatic.png', alt: 'Animatic concept frame' }],
+      video: { thumbnail: '/images/archive/un-sustainable-development-goal-16/video-sketch-thumb.jpg', alt: 'Animatic sketch video thumbnail', href: 'https://vimeo.com/1128322303', title: 'sketch', duration: '0:58' } },
       { label: 'Final design', heading: 'Five hundred hand-drawn frames', body: [
         'Directing a child narrator and producing over five hundred hand-drawn frames taught me practical lessons in voice direction, audio mixing, timing, spacing, and perspective. I also gained confidence in trusting a rough, human aesthetic as a legitimate design choice.',
       ], video: { thumbnail: '/images/archive/un-sustainable-development-goal-16/video-final-thumb.jpg', alt: 'Final SDG 16 animation video thumbnail', href: 'https://vimeo.com/1146483740', title: 'MA Studio I: UN Sustainable Development Goal Video', duration: '1:00' } },
@@ -121,8 +128,17 @@ export const archive: ArchiveEntry[] = [
       ] },
       { label: 'Development', heading: 'Learning a city from the inside', body: [
         'I used the assignment to learn Pittsburgh from the inside: as an international student I wanted to surface local quirks and translate them into visual stories that would be legible and interesting both to fellow internationals and to a broader audience.',
-      ], images: [{ src: '/images/archive/discoversing-pittsburgh/illustration-1.png', alt: 'Daily illustration from the Pittsburgh Everyday series' }] },
-      { label: 'Final design', heading: 'One hundred consecutive pieces', body: [], images: [{ src: '/images/archive/discoversing-pittsburgh/illustration-2.png', alt: 'Another daily illustration from the Pittsburgh Everyday series' }] },
+      ] },
+      { label: 'How I draw', heading: 'One hundred consecutive pieces', body: [], images: [
+        { src: '/images/archive/discoversing-pittsburgh/process-1.png', alt: 'Drawing process, in progress' },
+        { src: '/images/archive/discoversing-pittsburgh/process-2.png', alt: 'Drawing process, reference study' },
+        { src: '/images/archive/discoversing-pittsburgh/illustration-1.png', alt: 'Daily illustration from the Pittsburgh Everyday series' },
+        { src: '/images/archive/discoversing-pittsburgh/illustration-2.png', alt: 'Daily illustration from the Pittsburgh Everyday series' },
+        { src: '/images/archive/discoversing-pittsburgh/illustration-3.png', alt: 'Daily illustration from the Pittsburgh Everyday series' },
+        { src: '/images/archive/discoversing-pittsburgh/illustration-4.png', alt: 'Daily illustration from the Pittsburgh Everyday series' },
+        { src: '/images/archive/discoversing-pittsburgh/illustration-5.png', alt: 'Daily illustration from the Pittsburgh Everyday series' },
+        { src: '/images/archive/discoversing-pittsburgh/illustration-6.png', alt: 'Daily illustration from the Pittsburgh Everyday series' },
+      ] },
       { label: 'Reflection', heading: 'Structure I’d add next time', body: [
         'I would keep the daily practice but add structure and early research to increase impact and reduce rework.',
         'Set a weekly theme and editorial plan: instead of purely reactive daily prompts, define weekly themes (architecture, food, rituals, transit, etc.) so individual pieces accumulate into a stronger narrative arc. Spend one focused hour on micro-research before each week — even shallow, early research prevents superficial visual choices and yields richer symbolism. And timebox finishing and iterating: finish daily sketches quickly, then reserve two weekly review sessions for refinement, to preserve momentum while still allowing craftsmanship to improve.',
@@ -145,11 +161,15 @@ export const archive: ArchiveEntry[] = [
       { label: 'Background', heading: 'A vending machine, late at night', body: [
         'This project was created as an individual midterm project for MA Principles & Practices at Carnegie Mellon University in Fall 2025. The assignment required a short video and a companion poster exploring physical, cognitive, and emotional human factors through a real-world example.',
         'I produced a one-minute narrative video and a conceptual poster, using the everyday interaction with a vending machine as the central case study. The work was filmed on campus, late at night.',
+      ], images: [
+        { src: '/images/archive/human-factors-in-the-mood-for-design/process-1.png', alt: 'Human factors analysis, process sketch' },
+        { src: '/images/archive/human-factors-in-the-mood-for-design/process-2.png', alt: 'Human factors analysis, process sketch' },
+        { src: '/images/archive/human-factors-in-the-mood-for-design/poster.png', alt: 'Companion poster analyzing human factors of a vending machine' },
       ] },
       { label: 'Development', heading: 'Mood over explanation', body: [
         'The project was conducted to develop a holistic understanding of people in design, beyond usability or aesthetics alone. Rather than treating physical, cognitive, and emotional factors as isolated checklists, the goal was to explore how these factors coexist and accumulate in a single moment of interaction — how design becomes meaningful not through novelty, but through its alignment (or misalignment) with human bodies, mental models, and emotional states.',
         'I developed the poster first to articulate the detailed human-factors analysis, then translated that content into a short video through storytelling rather than explanation. Treating the video as a film teaser, I focused on mood and atmosphere, drawing visual inspiration from Chungking Express (Wong Kar-wai, 1994) to keep a consistent tone across both mediums.',
-      ], images: [{ src: '/images/archive/human-factors-in-the-mood-for-design/poster.png', alt: 'Companion poster analyzing human factors of a vending machine' }] },
+      ], images: [{ src: '/images/archive/human-factors-in-the-mood-for-design/chungking-express-ref.png', alt: 'Still from Chungking Express (Wong Kar-wai, 1994), visual reference' }] },
       { label: 'Final design', heading: 'Design as a condition, not a checklist', body: [
         'Through this project I came to understand design not only as a set of features, but as a condition shaped by human readiness — physical fatigue, cognitive expectation, emotional tension. Small decisions, like button placement, feedback timing, or retrieval height, can significantly influence trust, frustration, and satisfaction.',
         'I also learned how narrative and cinematic framing can work as analytical tools, surfacing human factors that a purely functional evaluation might overlook.',
@@ -174,7 +194,10 @@ export const archive: ArchiveEntry[] = [
     sections: [
       { label: 'Background', heading: 'An object that responds to its environment', body: [
         'I started with the intention of creating an interactive object inspired by nature that responds to its surrounding environment. Based on the ambient light level, the angle of the petals and the color of the inner core of the flower change, creating the impression of a flower gradually blooming.',
-      ], images: [{ src: '/images/archive/interactive-flower/detail.png', alt: 'Detail of the flower’s petal mechanism and core light' }] },
+      ], images: [
+        { src: '/images/archive/interactive-flower/detail.png', alt: 'Detail of the flower’s petal mechanism and core light' },
+        { src: '/images/archive/interactive-flower/detail-2.png', alt: 'Sketch of the flower’s petal and sensor mechanism' },
+      ] },
       { label: 'Demo', heading: 'Blooming in response to light', body: [],
         video: { thumbnail: '/images/archive/interactive-flower/video-thumb.jpg', alt: 'Interactive flower demo video thumbnail', href: 'https://vimeo.com/1154385413', title: 'Interactive Flower', duration: '0:12' } },
     ],
