@@ -4,7 +4,7 @@ import styles from "./MellonProblem.module.css";
 
 const scenes = [
   {file:"mellon-01-student-buried-transparent.webm", text:"Students lose track of their advisor’s emails\nin a crowded inbox."},
-  {file:"mellon-03-little-comes-back.mp4", text:"Students rarely reach out with questions,\nso the advisor can’t tell what they need."},
+  {file:"mellon-03-little-comes-back.mp4", text:"The advisor rarely hears back from students,\nso she can’t tell what they’re wondering."},
 ];
 export function MellonProblem() {
   return <><MellonCast/><div className={styles.grid}>{scenes.map((scene,index) => <div key={scene.file} className={styles.item} data-entrance>

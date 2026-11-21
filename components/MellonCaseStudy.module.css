@@ -380,3 +380,7 @@
 .section[id="insights"] .insight:nth-child(even) { padding-left: 32px; }
 .section[id="insights"] .insight:nth-child(n) > .insightIntro { padding-right: 0; }
 .section[id="insights"] .insight:nth-child(n) > .advisorQuote > .bubble { padding: 22px 28px; }
+
+/* Survey figures in the insight body read as evidence, set a step above the sentence around them. */
+.section[id="insights"] .insightIntro p strong { color: var(--color-text-primary); font-weight: 500; }
+.section[id="insights"] .insightIntro p small { display: block; margin-top: 12px; color: var(--color-text-muted); font-size: calc(14px * var(--text-scale)); line-height: 1.4; }
