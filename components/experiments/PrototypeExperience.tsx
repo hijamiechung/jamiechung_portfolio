@@ -21,6 +21,11 @@ function subscribePreferences(callback: () => void) {
 }
 function read(key: string, fallback: string) {try {return localStorage.getItem(key) ?? fallback;} catch {return fallback;}}
 function save(key: string, value: string) {try {localStorage.setItem(key,value);} catch {} window.dispatchEvent(new Event("portfolio-preferences"));}
+function subscribeMotion(callback: () => void) {
+  const media = matchMedia("(prefers-reduced-motion: reduce)");
+  media.addEventListener("change", callback);
+  return () => media.removeEventListener("change", callback);
+}
 type Source = "pittsburgh" | "mine";
 const WEATHER_CODES = ["clear", "clouds", "rain", "snow", "wind"] as const;
 type WeatherCode = typeof WEATHER_CODES[number];
@@ -36,8 +41,9 @@ export function PrototypeExperience({fieldFactory = createEnvField, fieldClassNa
   const pathname = usePathname();
   const storedTheme = useSyncExternalStore(subscribePreferences, () => read("jc-theme","dark"), () => "dark");
   const theme = storedTheme === "light" ? "light" : "dark";
-  const storedA11y = useSyncExternalStore(subscribePreferences, () => read("jc-a11y","off"), () => "off");
-  const boosted = storedA11y === "boost";
+  const systemReduced = useSyncExternalStore(subscribeMotion, () => matchMedia("(prefers-reduced-motion: reduce)").matches, () => false);
+  const paused = useSyncExternalStore(subscribePreferences, () => read("jc-motion","play"), () => "play") === "paused";
+  const frozen = paused || systemReduced;
   const [source,setSource] = useState<Source>("pittsburgh");
   const [env,setEnv] = useState(initial);
   const [manualCode,setManualCode] = useState<WeatherCode | null>(null);
@@ -50,12 +56,11 @@ export function PrototypeExperience({fieldFactory = createEnvField, fieldClassNa
   const field = useRef<ReturnType<FieldFactory> | null>(null);
 
   useEffect(() => {document.documentElement.dataset.theme = theme; field.current?.resize(); return () => {delete document.documentElement.dataset.theme;};}, [theme]);
-  useEffect(() => {if(boosted) document.documentElement.dataset.a11y = "boost"; else delete document.documentElement.dataset.a11y; return () => {delete document.documentElement.dataset.a11y;};}, [boosted]);
   useEffect(() => {
     const media=matchMedia("(prefers-reduced-motion: reduce)");
     function start() {
       field.current?.stop();
-      field.current=fieldFactory(() => canvas.current, {reduced:media.matches,density:1,thinning:true,integration:"ground",rects:()=>({cards:Array.from(document.querySelectorAll('a[aria-label^="View "]')).map(el=>el.getBoundingClientRect())})});
+      field.current=fieldFactory(() => canvas.current, {reduced:frozen,density:1,thinning:true,integration:"ground",rects:()=>({cards:Array.from(document.querySelectorAll('a[aria-label^="View "]')).map(el=>el.getBoundingClientRect())})});
       field.current.setEnv(latestEnvironment.current);
     }
     start();
@@ -64,7 +69,7 @@ export function PrototypeExperience({fieldFactory = createEnvField, fieldClassNa
     const resize=()=>field.current?.resize();
     window.addEventListener("pointermove",move); document.addEventListener("pointerleave",leave); window.addEventListener("resize",resize); media.addEventListener("change",start);
     return ()=>{field.current?.stop();field.current=null;window.removeEventListener("pointermove",move);document.removeEventListener("pointerleave",leave);window.removeEventListener("resize",resize);media.removeEventListener("change",start);};
-  }, [fieldFactory]);
+  }, [fieldFactory, frozen]);
   useEffect(() => {latestEnvironment.current=displayEnv; field.current?.setEnv(displayEnv);}, [displayEnv]);
   useEffect(() => {
     let abort: AbortController | null = null, active=true;
@@ -106,7 +111,11 @@ export function PrototypeExperience({fieldFactory = createEnvField, fieldClassNa
         <span className={styles.themeTrackIcon} data-side="light"><LineIcon name="sun"/></span>
         <span className={styles.themeTrackIcon} data-side="dark"><LineIcon name="moon"/></span>
       </button>
-      <button type="button" aria-pressed={boosted} aria-label="Accessibility mode: higher contrast and larger text" title="Accessibility mode" className={styles.a11yToggle} onClick={()=>save("jc-a11y", boosted ? "off" : "boost")}>Aa</button>
+      <button type="button" className={styles.motionToggle} aria-disabled={systemReduced} title={systemReduced ? "Paused by your system’s reduced-motion setting" : undefined}
+        aria-label={systemReduced ? "Background animation is paused by your system’s reduced-motion setting" : frozen ? "Play background animation" : "Pause background animation"}
+        onClick={()=>{if(!systemReduced) save("jc-motion", paused ? "play" : "paused");}}>
+        <LineIcon name={frozen ? "play" : "pause"}/>
+      </button>
     </div>,controls)}
     {header && pathname === "/" && createPortal(<div className={styles.environment}>
       <div className={styles.trayWrap}>

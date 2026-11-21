@@ -29,3 +29,6 @@
     padding-top: 52px;
   }
 }
+
+/* Navigation focuses main for reading; it is not an interactive control. */
+.main:focus, .main:focus-visible { outline: none; }

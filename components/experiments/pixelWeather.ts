@@ -4,9 +4,8 @@ import type { Environment, FieldFactory } from "./PrototypeExperience";
 // atmosphere field uses — no gradients, no smoothing, no blur. Each cell is either on
 // or off, drawn as a hard-edged square. Deterministic per-cell hash instead of a
 // noise library keeps the pattern reproducible across frames without needing to store
-// per-cell state. Clouds and clear/sun are literal hand-drawn sprite bitmaps (Mario /
-// Pokémon Red style icons) rather than procedural texture — the goal is "recognizable
-// game-sprite weather icon," not ambient noise.
+// per-cell state. Clouds use hand-drawn sprites; Clear uses isolated white
+// pixels that brighten slowly within a shallow band at the top.
 
 const CELL = 9; // px, before device-pixel-ratio scaling
 
@@ -17,10 +16,8 @@ const CODE_ALPHA: Record<string, number> = { clear: 1.3, clouds: 0.85, rain: 0.5
 // Muted, desaturated per-condition tints — a hint of color, not saturated weather-app
 // primaries. The base grid stays neutral grey; only the active weather cells carry it,
 // so color reads as "this is the live data" rather than a palette change to the UI.
-// Clear is the one exception: it's meant to read as actual sunlight, so it's pushed all
-// the way to pure white rather than a muted tint.
+// Clear stays white in both themes, directly over the existing page background.
 const CODE_TINT: Record<string, string> = {
-  clear: "#ffffff",
   clouds: "#9aa4b0",
   rain: "#a9c2d6",
   snow: "#c9dce6",
@@ -179,40 +176,22 @@ export const createPixelField: FieldFactory = (getCanvas, options) => {
     return puff;
   }
 
-  // Diagonal sunbeams fanning out from an off-canvas source (top-right) toward the
-  // lower-left — straight rays only, no disc at the source, so the source itself
-  // is never visible and the beams read as light sweeping in from off-screen. The
-  // whole fan turns at a pace you can actually see, and each ray's brightness drifts
-  // independently, like light through a window shifting as clouds/time pass — never a
-  // perfectly still frame. `anchorCol/Row` are grid coordinates of the (off-canvas)
-  // light source.
-  const SUN_RAY_COUNT = 7;
-  const SUN_RAY_BASE_ANGLE = Math.PI * 0.78; // down-and-left
-  const SUN_RAY_SPREAD = Math.PI * 0.4;
-  const SUN_RAY_LENGTH = 75;
-  function sunRayValue(col: number, row: number, anchorCol: number, anchorRow: number, t: number): number {
-    const dx = col - anchorCol, dy = row - anchorRow;
-    const dist = Math.hypot(dx, dy);
-    if (dist > SUN_RAY_LENGTH) return 0;
-    const angle = Math.atan2(dy, dx);
-    const turn = Math.sin(t * 0.00018) * 0.16;
-    for (let r = 0; r < SUN_RAY_COUNT; r++) {
-      const rt = r / (SUN_RAY_COUNT - 1);
-      const rayAngle = SUN_RAY_BASE_ANGLE - SUN_RAY_SPREAD / 2 + SUN_RAY_SPREAD * rt + turn + (hash(r, 71) - 0.5) * 0.05;
-      let diff = Math.abs(angle - rayAngle);
-      if (diff > Math.PI) diff = Math.PI * 2 - diff;
-      const width = 0.045 + hash(r, 72) * 0.03;
-      if (diff < width) {
-        const shimmer = 0.55 + 0.45 * (0.5 + 0.5 * Math.sin(t * 0.0007 + r * 1.8));
-        return Math.max(0, 1 - dist / SUN_RAY_LENGTH) * shimmer;
-      }
-    }
-    return 0;
+  const CLEAR_HEIGHT = 160;
+
+  function clearPixelValue(col: number, row: number, t: number): number {
+    if (row * CELL >= CLEAR_HEIGHT) return 0;
+    // One candidate per 3×3 tile keeps neighboring pixels from forming blotches.
+    const tileX = Math.floor(col / 3), tileY = Math.floor(row / 3);
+    if (hash(tileX, tileY, 81) < .42) return 0;
+    if (col % 3 !== Math.floor(hash(tileX, tileY, 82) * 3)
+      || row % 3 !== Math.floor(hash(tileX, tileY, 83) * 3)) return 0;
+    const period = 6500 + hash(tileX, tileY, 84) * 5500;
+    const pulse = .5 + .5 * Math.sin(t / period * Math.PI * 2 + hash(tileX, tileY, 85) * Math.PI * 2);
+    const fade = 1 - smoothstep((row * CELL - 24) / (CLEAR_HEIGHT - 24));
+    return (.22 + .78 * pulse * pulse) * fade;
   }
 
-  // Returns 0..1: how "lit" a cell is at this moment. `near` is 0..1, how close this
-  // cell is to the effect's anchor point — used to place the fixed sun icon.
-  function cellValue(code: string, col: number, row: number, t: number, density: number, near: number, anchorCol: number, anchorRow: number): number {
+  function cellValue(code: string, col: number, row: number, t: number, density: number): number {
     if (code === "clouds") {
       return cloudSpriteValue(col, row, t);
     }
@@ -275,11 +254,11 @@ export const createPixelField: FieldFactory = (getCanvas, options) => {
       return best;
     }
     if (code === "clear") {
-      return sunRayValue(col, row, anchorCol, anchorRow, t);
+      return clearPixelValue(col, row, t);
     }
     // orbit fallback: sparse static-position dust that twinkles in place.
     const hv = hash(col, row, 3);
-    const threshold = 0.985 - (1 - density) * 0.055 - near * 0.09;
+    const threshold = 0.985 - (1 - density) * 0.055;
     if (hv > threshold) return 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(t * 0.0028 + hv * 60));
     return 0;
   }
@@ -344,18 +323,14 @@ export const createPixelField: FieldFactory = (getCanvas, options) => {
       ctx.globalAlpha = 1;
     }
 
-    // The sun's rays fan from a fixed corner (their own radial fade, below); every
-    // other condition fades vertically — full strength for the top `inner` fraction of
-    // the height, across the whole width, tapering out by `outer`. Weather happens up
-    // in the sky and fades toward the ground, not concentrated into one corner.
-    // Pushed just past the top-right corner, off-canvas — the source itself never
-    // renders a cell, only the rays fanning out from it do, so what's visible is
-    // beams sweeping in from off-screen rather than a fixed bright dot anchoring them.
-    const anchorX = w + CELL * 5, anchorY = -CELL * 5;
-    const anchorCol = anchorX / CELL, anchorRow = anchorY / CELL;
-    const innerY = h * reach.inner, outerY = h * reach.outer;
+    // The pale weather tint has far more contrast on the dark background than on the light
+    // one, so the same reach reads as a much taller band in dark mode. Pull it in to match.
+    const reachScale = document.documentElement.dataset.theme === "light" ? 1 : 0.7;
+    const innerY = h * reach.inner * reachScale, outerY = h * reach.outer * reachScale;
 
-    ctx.fillStyle = CODE_TINT[code] ?? color();
+    ctx.fillStyle = code === "clear"
+      ? getComputedStyle(canvas).getPropertyValue("--color-weather-clear").trim() || color()
+      : CODE_TINT[code] ?? color();
     const inset = 2.5; // gutter between cells — enough that active cells read as
     // distinct pixels even when several sit next to each other, instead of merging
     // into a solid blob.
@@ -364,12 +339,12 @@ export const createPixelField: FieldFactory = (getCanvas, options) => {
         const cx = col * CELL, cy = row * CELL;
         const falloff = code === "clear" ? 1 : 1 - smoothstep((cy - innerY) / (outerY - innerY));
         if (falloff <= 0.015) continue;
-        const v = cellValue(code, col, row, t, phaseDensity, 0, anchorCol, anchorRow);
+        const v = cellValue(code, col, row, t, phaseDensity);
         if (v <= 0) continue;
         const dx = mouse.x - (cx + CELL / 2), dy = mouse.y - (cy + CELL / 2);
         const md = Math.hypot(dx, dy);
-        const mouseBoost = md < 140 ? (1 - md / 140) * 0.35 : 0;
-        const a = Math.min(1, (v * phaseAlpha * codeAlpha * falloff) + mouseBoost * falloff);
+        const mouseBoost = code !== "clear" && md < 140 ? (1 - md / 140) * 0.35 : 0;
+        const a = Math.min(1, (v * (code === "clear" ? 1 : phaseAlpha * codeAlpha) * falloff) + mouseBoost * falloff);
         if (a <= 0.02) continue;
         ctx.globalAlpha = a;
         ctx.fillRect(cx + inset / 2, cy + inset / 2, CELL - inset, CELL - inset);

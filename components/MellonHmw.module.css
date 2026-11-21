@@ -1,0 +1,29 @@
+/* Normal scrolling: the words fill as the sentence travels up through the viewport (see MellonHmw.tsx). */
+.stage { margin-block: 0; padding-block: 270px 52px; text-align: center; }
+.pin { display: grid; place-items: center; }
+.stage blockquote.statement { display: block; width: 100%; max-width: 52ch; margin: 0 auto; padding: 0; border: 0; border-radius: 0; box-shadow: none; background: transparent; color: var(--color-text-primary); font-family: var(--font-family-base); font-size: calc(30px * var(--text-scale)); font-weight: 500; line-height: 1.95; letter-spacing: -.02em; text-align: center; text-wrap: balance; }
+.underline { padding-bottom: 6px; }
+.segment { --word-fill: 0%; position: relative; display: inline-block; }
+.underline[data-who="student"] { --underline-color: #8CB454; }
+.underline[data-who="advisor"] { --underline-color: #4A98DF; }
+/* The slice runs past the word by one space so neighbouring slices meet; the last word of a phrase stops at its edge. */
+.underline .segment::after { content: ""; position: absolute; left: 0; right: -0.28em; bottom: -5px; height: 3px; background-image: linear-gradient(90deg, var(--underline-color, var(--color-text-muted)) 0 4px, transparent 4px 7px); background-size: 7px 3px; background-repeat: repeat-x; background-position-x: calc(var(--dash-phase, 0px) * -1); -webkit-mask-image: linear-gradient(90deg, #000 var(--word-fill), transparent var(--word-fill)); mask-image: linear-gradient(90deg, #000 var(--word-fill), transparent var(--word-fill)); pointer-events: none; }
+.underline > span:last-child .segment::after { right: 0; }
+
+
+.word { color: transparent; background-image: linear-gradient(90deg, var(--color-text-primary) 0%, var(--color-text-primary) var(--word-fill), color-mix(in srgb, var(--color-text-primary) 22%, var(--color-surface-app)) var(--word-fill), color-mix(in srgb, var(--color-text-primary) 22%, var(--color-surface-app)) 100%); background-clip: text; -webkit-background-clip: text; }
+@media (prefers-reduced-motion: reduce) { .word { color: var(--color-text-primary); background: none; } }
+@media print { .word { color: var(--color-text-primary); background: none; } }
+
+@media (prefers-reduced-motion: reduce), print { .underline .segment::after { -webkit-mask-image: none; mask-image: none; } }
+
+/* Characters pop in beside "students" and "Advisor" once that word has filled: overshoot scale, then a small wiggle. */
+.icon { display: inline-block; width: 40px; height: 40px; margin-left: .2em; vertical-align: -0.3em; opacity: 0; transform: scale(.3) rotate(-24deg); transform-origin: 50% 80%; transition: opacity 160ms ease, transform 520ms cubic-bezier(.34, 1.56, .64, 1); }
+.icon[data-shown="true"] { opacity: 1; transform: none; animation: hmwWiggle 760ms 260ms ease-in-out 1 both; }
+@keyframes hmwWiggle { 0%, 100% { transform: rotate(0); } 20% { transform: translateY(-5px) rotate(-9deg); } 45% { transform: translateY(0) rotate(7deg); } 70% { transform: translateY(-2px) rotate(-3deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .stage { height: auto; margin-block: 80px; padding-block: clamp(120px, 22svh, 240px); }
+  .pin { position: static; height: auto; }
+  .icon { opacity: 1; transform: none; transition: none; animation: none; }
+}
+@media print { .stage { height: auto; } .pin { position: static; height: auto; } .icon { opacity: 1; transform: none; } }

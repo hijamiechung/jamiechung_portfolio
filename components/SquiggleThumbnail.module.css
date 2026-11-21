@@ -1,0 +1,29 @@
+.stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  place-items: center;
+  padding: var(--squiggle-inset, 11%);
+  overflow: hidden;
+  border-radius: inherit;
+  container-type: size;
+  pointer-events: none;
+}
+
+/* The source video has its own baked-in card edge, shadow, and uneven corner radii.
+   It's cropped well inside the card onto a canvas, then rounded here so all four corners match. */
+.frame {
+  display: block;
+  width: min(100cqw, 100cqh * 1.7496);
+  height: auto;
+  aspect-ratio: 1384 / 791;
+  border-radius: var(--squiggle-frame-radius, var(--radius-xs));
+}
+
+.source {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}

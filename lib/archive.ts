@@ -8,7 +8,7 @@
 // directly here instead, add this site's domain to each video's allowed embed
 // domains in Vimeo's privacy settings.
 export type ArchiveEntry = {
-  id: string; title: string; tag: string; year: string; blurb: string; lede: string;
+  id: string; title: string; tag: string; year: string; kinds: string[]; blurb: string; lede: string;
   meta: { k: string; v: string }[];
   hero: { src: string; alt: string };
   sections: { label: string; heading: string; body: string[]; images?: { src: string; alt: string }[]; video?: { thumbnail: string; alt: string; href: string; title: string; duration: string } }[];
@@ -17,7 +17,7 @@ export type ArchiveEntry = {
 
 export const archive: ArchiveEntry[] = [
   {
-    id: 'definition-of-design', title: 'Definition of Design', tag: 'Physical Computing · Interaction Design', year: '2025',
+    id: 'definition-of-design', title: 'Definition of Design', tag: 'Physical Computing · Interaction Design', year: '2025', kinds: ['Physical prototype'],
     blurb: 'A physical computing experiment framing design as a joint that enables connection and expansion.',
     lede: 'Design as a joint that enables connection and expansion.',
     meta: [
@@ -73,7 +73,7 @@ export const archive: ArchiveEntry[] = [
     ],
   },
   {
-    id: 'un-sustainable-development-goal-16', title: 'UN Sustainable Development Goal 16', tag: 'Video · Storytelling', year: '2025',
+    id: 'un-sustainable-development-goal-16', title: 'UN Sustainable Development Goal 16', tag: 'Video · Storytelling', year: '2025', kinds: ['Video', 'Animation'],
     blurb: 'A hand-drawn, voice-driven animation interpreting SDG 16 — Peace, Justice and Strong Institutions — through public access to information.',
     lede: 'Experimental animation exploring how access to information empowers individuals and institutions.',
     meta: [
@@ -112,7 +112,7 @@ export const archive: ArchiveEntry[] = [
     externalLink: { label: 'Read more on Medium', href: 'https://medium.com/@jamie_chung/ma-studio-i-project-3-diving-into-sdg-16-4134fe2707a0' },
   },
   {
-    id: 'discoversing-pittsburgh', title: 'Discovering Pittsburgh', tag: 'Illustration', year: '2025',
+    id: 'discoversing-pittsburgh', title: 'Discovering Pittsburgh', tag: 'Illustration', year: '2025', kinds: ['Illustration'],
     blurb: 'A 100-day illustration project: one piece a day for 100 consecutive days, documenting Pittsburgh culture through an international student’s eyes.',
     lede: 'Documenting the process of observing and understanding Pittsburgh from an outsider’s perspective.',
     meta: [
@@ -147,7 +147,7 @@ export const archive: ArchiveEntry[] = [
     externalLink: { label: 'Visit the full 100-day series', href: 'https://discoveringpittsburgh.framer.website/' },
   },
   {
-    id: 'human-factors-in-the-mood-for-design', title: 'Human Factors: In the Mood for Design', tag: 'Video · Storytelling', year: '2025',
+    id: 'human-factors-in-the-mood-for-design', title: 'Human Factors: In the Mood for Design', tag: 'Video · Storytelling', year: '2025', kinds: ['Video', 'Poster'],
     blurb: 'A one-minute narrative video and companion poster using a late-night vending machine to explore physical, cognitive, and emotional human factors.',
     lede: 'A video-based exploration of physical, cognitive, and emotional human factors in everyday interaction.',
     meta: [
@@ -181,7 +181,7 @@ export const archive: ArchiveEntry[] = [
     ],
   },
   {
-    id: 'interactive-flower', title: 'Interactive Flower', tag: 'Physical Computing · Interaction Design · Personal, Fun', year: '2025',
+    id: 'interactive-flower', title: 'Interactive Flower', tag: 'Physical Computing · Interaction Design · Personal, Fun', year: '2025', kinds: ['Physical prototype'],
     blurb: 'A flower that physically reacts to ambient light, changing petal angle and core color to simulate blooming.',
     lede: 'A flower that physically reacts to light by changing petal position and core illumination.',
     meta: [

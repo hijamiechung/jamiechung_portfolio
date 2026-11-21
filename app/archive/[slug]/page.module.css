@@ -9,10 +9,17 @@
 .body {
   flex: 1;
   min-width: 0;
-  max-width: 860px;
+  max-width: var(--layout-detail-max-width);
+  display: grid;
+  grid-template-columns: var(--grid-cols);
+  column-gap: var(--grid-gap);
+  align-content: start;
 }
 
+.body > * { grid-column: 1 / -1; }
+
 .back {
+  justify-self: start;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
@@ -30,7 +37,7 @@
 }
 
 .overview {
-  max-width: 620px;
+  grid-column: 1 / span 8;
   scroll-margin-top: 88px;
 }
 
@@ -58,8 +65,9 @@
 
 .metadata {
   display: grid;
-  grid-template-columns: repeat(4,minmax(0,1fr));
-  gap: var(--space-5);
+  grid-template-columns: var(--grid-cols);
+  column-gap: var(--grid-gap);
+  row-gap: var(--space-5);
   margin: 40px 0 0;
   padding: 22px 0;
   border-top: 1px solid var(--color-border-subtle);
@@ -67,6 +75,7 @@
 }
 
 .metadata div {
+  grid-column: span 3;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -85,10 +94,12 @@
 .hero {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 16/9;
+  aspect-ratio: 3/2;
+  width: 100%;
+  max-height: var(--layout-hero-max-height);
   margin-top: var(--space-9);
   border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   background-color: var(--color-surface-thumbnail);
 }
 
@@ -99,22 +110,29 @@
 }
 
 .sections {
-  display: flex;
-  flex-direction: column;
-  gap: 56px;
+  display: grid;
+  grid-template-columns: var(--grid-cols);
+  column-gap: var(--grid-gap);
+  row-gap: 56px;
   margin-top: 64px;
-  max-width: 620px;
 }
 
 .section {
+  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 88px minmax(0,1fr);
-  gap: var(--space-6);
+  grid-template-columns: var(--grid-cols);
+  column-gap: var(--grid-gap);
   scroll-margin-top: 88px;
 }
 
 .section>.label {
+  grid-column: 1 / var(--grid-body-start);
   padding-top: 4px;
+}
+
+.section>div {
+  grid-column: var(--grid-body-start) / -1;
+  min-width: 0;
 }
 
 .section h2 {
@@ -282,6 +300,20 @@
 
 .nextArrow svg {
   transform: rotate(180deg);
+}
+
+@media (max-width: 1360px) {
+  .section>.label, .section>div {
+    grid-column: 1 / -1;
+  }
+
+  .section {
+    row-gap: var(--space-2);
+  }
+
+  .section>.label {
+    padding-top: 0;
+  }
 }
 
 @media (max-width: 1024px) {

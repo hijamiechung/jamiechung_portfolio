@@ -1,0 +1,21 @@
+.brief { max-width: 100%; margin-top: 56px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.tags li { padding: 4px 8px; border-radius: 4px; background: var(--color-surface-card); color: var(--color-text-secondary); font-family: var(--font-family-base); font-size: calc(14px * var(--text-scale)); font-weight: 400; line-height: 1.35; }
+.details { display: grid; grid-template-columns: var(--grid-cols); column-gap: var(--grid-gap); row-gap: 28px; margin: 24px 0 0; padding: 0; }
+.details > div { grid-column: span 3; min-width: 0; padding-right: var(--space-6); }
+.details dt { margin: 0 0 4px; color: var(--color-text-muted); font-size: calc(14px * var(--text-scale)); font-weight: 400; line-height: 1.25; }
+.details dd { max-width: 36ch; margin: 0; color: var(--color-text-primary); font-size: calc(15px * var(--text-scale)); font-weight: 400; line-height: 1.45; text-wrap: pretty; }
+.role { grid-column: auto; grid-row: auto; }
+
+.introduction { min-width: 0; align-self: center; }
+.introduction > p { margin: 0; font-weight: 400; }
+.introduction > .tags { margin-top: 0; }
+
+:global([data-theme="dark"]) .tags li {
+  color: var(--color-text-primary);
+  background: var(--color-surface-hover);
+}
+
+/* Centered summary statement, set between the project facts and the first section. */
+.statement { margin: 96px auto 0; padding-top: 96px; border-top: 1px solid var(--color-border-subtle); text-align: center; }
+.statement p { max-width: 44ch; margin: 0 auto; color: var(--color-text-primary); font-size: calc(26px * var(--text-scale)); font-weight: var(--font-weight-medium); line-height: 1.45; letter-spacing: var(--tracking-display); text-wrap: balance; }

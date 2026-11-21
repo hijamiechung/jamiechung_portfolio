@@ -1,0 +1,31 @@
+/* Tighter corners than the project cards; thumbnail radius = card radius minus its 14px inset ratio. */
+.card {
+  border-radius: var(--radius-profile);
+}
+
+.thumbnail {
+  border-radius: var(--radius-xs);
+}
+
+.image {
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.kinds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.kinds li {
+  padding: 3px 10px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-label-xs);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-text-muted);
+}

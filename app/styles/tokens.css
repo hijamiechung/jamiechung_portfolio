@@ -3,27 +3,13 @@
     --color-surface-app: #0A0A0A; --color-surface-popover: #121212; --color-surface-card: #141414; --color-overlay-hover: #191919; --color-surface-hover: #202020;
     --color-surface-thumbnail: #262626; --color-border-subtle: #242424; --color-border-strong: #3A3A3A; --color-dot-secondary: #2E2E2E;
     --color-text-primary: #EDEDED; --color-text-secondary: #AAAAAA; --color-text-muted: #818181; --color-text-detail: #686868; --color-text-disabled: #474747;
-    --color-dot: #3B3E40; --color-accent: #EDEDED; --color-on-accent: #0A0A0A;
+    --color-interactive-accent: #EDEDED; --color-dot: #3B3E40; --color-accent: #EDEDED; --color-on-accent: #0A0A0A;
   }
   [data-theme="light"] {
     --color-surface-app: #F9F9F9; --color-surface-popover: #FFFFFF; --color-surface-card: #F1F1F1; --color-overlay-hover: #E9E9E9; --color-surface-hover: #E1E1E1;
     --color-surface-thumbnail: #D7D7D7; --color-border-subtle: #E1E1E1; --color-border-strong: #C2C2C2; --color-dot-secondary: #D2D0C8;
     --color-text-primary: #121212; --color-text-secondary: #525252; --color-text-muted: #787878; --color-text-detail: #8D8D8D; --color-text-disabled: #A8A8A8;
-    --color-dot: #A7ABAA; --color-accent: #121212; --color-on-accent: #F9F9F9;
-  }
-
-  /* Accessibility mode: boosts low-vision-relevant tokens only (contrast, focus rings, text size) — orthogonal to light/dark, never a third theme. */
-  [data-theme="dark"][data-a11y="boost"] {
-    --color-text-detail: #7E7E7E; /* 3.55:1 -> 4.88:1 on #0A0A0A */
-  }
-  [data-theme="light"][data-a11y="boost"] {
-    --color-text-detail: #707070; /* 3.15:1 -> 4.70:1 on #F9F9F9 */
-    --color-text-muted: #6B6B6B; /* 4.19:1 -> 5.06:1 on #F9F9F9 */
-  }
-  :root[data-a11y="boost"] {
-    --text-scale: 1.15;
-    --focus-ring-width: 3px;
-    --focus-ring-color: var(--color-focus-ring);
+    --color-interactive-accent: #121212; --color-dot: #A7ABAA; --color-accent: #121212; --color-on-accent: #F9F9F9;
   }
 
 
@@ -31,7 +17,7 @@
   --color-shadow: rgb(0 0 0 / 22%);
   --color-focus-ring: var(--color-text-primary);
   --focus-ring-width: 2px;
-  --focus-ring-color: var(--color-text-muted);
+  --focus-ring-color: var(--color-interactive-accent);
   --text-scale: 1;
   --font-family-base: var(--font-neue-montreal), -apple-system, BlinkMacSystemFont,
     "Segoe UI", Helvetica, Arial, sans-serif;
@@ -51,6 +37,7 @@
   --font-size-name: calc(13px * var(--text-scale));
   --font-size-label-sm: calc(12.5px * var(--text-scale));
   --font-size-label-xs: calc(10.5px * var(--text-scale));
+  --font-size-utility-control: 13px;
   --font-size-control: calc(11px * var(--text-scale));
   --tracking-body: 0em;
   --tracking-display: -0.01em;
@@ -62,9 +49,30 @@
   --radius-md: 16px; --radius-pill: 999px;
   --duration-fast: 160ms; --duration-standard: 220ms; --duration-slow: 260ms;
   --duration-layout: 420ms; --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
-  --layout-sidebar-width: 260px; --layout-content-max-width: 940px;
+  --layout-sidebar-width: 260px; --layout-content-max-width: 940px; --layout-detail-max-width: 1200px;
   --layout-gap: 56px; --layout-page-padding: 88px;
+  /* Detail-page 12-column grid. Every right-hand column starts on --grid-body-start;
+     --grid-cols-body must equal 13 - --grid-body-start so nested grids hit the same lines. */
+  --layout-hero-max-height: 680px; /* hero art scales with width; cap height so the 1200px container doesn't make it taller than before */
+  --grid-gap: var(--space-2);
+  --grid-cols: repeat(12, minmax(0, 1fr));
+  --grid-body-start: 5;
+  --grid-cols-body: repeat(8, minmax(0, 1fr));
 }
 :root {
   --color-light-morning: 224, 178, 124; --color-light-day: 236, 214, 180; --color-light-evening: 226, 163, 112; --color-light-night: 166, 152, 136; --color-light-dark: 246, 232, 210; --color-light-orbit-dark: 172, 196, 176; --color-light-orbit: 148, 168, 148;
+}
+
+:root[data-text-size="large"] { --text-scale: 1.25; }
+:root[data-text-size="larger"] { --text-scale: 1.5; }
+:root[data-contrast="high"] {
+  --color-text-primary: #FFFFFF; --color-text-secondary: #E8E8E8;
+  --color-text-muted: #CCCCCC; --color-text-detail: #CCCCCC; --color-text-disabled: #AAAAAA;
+  --color-border-subtle: #888888; --color-border-strong: #AAAAAA;
+  --focus-ring-width: 3px;
+}
+:root[data-theme="light"][data-contrast="high"] {
+  --color-text-primary: #000000; --color-text-secondary: #202020;
+  --color-text-muted: #333333; --color-text-detail: #333333; --color-text-disabled: #444444;
+  --color-border-subtle: #666666; --color-border-strong: #444444;
 }

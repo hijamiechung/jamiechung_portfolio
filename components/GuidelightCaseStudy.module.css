@@ -1,11 +1,14 @@
 .page { --guidelight-highlight: #D9E94D; --guidelight-ink: #2F4F63; --guidelight-on-ink: #FFFFFF; --guidelight-accent-text: var(--guidelight-highlight); gap: var(--space-8); }
 :global([data-theme="light"]) .page { --guidelight-accent-text: var(--guidelight-ink); }
-.body { flex: 1; min-width: 0; max-width: 1200px; }
+.body { flex: 1; min-width: 0; max-width: var(--layout-detail-max-width); }
 .body section, .header { scroll-margin-top: var(--space-9); }
-.header { display: flex; align-items: baseline; gap: var(--space-9); }
+.header { display: grid; grid-template-columns: var(--grid-cols); column-gap: var(--grid-gap); align-items: baseline; }
 .header h1 { font-size: var(--font-size-heading); font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-display-lg); }
-.header > p { font-size: var(--font-size-lede); max-width: 650px; }
-.intro { display: grid; grid-template-columns: 1fr 1fr; gap: 12%; margin-top: var(--space-9); }
+.header h1 { grid-column: 1 / span 6; }
+.header > p { grid-column: 7 / -1; font-size: var(--font-size-lede); }
+.intro { display: grid; grid-template-columns: var(--grid-cols); column-gap: var(--grid-gap); margin-top: var(--space-9); }
+.intro > .lede { grid-column: 1 / var(--grid-body-start); padding-right: var(--space-4); }
+.intro > .metadata { grid-column: var(--grid-body-start) / -1; }
 .body p { line-height: 1.6; color: var(--color-text-secondary); font-size: var(--font-size-prose); text-wrap: pretty; }
 .body p + p { margin-top: var(--space-4); }
 .lede p { font-size: var(--font-size-lede); text-wrap: wrap; line-height: 1.5; }
@@ -13,13 +16,14 @@
 .metadata > div { display: grid; grid-template-columns: 64px 1fr; gap: var(--space-3); }
 .metadata dt { color: var(--color-text-muted); }
 .metadata dd { margin: 0; line-height: 1.4; }
-.section { display: grid; grid-template-columns: minmax(90px, .65fr) minmax(0, 3fr); gap: var(--space-8); margin-top: calc(var(--space-9) * 3); }
-.label { font-size: var(--font-size-body); color: var(--color-text-muted); }
+.section { display: grid; grid-template-columns: var(--grid-cols); column-gap: var(--grid-gap); margin-top: calc(var(--space-9) * 3); }
+.label { grid-column: 1 / var(--grid-body-start); font-size: var(--font-size-body); color: var(--color-text-muted); }
 .body h2, .body h3 { font-size: var(--font-size-section-heading); font-weight: var(--font-weight-medium); line-height: 1.35; letter-spacing: var(--tracking-display); }
 .body h2 + p, .body h3 + p { margin-top: var(--space-3); }
 .reading { max-width: 660px; }
-.sectionBody { min-width: 0; }
-.pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: var(--space-7); }
+.sectionBody, .section > .reading, .section > .reflections { grid-column: var(--grid-body-start) / -1; min-width: 0; }
+.pair { display: grid; grid-template-columns: var(--grid-cols-body); align-items: start; column-gap: var(--grid-gap); row-gap: var(--space-7); }
+.pair > * { grid-column: span 4; }
 .sectionBody > .pair { margin-top: var(--space-6); }
 .body figure { margin: 0; min-width: 0; }
 .body figcaption, .note, .body small { font-size: var(--font-size-label-sm); line-height: 1.5; color: var(--color-text-secondary); }
@@ -38,7 +42,9 @@
 .workflow strong { font-size: var(--font-size-label-sm); font-weight: var(--font-weight-medium); overflow-wrap: anywhere; }
 .workflow small { font-size: var(--font-size-detail); }
 .workflow > p { font-size: var(--font-size-detail); }
-.finding { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-7); margin-top: var(--space-8); }
+.finding { display: grid; grid-template-columns: var(--grid-cols-body); column-gap: var(--grid-gap); margin-top: var(--space-8); }
+.finding > :first-child { grid-column: 1 / span 4; padding-right: var(--space-6); }
+.finding > :last-child { grid-column: 5 / -1; }
 .finding > p { margin-top: 0 !important; }
 .decision { margin-top: calc(var(--space-9) * 2) !important; }
 .decisionIntro { max-width: 520px; }
@@ -48,13 +54,29 @@
 .diagramCard { padding: var(--space-4); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-sm); background: var(--color-surface-app); }
 .diagramCard strong { font-size: var(--font-size-body); font-weight: var(--font-weight-medium); }
 .diagramCard p { margin-top: var(--space-1); font-size: var(--font-size-label-sm); }
-.entryPaths { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+.entryPaths { display: grid; grid-template-columns: 1fr 1fr; gap: var(--grid-gap); }
 .arrows { text-align: center; color: var(--color-text-muted); }
-.reflections { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-9); }
+.reflections { display: grid; grid-template-columns: var(--grid-cols-body); column-gap: var(--grid-gap); row-gap: var(--space-9); }
+.reflections > :nth-child(odd) { grid-column: 1 / span 4; padding-right: var(--space-6); }
+.reflections > :nth-child(even) { grid-column: 5 / -1; }
 
 .researchIntro { max-width: 660px; }
 .header h1, .solution > .label, .solution .decisionIntro > span { color: var(--guidelight-accent-text); }
 .diagram { border-top: 3px solid var(--guidelight-highlight); }
 .diagramCard strong { color: var(--guidelight-accent-text); }
 
-.researchLayout { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-6); align-items: start; margin-top: var(--space-3); }
+.researchLayout { display: grid; grid-template-columns: var(--grid-cols-body); column-gap: var(--grid-gap); align-items: start; margin-top: var(--space-3); }
+.researchLayout > :first-child { grid-column: 1 / span 3; padding-right: var(--space-4); }
+.researchLayout > :last-child { grid-column: 4 / -1; }
+
+/* Below 1360px the sidebar + contents rail leave too little width for a label column:
+   stack the label above the body and give every block the full 12 columns. */
+@media (max-width: 1360px) {
+  .header { row-gap: var(--space-3); }
+  .header h1, .header p { grid-column: 1 / -1; }
+  .intro { row-gap: var(--space-6); }
+  .intro > .lede, .intro > .metadata { grid-column: 1 / -1; padding-right: 0; }
+  .section { row-gap: var(--space-4); }
+  .label, .section > .label { grid-column: 1 / -1; position: static; }
+  .sectionBody, .section > .reading, .section > .reflections { grid-column: 1 / -1; }
+}

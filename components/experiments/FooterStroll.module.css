@@ -1,0 +1,190 @@
+.stroll {
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  cursor: none;
+  color: var(--color-text-secondary);
+}
+
+.traveler {
+  width: 56px;
+  padding-top: 64px;
+  transform: translate(var(--stroll-x, -76px), var(--stroll-jump, 0px));
+}
+
+.character {
+  width: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.head {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-thumbnail);
+  transform: translateY(var(--gait-bob, 0px));
+}
+
+.face {
+  width: 32px;
+  height: 32px;
+  transform: translate(var(--face-x, 4px), var(--face-y, 0px));
+}
+.feet { display: flex; gap: 10px; margin-top: -1px; }
+.limb { display: flex; flex-direction: column; gap: 1px; }
+.limb > span { width: 5px; height: 5px; background: currentColor; }
+.feet > .limb {
+  transform-origin: top;
+  transform: translateY(var(--gait-left-lift, 0px)) rotate(var(--gait-swing, 0deg));
+}
+.feet > .limb:last-child { transform: translateY(var(--gait-right-lift, 0px)) rotate(calc(-1 * var(--gait-swing, 0deg))); }
+.armLeft, .armRight {
+  position: absolute;
+  top: 24px;
+  transform-origin: top;
+  transform: rotate(calc(-0.8 * var(--gait-swing, 0deg)));
+}
+.armLeft { left: -5px; }
+.armRight { right: -5px; transform: rotate(calc(0.8 * var(--gait-swing, 0deg))); }
+
+.stroll[data-running="false"] .head,
+.stroll[data-running="false"] .limb,
+.stroll[data-moving="false"] .head,
+.stroll[data-moving="false"] .limb { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stroll { display: none; }
+  .traveler, .head, .limb { animation: none; }
+}
+
+.eyes {
+  transform: translate(var(--look-x, 0px), var(--look-y, 0px));
+  transition: transform var(--duration-fast) ease-out;
+}
+.stroll[data-jumping="true"] .armLeft { animation: none; transform: rotate(150deg); }
+.stroll[data-jumping="true"] .armRight { animation: none; transform: rotate(-150deg); }
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--color-text-primary);
+  outline: 1px solid var(--color-surface-app);
+  pointer-events: none;
+  z-index: 100;
+}
+@media (pointer: coarse) { .stroll { cursor: auto; } .cursor { display: none; } }
+
+.stroll {
+  position: relative;
+  --activity-duration: 2200ms;
+}
+.character {
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: none;
+}
+.character:focus-visible {
+  outline: 2px solid var(--color-interactive-accent);
+  outline-offset: 8px;
+  border-radius: var(--radius-sm);
+}
+.character svg { flex-shrink: 0; }
+.choices {
+  position: absolute;
+  top: 6px;
+  left: clamp(8px, var(--stroll-x, 8px), calc(100% - 248px));
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-popover);
+  color: var(--color-text-primary);
+  z-index: 2;
+  cursor: auto;
+}
+.choices button {
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: var(--font-size-label-sm);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.choices button:hover { background: var(--color-surface-hover); }
+.choices button:focus-visible { outline: 2px solid var(--color-interactive-accent); outline-offset: -2px; }
+.stroll:has(.choices:hover) .cursor { display: none; }
+.stroll[data-running="false"] .character * { animation-play-state: paused; }
+.stroll[data-action="coffee"] .head,
+.stroll[data-action="sit"] .head { animation: none; }
+.stroll[data-action="coffee"] .limb { animation: none; transform: none; }
+.stroll[data-action="coffee"] .armRight {
+  animation: liftCup var(--activity-duration) ease-in-out infinite;
+}
+.cup {
+  position: absolute;
+  right: -13px;
+  top: 19px;
+  width: 28px;
+  height: 40px;
+  overflow: visible;
+  z-index: 1;
+  animation: sip var(--activity-duration) ease-in-out infinite;
+}
+.mug { fill: var(--color-surface-popover); }
+.steam { stroke: var(--color-text-muted); }
+@keyframes sip {
+  0%, 100% { transform: translateY(0); }
+  35%, 65% { transform: translate(-10px, -16px) rotate(-16deg); }
+}
+@keyframes liftCup {
+  0%, 100% { transform: rotate(-85deg); }
+  35%, 65% { transform: translate(-3px, -4px) rotate(-135deg); }
+}
+.chair {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  left: -12px;
+  top: 3px;
+  color: var(--color-text-detail);
+}
+.stroll[data-action="sit"] .head { transform: translateY(8px); }
+.stroll[data-action="sit"] .armLeft,
+.stroll[data-action="sit"] .armRight { animation: none; transform: rotate(-25deg); }
+.stroll[data-action="sit"] .feet { transform: translate(8px, 6px); }
+.stroll[data-action="sit"] .feet > .limb {
+  animation: dangle var(--activity-duration) ease-in-out infinite;
+}
+.stroll[data-action="sit"] .feet > .limb:last-child { animation-delay: calc(var(--activity-duration) / -2); }
+@keyframes dangle {
+  0%, 100% { transform: rotate(-35deg); }
+  50% { transform: rotate(-60deg); }
+}
+.stroll[data-running="false"] .cup,
+.stroll[data-running="false"] .feet > .limb { animation-play-state: paused; }
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

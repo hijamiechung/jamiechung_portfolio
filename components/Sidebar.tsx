@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { AccessibilitySettings } from "./AccessibilitySettings";
 import { useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import { LineIcon } from "./LineIcon";
 import { SidebarNavSection } from "./SidebarNavSection";
@@ -43,7 +44,10 @@ export function Sidebar({brand}: {brand?: ReactNode}) {
       </div>
       <nav className={styles.nav}><SidebarNavSection /></nav>
       <ProfileFooter />
-      <div id="appearance-controls" />
+      <div className={styles.appearanceRow}>
+        <div id="appearance-controls" />
+        <AccessibilitySettings />
+      </div>
     </aside>
   </>;
 }

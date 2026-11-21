@@ -1,5 +1,6 @@
 "use client";
 import {useEffect,useState} from "react";
+import {ReadAloud} from "./ReadAloud";
 import styles from "./ProjectContents.module.css";
 export function ProjectContents({sections}: {sections:{id:string;label:string}[]}) {
   const [active,setActive]=useState("overview");
@@ -11,5 +12,5 @@ export function ProjectContents({sections}: {sections:{id:string;label:string}[]
     };
     window.addEventListener("scroll",track,{passive:true});return ()=>window.removeEventListener("scroll",track);
   },[sections]);
-  return <nav className={styles.toc} aria-label="On this page"><div className={styles.title}><span aria-hidden="true">▪▪▪</span>On this page</div><ul>{sections.map(s=><li key={s.id}><a href={`#${s.id}`} aria-current={active===s.id ? "location" : undefined}><i aria-hidden="true"/>{s.label}</a></li>)}</ul></nav>;
+  return <nav className={styles.toc} aria-label="On this page"><ul>{sections.map(s=><li key={s.id}><a href={`#${s.id}`} aria-current={active===s.id ? "location" : undefined}>{s.label}</a></li>)}</ul><ReadAloud/></nav>;
 }

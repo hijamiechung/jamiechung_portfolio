@@ -77,3 +77,7 @@ a.item:hover {
   opacity: .5;
   cursor: not-allowed;
 }
+
+a.item:hover .icon, a.item:focus-visible .icon {
+  color: var(--color-interactive-accent);
+}

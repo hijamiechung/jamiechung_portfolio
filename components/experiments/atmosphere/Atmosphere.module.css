@@ -45,11 +45,11 @@
 
 /* The material is owned by the experiment; removing its canvas restores the core card. */
 :global(body):has(.field) {
-  --color-atmosphere-card: color-mix(in srgb, var(--color-surface-card) 48%, transparent);
+  --color-atmosphere-card: color-mix(in srgb, var(--color-surface-card) 66%, transparent);
   --color-atmosphere-card-reading: color-mix(in srgb, var(--color-surface-card) 84%, transparent);
   --color-atmosphere-card-hover: color-mix(in srgb, var(--color-surface-hover) 56%, transparent);
   --color-atmosphere-thumbnail: color-mix(in srgb, var(--color-surface-thumbnail) 20%, transparent);
-  --color-atmosphere-card-border: color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+  --color-atmosphere-card-border: color-mix(in srgb, var(--color-text-primary) 16%, transparent);
   --color-atmosphere-card-copy: var(--color-text-secondary);
   --atmosphere-card-blur: 40px;
 }
@@ -57,6 +57,7 @@
 :global(body):has(.field) :global(main a[aria-label^="View "]) {
   background: linear-gradient(to bottom, var(--color-atmosphere-card) 0%, var(--color-atmosphere-card) 58%, var(--color-atmosphere-card-reading) 74%);
   border-color: var(--color-atmosphere-card-border);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--color-text-primary) 6%, transparent), 0 10px 28px -14px color-mix(in srgb, var(--color-text-primary) 28%, transparent);
   --color-text-muted: var(--color-atmosphere-card-copy);
   --color-text-detail: var(--color-atmosphere-card-copy);
   --color-surface-thumbnail: var(--color-atmosphere-thumbnail);
@@ -65,8 +66,8 @@
 }
 
 :global(body):has(.field) :global(aside) {
-  --color-sidebar-material: color-mix(in srgb, var(--color-surface-app) 50%, transparent);
-  --sidebar-material-blur: 40px;
+  --color-sidebar-material: color-mix(in srgb, var(--color-surface-app) 28%, transparent);
+  --sidebar-material-blur: 10px;
   --color-text-muted: var(--color-text-secondary);
 }
 

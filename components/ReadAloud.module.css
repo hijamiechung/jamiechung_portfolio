@@ -1,0 +1,53 @@
+.reader {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.reader button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 6px 8px 6px 6px;
+  margin-bottom: 1px;
+  border: 0;
+  border-radius: var(--radius-icon);
+  background: transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-size: var(--font-size-label-sm);
+  letter-spacing: var(--tracking-display);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--duration-fast) ease, color var(--duration-standard) ease;
+}
+
+.reader button:hover:not(:disabled) {
+  background: var(--color-overlay-hover);
+  color: var(--color-text-primary);
+}
+
+.reader button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.reader button svg {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  margin-inline: 0;
+}
+
+.reader > span {
+  display: block;
+  padding: 2px 6px;
+  color: var(--color-text-detail);
+  font-size: var(--font-size-label-xs);
+  line-height: 1.5;
+}
+
+.reader > span:empty {
+  display: none;
+}

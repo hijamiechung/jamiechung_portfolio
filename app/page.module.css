@@ -7,6 +7,15 @@
   margin-inline: auto;
 }
 
+.footer {
+  margin-inline: var(--space-6);
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--color-border-subtle);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-detail);
+  letter-spacing: var(--tracking-body);
+}
+
 .header {
   display: flex;
   align-items: flex-start;
@@ -20,6 +29,19 @@
   min-width: 0;
 }
 
+.heading, .description {
+  /* The weather field (rain pixels) renders behind the intro; a soft frosted layer hugging
+     just the text keeps it legible without wiping out the rest of the effect. Negative margin
+     keeps the text on the content grid. */
+  width: fit-content;
+  padding: 6px 14px;
+  margin-inline: -14px;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-surface-app) 72%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
 .heading {
   font-size: var(--font-size-heading);
   font-weight: var(--font-weight-medium);
@@ -29,12 +51,13 @@
 }
 
 .description {
-  margin: 10px 0 0;
+  margin-top: 6px;
   font-size: var(--font-size-lede);
   letter-spacing: var(--tracking-body);
   color: var(--color-text-secondary);
-  max-width: 460px;
+  max-width: min(100%, 78ch);
   line-height: 1.6;
+  text-wrap: balance;
 }
 
 @media (max-width: 1024px) {

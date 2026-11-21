@@ -212,3 +212,7 @@
   }
 }
 
+
+.appearanceRow { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) 6px 2px; margin-top: var(--space-2); flex-shrink: 0; }
+.appearanceRow :global(#appearance-controls) { min-height: 0; }
+.sidebar[data-collapsed="true"] .appearanceRow { flex-direction: column; padding: var(--space-2) 0; gap: 6px; }

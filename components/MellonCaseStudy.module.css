@@ -1,0 +1,382 @@
+.page {
+  --mellon-label-size: calc(16px * var(--text-scale));
+  --mellon-body-size: calc(17px * var(--text-scale));
+  --mellon-heading-size: calc(24px * var(--text-scale));
+  --mellon-columns: var(--grid-cols);
+  --mellon-column-gap: var(--grid-gap);
+  --mellon-section-gap: 208px;
+  --mellon-block-gap: 80px;
+}
+.body { flex: 1; width: 100%; min-width: 0; max-width: var(--layout-detail-max-width); }
+.header h1 { font-size: var(--font-size-heading); font-weight: var(--font-weight-medium); line-height: 1.1; letter-spacing: var(--tracking-display-lg); }
+.keepTogether { white-space: nowrap; }
+.hero { margin-top: var(--space-8); }
+.body p { font-weight: 400; font-size: var(--mellon-body-size); line-height: 1.6; color: var(--color-text-secondary); text-wrap: pretty; }
+.body p + p { margin-top: var(--space-4); }
+.body h2 { font-size: var(--mellon-heading-size); line-height: 1.3; font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-display); text-wrap: pretty; }
+.body h3 { font-size: var(--mellon-body-size); line-height: 1.4; font-weight: var(--font-weight-medium); }
+.body h2 + p, .body h3 + p { margin-top: var(--space-4); }
+.label { font-weight: var(--font-weight-medium); display: block; font-size: var(--mellon-label-size); line-height: 1.5; color: var(--color-text-secondary); }
+.metadata { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); column-gap: var(--space-9); row-gap: var(--space-5); padding-block: var(--space-6); margin-top: var(--space-8); border-block: 1px solid var(--color-border-subtle); font-size: var(--mellon-label-size); }
+.metadata > div { display: grid; grid-template-columns: 88px minmax(0,1fr); gap: var(--space-3); }
+.metadata dt { color: var(--color-text-secondary); }
+.metadata dd { margin: 0; line-height: 1.5; }
+.metadata > div:nth-child(2) { grid-column: 2; grid-row: 1 / 3; }
+.section { display: block; margin-top: var(--mellon-section-gap); padding-top: 0; border-top: 0; scroll-margin-top: var(--space-9); }
+.section > .label { position: static; margin-bottom: var(--space-7); color: var(--color-text-primary); font-weight: var(--font-weight-medium); }
+.sectionBody { min-width: 0; max-width: 100%; }
+/* Every claim stays in the reading column; motion is supporting evidence. */
+.problemStory { display: flex; flex-direction: column; gap: var(--mellon-block-gap); min-width: 0; }
+.problemOpening { width: min(32%,260px); margin-left: auto; margin-right: 5%; }
+.problemBeat { display: grid; grid-template-columns: var(--mellon-columns); gap: var(--mellon-column-gap); align-items: start; padding-top: 0; border-top: 0; }
+.body .problemBeat h2 { max-width: 24ch; padding-top: var(--space-3); }
+.problemBeat > video { width: 100%; max-width: 360px; justify-self: end; }
+.problemBeat:last-child { margin-top: 0; }
+.recording { margin: 0; min-width: 0; }
+.recording video { width: 100%; max-width: 100%; height: auto; }
+.approachIntro { max-width: 62ch; }
+.researchStory { margin-top: var(--space-8); min-width: 0; }
+.researchOverview { margin: 0 0 var(--space-8); max-width: 760px; }
+.researchOverview img { display: block; width: 100%; max-width: 100%; height: auto; border-radius: 4px; }
+.researchBeat { display: grid; grid-template-columns: var(--mellon-columns); gap: var(--mellon-column-gap); align-items: start; padding-block: 0; margin-top: var(--mellon-block-gap); border-top: 0; }
+.body .researchBeat h3 { max-width: 25ch; padding-top: var(--space-3); font-size: calc(20px * var(--text-scale)); }
+.researchBeat > video { width: 100%; max-width: 100%; }
+.insight { display: grid; grid-template-columns: var(--mellon-columns); gap: var(--mellon-column-gap); align-items: start; }
+.insight + .insight { margin-top: var(--mellon-block-gap); }
+.insightIntro h2 { max-width: 26ch; }
+.comparison { display: grid; gap: var(--space-8); }
+.comparison > div { padding-left: 0; }
+.comparison > div:last-child { border-left: 0; }
+.comparison p { margin-top: var(--space-2); }
+.body blockquote { margin: 56px 0 0; padding: var(--space-6) 0; border-block: 1px solid var(--color-border-subtle); max-width: 720px; font-size: var(--mellon-heading-size); line-height: 1.4; letter-spacing: var(--tracking-display); }
+.body cite { display: block; margin-top: var(--space-4); color: var(--color-text-secondary); font-size: var(--mellon-label-size); font-style: normal; letter-spacing: normal; }
+.approachComposition { display: grid; grid-template-columns: var(--mellon-columns); column-gap: var(--mellon-column-gap); row-gap: var(--mellon-block-gap); align-items: start; }
+.approachComposition > .approachIntro { grid-column: 1 / span 7; }
+.approachComposition > .recording { grid-column: 8 / -1; grid-row: 1; padding-top: var(--space-2); }
+.approachComposition > .reframe { grid-column: 1 / -1; display: grid; grid-template-columns: var(--mellon-columns); gap: var(--space-5) var(--mellon-column-gap); padding-top: 0; border-top: 0; }
+.reframe h2 { grid-column: 1 / span 7; grid-row: 1 / 3; max-width: 26ch; }
+.reframe > p { grid-column: 8 / -1; }
+.body .reframe > p { margin-top: 0; }
+.approachComposition + blockquote { max-width: 34ch; margin-block: 64px 0; padding-block: var(--space-6); font-size: calc(28px * var(--text-scale)); line-height: 1.4; text-wrap: pretty; }
+.options { display: grid; grid-template-columns: var(--grid-cols); column-gap: var(--grid-gap); row-gap: var(--space-7); margin-top: var(--space-7); }
+.options > div:nth-child(odd) { grid-column: 1 / span 5; }
+.options > div:nth-child(even) { grid-column: 7 / -1; }
+.options > div { padding-top: var(--space-4); border-top: 1px solid var(--color-border-subtle); }
+.options > div:last-child { border-top: 2px solid var(--color-text-primary); }
+.problemBeat > *, .researchBeat > *, .insight > *, .approachComposition > * { min-width: 0; max-width: 100%; }
+
+.body .comparison > div, .body .reframe, .body blockquote { border-left: 0; border-inline-start: 0; }
+
+.body .hmw {
+  max-width: 29ch;
+  margin: 80px auto;
+  padding: var(--space-8) 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: calc(34px * var(--text-scale));
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+  letter-spacing: var(--tracking-display-lg);
+  text-wrap: pretty;
+}
+.body .hmw strong { color: var(--color-text-primary); font-weight: var(--font-weight-medium); }
+
+.chapter { display: flex; align-items: center; gap: var(--space-4); margin-bottom: 48px; color: var(--color-text-primary); font-size: var(--mellon-label-size); font-weight: var(--font-weight-medium); line-height: 1.5; }
+.chapterMark { flex: 0 0 20px; fill: var(--color-text-primary); }
+.chapterMark rect { opacity: .18; }
+.chapter[data-visible="true"] .chapterMark rect { animation: mellon-pixel-in 260ms steps(2,end) both; }
+@keyframes mellon-pixel-in { from { opacity: .18; } to { opacity: 1; } }
+.comparison > div:last-child > .label { display: flex; align-items: center; gap: var(--space-3); color: var(--color-text-primary); }
+.comparison > div:last-child > .label::before { content: ""; width: 4px; height: 4px; margin-right: 8px; background: currentColor; box-shadow: 4px 4px currentColor, 8px 8px currentColor, 4px 12px currentColor, 0 16px currentColor; transform: translateY(-8px); }
+.metadata { font-weight: var(--font-weight-medium); }
+@media (prefers-reduced-motion: reduce) { .chapterMark rect { animation: none !important; opacity: 1; } }
+
+.body .comparison > div,
+.body .comparison > div:last-child {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+.body .comparison > div:last-child > .label::before { content: none; }
+
+.body blockquote.advisorQuote {
+  display: grid;
+  grid-template-columns: minmax(0,1fr);
+  row-gap: var(--space-5);
+  max-width: 760px;
+  margin-inline: auto;
+  text-align: center;
+  margin-block: var(--mellon-block-gap);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+/* Centered statement with its attribution below; the quotation marks are typographic, no icon. */
+.body .advisorQuote > p { grid-column: 1; margin: 0 auto; max-width: 28em; color: var(--color-text-primary); font-size: calc(24px * var(--text-scale)); font-weight: var(--font-weight-medium); line-height: 1.35; letter-spacing: var(--tracking-display); text-wrap: pretty; }
+.body .advisorQuote > cite { grid-column: 1; margin: 0; color: var(--color-text-secondary); font-style: normal; font-size: var(--mellon-label-size); line-height: 1.5; font-weight: 400; }
+
+.body .metadata, .body .section, .body .problemBeat, .body .researchBeat, .body .reframe, .body blockquote, .body .options > div { border-top: 0; border-bottom: 0; border-block: 0; }
+
+.introClause { display: block; }
+
+/* Three equal columns keep the problem sequence visible in one pass. */
+.problemStory { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: var(--space-8); align-items: start; }
+.problemStory .problemBeat { display: flex; flex-direction: column; gap: var(--space-6); margin: 0; padding: 0; min-width: 0; }
+.problemStory .problemBeat > div { min-height: calc(246px * var(--text-scale)); width: 100%; }
+.body .problemStory .problemBeat h2 { max-width: none; padding: 0; font-size: calc(20px * var(--text-scale)); line-height: 1.35; }
+.body .problemStory .problemBeat p { font-size: var(--mellon-label-size); line-height: 1.5; }
+.problemStory .problemBeat > video { width: 100%; max-width: 100%; }
+
+
+.approachIntro > h2 + div { margin-top: var(--space-6); }
+
+.chapter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 40px;
+  padding: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-base);
+  font-size: calc(16px * var(--text-scale));
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.chapterMark { width: 12px; height: 12px; flex: 0 0 12px; }
+.sectionBody > .approachIntro > h2 { max-width: 36ch; font-size: calc(28px * var(--text-scale)); line-height: 1.3; }
+
+.researchLead { display: grid; grid-template-columns: minmax(0,.85fr) minmax(0,1.5fr); gap: 48px; align-items: start; width: 100%; }
+.body .researchLead > h2 { margin: 0; max-width: none; font-size: calc(24px * var(--text-scale)); line-height: 1.3; }
+.researchLead > div { min-width: 0; margin: 0; }
+.researchLead > div > p:first-child { margin-top: 0; }
+
+
+.body .hero { border: 0; border-radius: 0; overflow: hidden; background-clip: padding-box; }
+
+
+
+.body .hero { background-image: url("/images/mellon/background-case-study-4c230f2db3.png"); background-position: center; background-size: cover; background-repeat: no-repeat; }
+
+.section[id="problem"] > .chapter { margin-bottom: 24px; }
+
+.researchLead { grid-template-columns: var(--grid-cols); column-gap: var(--grid-gap); row-gap: 24px; }
+.body .researchLead > h2 { grid-column: 1 / span 8; max-width: none; }
+.researchLead > div { grid-column: 1 / span 8; margin: 0; }
+
+.header { display: grid; grid-template-columns: var(--grid-cols); column-gap: var(--grid-gap); row-gap: 24px; align-items: start; scroll-margin-top: var(--space-9); }
+.body .header h1 { grid-column: 1 / span 4; margin: 0; align-self: start; }
+.body .header > div { grid-column: var(--grid-body-start) / -1; }
+.body .header > div > p { max-width: 60ch; margin: 0; color: var(--color-text-secondary); font-size: calc(17px * var(--text-scale)); font-weight: 400; line-height: 1.5; letter-spacing: 0; text-wrap: pretty; }
+
+.researchLead > div { grid-column: 1 / -1; max-width: none; }
+.body .researchLead > div > p { max-width: none; font-weight: 400; }
+
+/* Looser inner rhythm: section gaps were fine, spacing inside blocks was tight. */
+.hero { margin-top: 56px; }
+.section[id="problem"] > .chapter { margin-bottom: 40px; }
+.problemStory { column-gap: 48px; }
+.problemStory .problemBeat { gap: 32px; }
+.body .problemStory .problemBeat p { line-height: 1.6; }
+.researchLead { row-gap: 32px; }
+.approachIntro > h2 + div { margin-top: 32px; }
+.body .insightIntro p { margin-top: 20px; line-height: 1.65; }
+.body .researchBeat h3 + p, .body .researchBeat h2 + p { margin-top: 16px; }
+.body .header > div > p { line-height: 1.6; }
+.body .header .tags, .body .header ul { margin-top: 0; }
+
+/* Research: label in column 1, lead (title + copy) in columns 2-3 from the same top edge,
+   matching the page header's 3-column grid. The diagram below stays full width. */
+.section[id="research"] { display: grid; grid-template-columns: var(--grid-cols); column-gap: var(--grid-gap); align-items: start; }
+.section[id="research"] > .chapter { grid-column: 1 / var(--grid-body-start); grid-row: 1; margin: 0; padding-top: 4px; }
+.section[id="research"] > .sectionBody { display: contents; }
+.section[id="research"] .researchLead { grid-column: var(--grid-body-start) / -1; grid-row: 1; display: flex; flex-direction: column; gap: 24px; width: auto; }
+.section[id="research"] .researchLead > h2 { grid-column: auto; }
+.section[id="research"] .researchLead > div { grid-column: auto; }
+.section[id="research"] .researchLead > div > p { margin: 0; }
+.section[id="research"] > .sectionBody > :not(.researchLead) { grid-column: 1 / -1; grid-row: 2; }
+
+/* Insights, editorial: title in column 1, copy and the assumed -> found pair from column 2.
+   Pure typography: the old belief is struck through and muted, the finding is large and dark. */
+.body .insight { grid-template-columns: repeat(3,minmax(0,1fr)); column-gap: 24px; row-gap: 0; align-items: start; }
+.body .insight > .insightIntro { display: contents; }
+.body .insight .insightIntro h2 { grid-column: 1; grid-row: 1; max-width: none; }
+.body .insight .insightIntro p { grid-column: 2 / -1; grid-row: 1; margin: 0; max-width: 56ch; }
+.body .insight > .comparison { grid-column: 2 / -1; grid-row: 2; display: grid; gap: 0; margin-top: 40px; border-top: 1px solid var(--color-border-subtle); }
+.body .comparison > div.assumed, .body .comparison > div.found { display: grid; grid-template-columns: 120px minmax(0,1fr); column-gap: 24px; align-items: baseline; padding: 20px 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; transform: none; }
+.body .comparison > div.assumed { border-bottom: 1px solid var(--color-border-subtle); }
+.body .comparison > div > .label { display: block; margin: 0; padding: 0; background: none; box-shadow: none; border-radius: 0; font-size: 13px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--color-text-muted); }
+.body .comparison > div.found > .label { color: var(--color-text-primary); }
+.body .comparison > div.assumed p { margin: 0; font-size: calc(17px * var(--text-scale)); line-height: 1.5; color: var(--color-text-muted); text-decoration: line-through; text-decoration-thickness: 1px; text-decoration-color: color-mix(in srgb, var(--color-text-muted) 70%, transparent); }
+.body .comparison > div.found p { margin: 0; font-size: calc(24px * var(--text-scale)); font-weight: 500; line-height: 1.3; letter-spacing: var(--tracking-display); color: var(--color-text-primary); text-wrap: balance; }
+
+/* Insights: same layout, but each row is a long card instead of a ruled line. No hairlines. */
+.body .insight > .comparison { border-top: 0; gap: 8px; margin-top: 36px; }
+.body .comparison > div.assumed, .body .comparison > div.found { padding: 22px 28px; border: 0; border-radius: 10px; align-items: center; }
+.body .comparison > div.assumed { background: var(--color-surface-hover); }
+.body .comparison > div.found { background: var(--color-text-primary); }
+.body .comparison > div.assumed > .label { color: var(--color-text-secondary); }
+.body .comparison > div.found > .label { color: var(--color-surface-app); opacity: .7; }
+.body .comparison > div.assumed p { text-decoration: none; color: var(--color-text-secondary); }
+.body .comparison > div.found p { color: var(--color-surface-app); }
+
+/* Insights, as prose: one sentence pair, the old belief muted, the finding dark. No labels, boxes or rules. */
+.body .insight > .comparison { grid-column: 2 / -1; grid-row: 2; display: block; margin-top: 32px; border: 0; }
+.body .insight > .comparison > p { margin: 0; max-width: 24em; font-size: calc(26px * var(--text-scale)); font-weight: 500; line-height: 1.3; letter-spacing: var(--tracking-display); color: var(--color-text-primary); text-wrap: pretty; }
+.body .insight > .comparison .was { color: var(--color-text-disabled, #A8A8A8); }
+
+/* Insights: the assumed -> found pair is the headline (column 1); copy sits in columns 2-3. */
+.body .insight .insightIntro h2 { grid-column: 1; grid-row: 1; max-width: none; font-size: calc(22px * var(--text-scale)); line-height: 1.3; }
+.body .insight .insightIntro h2 .was { color: var(--color-text-disabled, #A8A8A8); }
+.body .insight .insightIntro p { grid-column: 2 / -1; grid-row: 1; }
+
+/* Insights, zigzag: each insight is a two-column subgrid. Set 1 keeps its text in column 1 with the student's
+   speech bubble floating in column 2; set 2 mirrors it (advisor bubble in column 1, text in column 2).
+   The assumed statement, the finding and its copy stack as one block; the bubble sits slightly lower so the
+   two sides never line up edge to edge. */
+.section[id="insights"] > .sectionBody { display: grid; grid-template-columns: var(--grid-cols); column-gap: var(--grid-gap); row-gap: var(--mellon-block-gap); align-items: start; }
+.section[id="insights"] .insight { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; grid-template-rows: auto auto auto; row-gap: 0; align-items: start; }
+.section[id="insights"] .insight > .insightIntro { display: contents; }
+.section[id="insights"] .insight > .assumed { margin: 0; max-width: 24em; font-size: calc(24px * var(--text-scale)); font-weight: 500; line-height: 1.3; letter-spacing: var(--tracking-display); color: var(--color-text-disabled, #A8A8A8); text-wrap: pretty; grid-row: 1; }
+.section[id="insights"] .insight .insightIntro h2 { grid-row: 2; max-width: none; margin-top: 48px; font-size: calc(24px * var(--text-scale)); line-height: 1.3; }
+.section[id="insights"] .insight .insightIntro p { grid-row: 3; max-width: 44ch; margin: 16px 0 0; }
+.section[id="insights"] .insight > .assumed, .section[id="insights"] .insight .insightIntro > * { grid-column: 1 / span 6; }
+.section[id="insights"] .insight:nth-child(even) > .assumed, .section[id="insights"] .insight:nth-child(even) .insightIntro > * { grid-column: 7 / span 6; }
+.section[id="insights"] .insight:nth-child(even) > .advisorQuote { grid-column: 1 / span 6; }
+
+/* Speech bubble: plain rounded card, a thin wedge tail pointing at the speaker's portrait below it. */
+.section[id="insights"] .advisorQuote { position: relative; display: block; grid-column: 7 / span 6; grid-row: 3; width: 100%; max-width: none; margin: 0; padding: 0 0 96px; text-align: left; }
+.section[id="insights"] .advisorQuote > .bubble { position: relative; display: block; padding: 24px 32px; border-radius: 12px; background: var(--color-surface-card); }
+.section[id="insights"] .advisorQuote > .bubble > p { margin: 0; max-width: none; font-size: calc(20px * var(--text-scale)); font-weight: 400; line-height: 1.5; color: var(--color-text-primary); }
+/* Attribution stays in the DOM for readers and screen readers; the portrait carries it visually. */
+.section[id="insights"] .advisorQuote > .bubble > cite { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.section[id="insights"] .advisorQuote > .bubble::after { content: ""; position: absolute; top: calc(100% - 1px); width: 30px; height: 25px; background: inherit; clip-path: path("M0 0H30V22Q30 25 27 24.7C17 22.5 6 14 0 0Z"); }
+.section[id="insights"] .advisorQuote > .speaker { position: absolute; bottom: 0; }
+/* Tail: one straight edge, one concave curve ending in a softly rounded tip; the portrait sits a small gap below it. */
+.section[id="insights"] .fromStudent > .bubble::after { right: 88px; }
+.section[id="insights"] .fromStudent > .speaker { right: 56px; transform: rotate(8deg); }
+.section[id="insights"] .fromAdvisor > .bubble::after { left: 88px; transform: scaleX(-1); }
+.section[id="insights"] .fromAdvisor > .speaker { left: 56px; transform: rotate(-6deg); }
+
+/* Below 1360px stack the 4/8 split: header copy and the research lead go full width under their title. */
+@media (max-width: 1360px) {
+  .body .header h1, .body .header > div { grid-column: 1 / -1; }
+  .section[id="research"] > .chapter { grid-column: 1 / -1; margin-bottom: var(--space-4); }
+  .section[id="research"] .researchLead { grid-column: 1 / -1; grid-row: 2; }
+  .section[id="research"] > .sectionBody > :not(.researchLead) { grid-row: 3; }
+}
+
+/* Insights: the assumption (left) and the finding (right) share a row; the explanation sits under the finding and the quote spans the full width below. */
+.section[id="insights"] .insight > .assumed { grid-row: 1; grid-column: 1 / span 6; }
+.section[id="insights"] .insight .insightIntro h2 { grid-row: 1; grid-column: 7 / span 6; margin-top: 0; }
+.section[id="insights"] .insight .insightIntro p { grid-row: 2; grid-column: 7 / span 6; margin-top: 16px; }
+.section[id="insights"] .insight .advisorQuote,
+.section[id="insights"] .insight:nth-child(even) > .advisorQuote { grid-row: 3; grid-column: 1 / span 9; margin-top: 32px; }
+.section[id="insights"] .insight:nth-child(even) > .assumed { grid-column: 1 / span 6; }
+.section[id="insights"] .insight:nth-child(even) .insightIntro > * { grid-column: 7 / span 6; }
+
+/* Quote: the bubble hugs its text and sits on one row with the portrait, tail pointing sideways at it.
+   Student: portrait left, anchored to the left edge. Advisor: portrait right, anchored to the right edge.
+   Under 900px the portrait drops below the bubble and the tail points down. */
+.section[id="insights"] .advisorQuote { display: flex; align-items: flex-end; gap: 28px; width: fit-content; max-width: 100%; padding: 0; }
+.section[id="insights"] .fromStudent { flex-direction: row-reverse; justify-self: start; }
+.section[id="insights"] .fromAdvisor { flex-direction: row; justify-self: end; }
+.section[id="insights"] .insight:nth-child(even) > .fromAdvisor { grid-column: 4 / -1; }
+.section[id="insights"] .advisorQuote > .bubble { flex: 0 1 auto; min-width: 0; }
+.section[id="insights"] .advisorQuote > .speaker { position: static; flex: none; margin-bottom: 4px; right: auto; left: auto; }
+.section[id="insights"] .advisorQuote > .bubble::after { top: auto; bottom: 28px; }
+.section[id="insights"] .fromStudent > .bubble::after { left: -26px; right: auto; transform: rotate(90deg); }
+.section[id="insights"] .fromAdvisor > .bubble::after { right: -26px; left: auto; transform: rotate(-90deg); }
+@media (max-width: 900px) {
+  .section[id="insights"] .advisorQuote, .section[id="insights"] .fromStudent, .section[id="insights"] .fromAdvisor { flex-direction: column; align-items: stretch; gap: 24px; width: 100%; }
+  .section[id="insights"] .insight:nth-child(even) > .fromAdvisor { grid-column: 1 / -1; }
+  .section[id="insights"] .fromStudent > .speaker { align-self: flex-start; margin-left: 56px; }
+  .section[id="insights"] .fromAdvisor > .speaker { align-self: flex-end; margin-right: 56px; }
+  .section[id="insights"] .advisorQuote > .bubble::after { top: calc(100% - 1px); bottom: auto; }
+  .section[id="insights"] .fromStudent > .bubble::after { left: 88px; right: auto; transform: scaleX(-1); }
+  .section[id="insights"] .fromAdvisor > .bubble::after { right: 88px; left: auto; transform: none; }
+}
+
+.teamVideo { margin: var(--mellon-section-gap) 0 0; min-width: 0; }
+.teamVideo iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: var(--radius-image); background: var(--color-surface-card); }
+
+/* Research evidence: the three counts behind the findings, each on its own card. */
+.researchFacts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 32px 0 0; padding: 0; }
+.researchFacts > div { display: flex; flex-direction: column; min-width: 0; padding: 20px 24px 22px; background: var(--color-surface-card); border-radius: var(--radius-sm); }
+.researchFacts dd { margin: 0 0 6px; order: -1; color: var(--color-text-primary); font-size: calc(40px * var(--text-scale)); font-weight: 500; line-height: 1.1; letter-spacing: var(--tracking-display); font-variant-numeric: tabular-nums; }
+.researchFacts dt { color: var(--color-text-muted); font-size: calc(14px * var(--text-scale)); font-weight: 400; line-height: 1.3; }
+
+/* Insights, side by side: each insight is a card (finding + evidence) with its speaker's quote beneath, the two
+   mirrored so the student's portrait sits on the inside-left and the advisor's on the inside-right. */
+.section[id="insights"] > .sectionBody { display: grid; grid-template-columns: var(--grid-cols); column-gap: var(--grid-gap); row-gap: 0; align-items: start; }
+.section[id="insights"] .insight:nth-child(n) { display: flex; flex-direction: column; gap: 32px; grid-column: 1 / span 6; min-width: 0; margin: 0; }
+.section[id="insights"] .insight:nth-child(even) { grid-column: 7 / span 6; }
+.section[id="insights"] .insight:nth-child(n) > .insightIntro { display: block; padding: 28px 32px 32px; background: var(--color-surface-card); border-radius: var(--radius-sm); }
+.section[id="insights"] .insight:nth-child(n) .insightIntro > * { grid-column: auto; grid-row: auto; }
+.section[id="insights"] .insight:nth-child(n) .insightIntro h2 { margin: 0; max-width: none; font-size: calc(24px * var(--text-scale)); line-height: 1.3; }
+.section[id="insights"] .insight:nth-child(n) .insightIntro p { max-width: none; margin: 16px 0 0; }
+.section[id="insights"] .insight:nth-child(n) > .advisorQuote { grid-column: auto; grid-row: auto; margin: 0; width: 100%; }
+.section[id="insights"] .insight:nth-child(n) > .fromStudent { justify-self: auto; }
+.section[id="insights"] .insight:nth-child(n) > .fromAdvisor { justify-self: auto; }
+
+/* Equal card heights: both insights share two grid rows (card, quote), so the rows size to the taller of each pair. */
+.section[id="insights"] > .sectionBody { row-gap: 32px; }
+.section[id="insights"] .insight:nth-child(n) { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: subgrid; grid-row: span 2; row-gap: 32px; }
+.section[id="insights"] .insight:nth-child(n) > .insightIntro { grid-row: 1; }
+.section[id="insights"] .insight:nth-child(n) > .advisorQuote { grid-row: 2; }
+
+/* Face-off: each bubble sits above its portrait, which stands on the inner edge of its column, so student and
+   advisor look across the gutter at each other; the tail points down at the portrait. */
+.section[id="insights"] .insight:nth-child(n) > .advisorQuote { display: flex; flex-direction: column; align-items: stretch; gap: 26px; width: 100%; }
+.section[id="insights"] .insight:nth-child(n) > .fromStudent > .speakerGroup { align-self: flex-start; margin-left: 56px; }
+.section[id="insights"] .insight:nth-child(n) > .fromAdvisor > .speakerGroup { align-self: flex-end; margin-right: 56px; }
+.section[id="insights"] .insight:nth-child(n) > .advisorQuote > .bubble::after { top: calc(100% - 1px); bottom: auto; }
+.section[id="insights"] .insight:nth-child(n) > .fromStudent > .bubble::after { left: 92px; right: auto; transform: scaleX(-1); }
+.section[id="insights"] .insight:nth-child(n) > .fromAdvisor > .bubble::after { right: 92px; left: auto; transform: none; }
+.section[id="insights"] .insight:nth-child(n) { align-items: stretch; }
+.section[id="insights"] .insight:nth-child(n) > .insightIntro { align-self: stretch; }
+/* Both bubbles fill their row to the same height so the two portraits sit level, facing each other. */
+.section[id="insights"] .insight:nth-child(n) > .advisorQuote > .bubble { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: center; }
+
+/* The source of each quote is shown under it; the portrait is captioned with who is speaking. */
+.section[id="insights"] .insight:nth-child(n) > .advisorQuote > .bubble > cite { position: static; width: auto; height: auto; overflow: visible; clip-path: none; margin-top: 12px; color: var(--color-text-muted); font-size: calc(14px * var(--text-scale)); white-space: normal; }
+.speakerGroup { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: none; }
+.speakerGroup > span { color: var(--color-text-primary); font-size: calc(16px * var(--text-scale)); font-weight: 500; line-height: 1.2; }
+/* Rounder speech bubbles. */
+.section[id="insights"] .insight:nth-child(n) > .advisorQuote > .bubble { border-radius: 28px; padding: 28px 36px; }
+/* Findings sit directly on the page; only the quotes keep their bubbles. */
+.section[id="insights"] .insight:nth-child(n) > .insightIntro { padding: 0 0 8px; background: transparent; border-radius: 0; }
+.section[id="insights"] .insight:nth-child(n) > .insightIntro { padding-right: 40px; }
+
+/* The source reads as a tag above the quote, and the quote itself is set in quotation marks. */
+.section[id="insights"] .insight:nth-child(n) > .advisorQuote > .bubble > cite { order: -1; align-self: flex-start; margin: 0 0 16px; padding: 4px 12px; border-radius: var(--radius-pill); background: var(--color-surface-app); color: var(--color-text-primary); font-size: calc(13px * var(--text-scale)); font-weight: 500; line-height: 1.3; }
+.section[id="insights"] .insight:nth-child(n) > .advisorQuote > .bubble > p::before { content: "\201C"; }
+.section[id="insights"] .insight:nth-child(n) > .advisorQuote > .bubble > p::after { content: "\201D"; }
+/* Tags sit on the same line in both bubbles, tinted with their speaker's colour. */
+.section[id="insights"] .insight:nth-child(n) > .advisorQuote > .bubble { justify-content: flex-start; }
+.section[id="insights"] .insight:nth-child(n) > .fromAdvisor > .bubble > cite { background: #A9D9F9; color: #1A1A1A; }
+.section[id="insights"] .insight:nth-child(n) > .fromStudent > .bubble > cite { background: #DCEFA2; color: #1A1A1A; }
+
+/* Category tags sit directly under the title, left-aligned with it, instead of floating mid-row. */
+.body .header { row-gap: 16px; }
+.body .header h1 { grid-column: 1 / -1; }
+.body .header > div { grid-column: 1 / -1; align-self: start; }
+
+/* Summary statement sits right under the title, with the category chips beneath it; both centred. */
+.body .header > div > .statementText { max-width: 44ch; margin: 40px auto 0; color: var(--color-text-primary); font-size: calc(26px * var(--text-scale)); font-weight: var(--font-weight-medium); line-height: 1.45; letter-spacing: var(--tracking-display); text-align: center; text-wrap: balance; }
+.body .header .tags { justify-content: center; margin-top: 28px; }
+
+/* Research intro: the supporting line sits close under its heading. */
+.section[id="research"] .researchLead { gap: 10px; }
+
+/* Insights: one shared gutter for text and bubbles (the columns are inset toward the middle), smaller bubbles. */
+.section[id="insights"] .insight:nth-child(odd) { padding-right: 32px; }
+.section[id="insights"] .insight:nth-child(even) { padding-left: 32px; }
+.section[id="insights"] .insight:nth-child(n) > .insightIntro { padding-right: 0; }
+.section[id="insights"] .insight:nth-child(n) > .advisorQuote > .bubble { padding: 22px 28px; }

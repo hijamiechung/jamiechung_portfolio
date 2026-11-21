@@ -1,0 +1,4 @@
+.reveal { opacity: 1; translate: 0 0; transition: opacity 420ms ease, translate 420ms cubic-bezier(.22,1,.36,1); }
+.pending { opacity: 0; translate: 0 10px; }
+@media (prefers-reduced-motion: reduce) { .reveal, .pending { opacity: 1; translate: none; transition: none; } }
+@media print { .reveal, .pending { opacity: 1; translate: none; } }

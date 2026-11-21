@@ -1,4 +1,5 @@
 .field {
+  --color-weather-clear: #ffffff;
   position: fixed;
   inset: 0;
   width: 100%;
@@ -18,15 +19,15 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-2) 6px 2px;
-  margin-top: var(--space-2);
+  padding: 0;
+  margin-top: 0;
   justify-content: flex-start;
 }
 
 :global(aside[data-collapsed="true"]) .controls {
   flex-direction: column;
   gap: 6px;
-  padding: var(--space-2) 0;
+  padding: 0;
 }
 
 .cartridge, .tray button {
@@ -135,6 +136,30 @@
   outline: var(--focus-ring-width) solid var(--color-focus-ring);
   outline-offset: 2px;
 }
+
+.motionToggle {
+  position: relative;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-text-primary) 7%, transparent);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: border-color var(--duration-standard) var(--ease-standard);
+}
+
+/* The visual button is 32px; this extends the hit area to the 44px control target. */
+.motionToggle::after { content: ""; position: absolute; inset: -6px; }
+.motionToggle svg { width: var(--control-icon); height: var(--control-icon); }
+.motionToggle svg path { stroke-width: .95; }
+.motionToggle:hover { border-color: color-mix(in srgb, var(--color-text-primary) 30%, var(--color-border-strong)); }
+.motionToggle[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+.motionToggle:focus-visible { outline: var(--focus-ring-width) solid var(--color-focus-ring); outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
   .themeToggle, .themeToggle:active, .themeTrackIcon, .themeThumb {
@@ -272,7 +297,7 @@
   right: 0;
   top: calc(100% + var(--space-2));
   z-index: 6;
-  min-width: 100%;
+  width: 240px;
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
@@ -313,3 +338,4 @@
 
 .tray button[aria-pressed="true"] { color: var(--color-text-primary); background: var(--color-surface-hover); }
 .selectionMark { width: 14px; }
+

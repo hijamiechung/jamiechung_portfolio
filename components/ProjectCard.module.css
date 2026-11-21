@@ -18,6 +18,7 @@
 }
 
 .thumbnail {
+  --squiggle-inset: 7%;
   position: relative;
   display: flex;
   align-items: flex-end;
@@ -30,27 +31,53 @@
 .badge {
   position: relative;
   z-index: 1;
-  padding: var(--space-1) 9px;
+  padding: 7px 14px;
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-pill);
   background: var(--color-surface-app);
-  font-size: var(--font-size-label-xs);
+  font-size: var(--font-size-label-sm);
   color: var(--color-text-muted);
   letter-spacing: var(--tracking-display);
 }
 
-.meta {
-  margin-top: 18px;
-}
-
-.featured {
-  display: block;
-  margin-bottom: 6px;
+.featuredBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-color: transparent;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
   font-size: var(--font-size-control);
   font-weight: var(--font-weight-medium);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-text-detail);
+}
+
+/* Square pixel marker, matching the site's blocky micro-interaction language. */
+.featuredBadge::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  background: currentColor;
+}
+
+/* On hover the pixel hops in stepped frames (matches the site's stepped motion) — a "press me" nudge. */
+@keyframes featuredHop {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-4px); }
+  50% { transform: translateY(0); }
+  70% { transform: translateY(-2px); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card:hover .featuredBadge::before,
+  .card:focus-visible .featuredBadge::before {
+    animation: featuredHop 720ms steps(1, end) infinite;
+  }
+}
+
+.meta {
+  margin-top: 18px;
 }
 
 .headerRow {
@@ -67,14 +94,37 @@
 }
 
 .year {
-  font-size: var(--font-size-label-sm);
-  color: var(--color-text-muted);
+  font-size: var(--font-size-body);
+  color: var(--color-text-secondary);
 }
 
 .description {
   margin-top: var(--space-2);
-  font-size: var(--font-size-body);
-  line-height: 1.62;
+  font-size: var(--font-size-prose);
+  line-height: 1.5;
   color: var(--color-text-muted);
   text-wrap: pretty;
 }
+
+/* Not-yet-openable card: no navigation; a "Coming soon" tag follows the pointer while hovering. */
+.locked { cursor: default; }
+.locked:hover, .locked:focus-visible { transform: none; }
+.cursorTag {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 50;
+  padding: 7px 14px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-popover);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-label-sm);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-display);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-fast, 150ms) var(--ease-standard);
+}
+.cursorTag[data-visible="true"] { opacity: 1; }

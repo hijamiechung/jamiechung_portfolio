@@ -1,0 +1,36 @@
+.cast { display: flex; align-items: flex-end; justify-content: center; gap: 220px; padding: 56px 0 0; margin-bottom: 72px; }
+.person { position: relative; display: flex; flex-direction: column; align-items: center; gap: 14px; margin: 0; outline: none; cursor: default; }
+.person figcaption { color: var(--color-text-primary); font-size: calc(16px * var(--text-scale)); font-weight: var(--font-weight-medium); line-height: 1.3; }
+.float { position: relative; animation: mellon-float 3.6s ease-in-out infinite; }
+.student .float { animation-delay: -1.8s; }
+.avatar { display: block; width: 120px; height: auto; }
+
+.thought {
+  position: absolute;
+  bottom: calc(100% + 16px);
+  left: 50%;
+  width: max-content;
+  max-width: 280px;
+  padding: 16px 22px;
+  border-radius: 24px;
+  background: var(--color-text-primary);
+  color: var(--color-surface-app);
+  font-size: calc(16px * var(--text-scale));
+  font-weight: var(--font-weight-medium);
+  line-height: 1.35;
+  text-align: center;
+  text-wrap: balance;
+  opacity: 0;
+  transform: translate(-50%, 6px) scale(.9);
+  transform-origin: 50% 100%;
+  transition: opacity var(--duration-fast) ease, transform var(--duration-standard) ease;
+  pointer-events: none;
+}
+.person:hover .thought, .person:focus-visible .thought { opacity: 1; transform: translate(-50%, 0) scale(1); }
+.person:focus-visible .avatar { outline: 2px solid var(--color-text-primary); outline-offset: 6px; border-radius: 50%; }
+
+@keyframes mellon-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@media (prefers-reduced-motion: reduce) { .float { animation: none; } .thought { transition: none; } }
+
+/* A curved tail under the bubble points at the figure that is speaking. */
+.thought::after { content: ""; position: absolute; top: calc(100% - 1px); left: calc(50% - 27px); width: 30px; height: 25px; background: inherit; clip-path: path("M0 0H30V22Q30 25 27 24.7C17 22.5 6 14 0 0Z"); }

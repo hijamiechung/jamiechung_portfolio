@@ -1,7 +1,12 @@
 type Name = "project" | "archive" | "connect" | "panel" | "chevron" | "arrow" | "back" | "send"
   | "sun" | "moon" | "soundOn" | "soundOff" | "briefcase" | "pencil" | "envelope" | "document"
-  | "hamburger" | "close" | "download" | "phone";
+  | "pause" | "play" | "hamburger" | "close" | "download" | "phone" | "education" | "search" | "people" | "sparkle";
 const paths: Record<Name, string> = {
+  education: "M1 4.5L6 2l5 2.5L6 7 1 4.5z M3 5.5v3c1.8 1.3 4.2 1.3 6 0v-3M11 4.5V8",
+  search: "M8.5 5a3.5 3.5 0 11-7 0 3.5 3.5 0 017 0z M7.5 7.5l3 3",
+  people: "M6 3.5a1.75 1.75 0 11-3.5 0 1.75 1.75 0 013.5 0z M1.5 10V9a2.75 2.75 0 015.5 0v1M8 2a1.75 1.75 0 010 3.5M9 6.5a2.5 2.5 0 011.5 2.3V10",
+  sparkle: "M6 1.5L7.3 4.7 10.5 6 7.3 7.3 6 10.5 4.7 7.3 1.5 6 4.7 4.7 6 1.5z",
+
   project: "M1.5 3.2c0-.6.5-1 1-1h2l1 1.2h3.9c.6 0 1 .4 1 1v4.4c0 .6-.4 1-1 1H2.5c-.5 0-1-.4-1-1V3.2z",
   archive: "M1.6 4.4h8.8M2.4 4.4v5.2c0 .5.4.9.9.9h5.4c.5 0 .9-.4.9-.9V4.4M1.6 4.4l1-2.4h6.8l1 2.4",
   connect: "M5.25 6.75a2.5 2.5 0 003.77.27l1.5-1.5a2.5 2.5 0 00-3.54-3.54l-.86.86M6.75 5.25a2.5 2.5 0 00-3.77-.27l-1.5 1.5a2.5 2.5 0 003.54 3.54l.86-.86",
@@ -16,6 +21,8 @@ const paths: Record<Name, string> = {
   pencil: "M2.3 9.7l.4-2.1 5-5a1 1 0 011.4 0l.3.3a1 1 0 010 1.4l-5 5-2.1.4z M6.7 3.6l1.7 1.7",
   envelope: "M1.5 3.3c0-.5.4-.9.9-.9h7.2c.5 0 .9.4.9.9v5.4c0 .5-.4.9-.9.9H2.4c-.5 0-.9-.4-.9-.9V3.3z M1.7 3.5L6 6.6l4.3-3.1",
   document: "M3.4 1.8h3.4L8.6 3.6v6a.7.7 0 01-.7.7H3.4a.7.7 0 01-.7-.7V2.5a.7.7 0 01.7-.7z M6.8 1.8v1.8h1.8",
+  pause: "M4.2 2.6v6.8M7.8 2.6v6.8",
+  play: "M3.8 2.4l5.2 3.6-5.2 3.6V2.4z",
   hamburger: "M2 3.6h8M2 6h8M2 8.4h8",
   close: "M3 3l6 6M9 3l-6 6",
   download: "M6 1.5v6.2M3.4 5.3L6 7.9l2.6-2.6M2 9.2h8",

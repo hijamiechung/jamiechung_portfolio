@@ -4,6 +4,7 @@
 }
 
 .mark rect {
+  color: var(--color-interactive-accent);
   transition: transform var(--duration-fast) steps(2, end);
 }
 

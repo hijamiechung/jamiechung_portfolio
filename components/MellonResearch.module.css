@@ -1,0 +1,52 @@
+/* Pinned research map: the steps build up down a vertical rail as the page scrolls, the map plays the current one. */
+.scrollRegion { margin-top: 80px; height: calc(var(--measured-panel-height, 560px) + 240vh); }
+.panel {
+  position: sticky;
+  top: max(56px, calc((100vh - var(--measured-panel-height, 560px)) / 2));
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  column-gap: 28px;
+  align-items: start;
+  min-width: 0;
+  /* Steps and map share one card so they read as a single unit. */
+  padding: 28px;
+  background: var(--color-surface-card);
+  border-radius: 12px;
+}
+
+.steps { --pitch: 76px; position: relative; display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
+/* The highlight slides between steps instead of switching per button. */
+.indicator { position: absolute; top: 0; left: 0; right: 0; height: 42px; border-radius: 8px; background: var(--color-surface-app); transform: translateY(calc(var(--active, 0) * var(--pitch))); transition: transform 420ms cubic-bezier(.22,1,.36,1); pointer-events: none; }
+.step { position: relative; height: var(--pitch); }
+.step button { position: relative; z-index: 1; display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 10px; align-items: baseline; width: 100%; padding: 10px 12px; border: 0; border-radius: 8px; background: transparent; color: var(--color-text-muted); font: inherit; text-align: left; cursor: pointer; transition: color 220ms ease, background-color 220ms ease; }
+.step:not([data-current="true"]) button:hover { background: var(--color-surface-hover); color: var(--color-text-primary); }
+.step[data-current="true"] button { color: var(--color-text-primary); }
+.step button:focus-visible { outline: 2px solid var(--color-text-primary); outline-offset: 4px; border-radius: 2px; }
+.number { font-size: calc(14px * var(--text-scale)); font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1.4; }
+.label { font-size: calc(17px * var(--text-scale)); font-weight: 500; line-height: 1.3; letter-spacing: -0.01em; }
+/* The connector draws down to the next step once that step is reached. */
+.step::before { content: ""; position: absolute; left: 20px; top: 42px; bottom: 2px; width: 1px; background: var(--color-text-muted); opacity: .6; opacity: .3; transition: opacity 320ms ease; }
+.step[data-linked="true"]::before { opacity: .8; }
+.step:last-child::before { display: none; }
+
+.stage { min-width: 0; }
+/* The caption is centred on the first step's pill (42px) so the two read as one row; a two-line caption overflows evenly. */
+.captions { display: grid; align-items: center; height: 42px; margin-bottom: 24px; }
+.captions h3 { grid-area: 1 / 1; margin: 0; color: var(--color-text-primary); font-size: calc(24px * var(--text-scale)); font-weight: 500; line-height: 1.25; letter-spacing: -0.01em; text-wrap: balance; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms; }
+.captions h3[data-active="true"] { opacity: 1; visibility: visible; transform: none; transition: opacity 320ms ease 120ms, transform 420ms cubic-bezier(.22,1,.36,1) 120ms, visibility 0s; }
+
+.map { position: relative; aspect-ratio: 1420 / 610; margin: 0; background: #fff; border-radius: 8px; overflow: hidden; }
+.layer { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+.animation { opacity: 0; pointer-events: none; transition: opacity 220ms ease; }
+.animation[data-active="true"] { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .indicator, .step::before, .captions h3, .captions h3[data-active="true"], .animation { transition: none; }
+}
+@media (max-width: 700px), (max-height: 500px), print {
+  .scrollRegion { height: auto; }
+  .panel { position: static; grid-template-columns: minmax(0, 1fr); row-gap: 20px; }
+  .step { height: auto; padding-bottom: 12px; }
+  .indicator { display: none; }
+  .step::before { display: none; }
+}

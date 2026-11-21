@@ -1,0 +1,8 @@
+.character {
+  width: 96px;
+  height: 106px;
+  flex: none;
+  margin-left: 24px;
+  color: var(--color-text-secondary);
+}
+.head { fill: var(--color-surface-thumbnail); }

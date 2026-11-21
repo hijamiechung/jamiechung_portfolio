@@ -8,7 +8,7 @@ export type DancePose = "idle" | "left" | "right";
 // same characters as ProfileFace, just standing up.
 export function DancingCharacter({ pose, accessory = "none" }: { pose: DancePose; accessory?: Accessory }) {
   return (
-    <div className={`${styles.character} ${pose !== "idle" ? styles[pose] : ""}`}>
+    <div data-dancer={accessory} className={`${styles.character} ${pose !== "idle" ? styles[pose] : ""}`} aria-hidden="true">
       <div className={styles.body}>
         <svg className={styles.faceSvg} viewBox="0 0 40 40" aria-hidden="true" shapeRendering="crispEdges">
           <rect x="12.4" y="14.2" width="2.4" height="2.4" rx=".5" fill="currentColor"/>

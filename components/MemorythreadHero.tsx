@@ -6,7 +6,6 @@ import styles from "./GuidelightHero.module.css";
 import preview from "./MemorythreadHero.module.css";
 
 export function MemorythreadHero() {
-  const video = useRef<HTMLVideoElement>(null);
   const screen = useRef<HTMLVideoElement>(null);
   const [paused, setPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(true);
@@ -20,15 +19,12 @@ export function MemorythreadHero() {
   }, []);
 
   useEffect(() => {
-    const element = video.current;
+    const element = screen.current;
     if (!element || reducedMotion) return;
-    const elements = [element, screen.current].filter((item): item is HTMLVideoElement => item !== null);
     let visible = false;
     const sync = () => {
-      for (const item of elements) {
-        if (paused || !visible || document.hidden) item.pause();
-        else void item.play().catch(() => setPaused(true));
-      }
+      if (paused || !visible || document.hidden) element.pause();
+      else void element.play().catch(() => setPaused(true));
     };
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
@@ -39,14 +35,11 @@ export function MemorythreadHero() {
     return () => {
       observer.disconnect();
       document.removeEventListener("visibilitychange", sync);
-      elements.forEach(item => item.pause());
+      element.pause();
     };
   }, [paused, reducedMotion]);
 
   return <div className={`${styles.hero} ${artwork.memorythread}`}>
-    {!reducedMotion && <video ref={video} className={styles.video} muted loop playsInline preload="metadata" poster="/images/memorythread/background.webp" aria-hidden="true">
-      <source src="/images/memorythread/hero-gradient.webm" type="video/webm"/>
-    </video>}
     <div className={preview.frame} aria-hidden="true">
       <video ref={screen} className={preview.screen} muted loop playsInline preload="metadata" poster="/images/memorythread/photo-flow-screen-poster.png">
         {!reducedMotion && <source src="/images/memorythread/photo-flow-screen.mp4" type="video/mp4"/>}

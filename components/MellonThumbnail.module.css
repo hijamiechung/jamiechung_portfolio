@@ -1,0 +1,18 @@
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Anchored to the bottom-left so the screen bleeds off the left and bottom edges,
+   leaving the gradient visible above and to the right. */
+.video {
+  position: absolute;
+  left: 0;
+  top: var(--mellon-top, 9%);
+  width: 100%;
+  max-width: none;
+  height: auto;
+}

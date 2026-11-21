@@ -1,3 +1,4 @@
+import { GuidelightSystemMap } from "./GuidelightSystemMap";
 import { GuidelightProblemFlow } from "./GuidelightProblemFlow";
 import { GuidelightSupportNetwork } from "./GuidelightSupportNetwork";
 import Link from "next/link";
@@ -5,12 +6,17 @@ import Image from "next/image";
 import interviewPhoto1 from "@/public/images/guidelight/interview_photo1.png";
 import interviewPhoto2 from "@/public/images/guidelight/interview_photo2.png";
 import type { Project } from "@/lib/projects";
+import { LineIcon } from "./LineIcon";
 import { BackPixelIcon } from "./BackPixelIcon";
 import { ProjectContents } from "./ProjectContents";
 import shared from "@/app/projects/[slug]/page.module.css";
 import { GuidelightHomeCarousel } from "./GuidelightHomeCarousel";
 import { GuidelightHero } from "./GuidelightHero";
+import { ProjectTransition } from "./ProjectTransition";
 import styles from "./GuidelightCaseStudy.module.css";
+
+// Prototype switch: disable to restore the existing stage-and-role diagram.
+const SYSTEM_MAP_ENABLED = true;
 
 const sections = ["Overview", "Background", "Research", "Problem", "Solution", "Reflection"].map(label => ({id: label.toLowerCase(), label}));
 
@@ -21,12 +27,12 @@ function DiagramCard({title, children}: {title: string; children: React.ReactNod
 }
 
 export function GuidelightCaseStudy({next}: {next: Project}) {
-  return <section className={`${shared.page} ${styles.page}`}><article className={styles.body}>
-    <Link className={shared.back} href="/"><BackPixelIcon/>Projects</Link>
+  return <section className={`${shared.page} ${styles.page}`}><article className={styles.body} data-reading-content>
+    <Link className={shared.back} href="/"><LineIcon name="back" />Projects</Link>
     <header id="overview" className={styles.header}>
       <h1>Guidelight</h1><p>A mobile-first tool connecting students and families with community support.</p>
     </header>
-    <GuidelightHero/>
+    <ProjectTransition id="guidelight"><GuidelightHero/></ProjectTransition>
     <div className={styles.intro}>
       <div className={styles.lede}><p>School staff coordinated support across<br/>separate systems, phone calls, and emails.</p><p>We designed a mobile prototype that brings<br/>support requests, guardian consent,<br/>and appointment coordination together<br/>so staff can see where each case stands<br/>and what to do next.</p></div>
       <dl className={styles.metadata}>
@@ -60,7 +66,7 @@ export function GuidelightCaseStudy({next}: {next: Project}) {
     <section id="problem" className={styles.section}>
       <span className={styles.label}>Problem</span><div className={styles.sectionBody}>
         <h2>Fragmented steps, limited visibility</h2><p>The interview revealed two difficulties in connecting students with support.</p>
-        <GuidelightProblemFlow/>
+        {SYSTEM_MAP_ENABLED ? <GuidelightSystemMap/> : <GuidelightProblemFlow/>}
       </div>
     </section>
     <section id="solution" className={`${styles.section} ${styles.solution}`}>

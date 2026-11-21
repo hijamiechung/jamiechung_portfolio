@@ -1,9 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Project } from "@/lib/projects";
+import { LineIcon } from "./LineIcon";
 import { BackPixelIcon } from "./BackPixelIcon";
 import { ProjectContents } from "./ProjectContents";
 import { MemorythreadHero } from "./MemorythreadHero";
+import { ProjectTransition } from "./ProjectTransition";
 import { MemorythreadBuildLoop, MemorythreadCarousel } from "./MemorythreadMotion";
 import shared from "@/app/projects/[slug]/page.module.css";
 import styles from "./MemorythreadCaseStudy.module.css";
@@ -16,10 +18,10 @@ function Recording({src, caption}: {src:string; caption:string}) {
   return <figure className={styles.recording}><video controls playsInline preload="metadata" src={src} aria-label={caption}/><figcaption>{caption}</figcaption></figure>;
 }
 export function MemorythreadCaseStudy({next}: {next:Project}) {
-  return <section className={`${shared.page} ${styles.page}`}><article className={styles.body}>
-    <Link href="/" className={shared.back}><BackPixelIcon/>Projects</Link>
+  return <section className={`${shared.page} ${styles.page}`}><article className={styles.body} data-reading-content>
+    <Link href="/" className={shared.back}><LineIcon name="back" />Projects</Link>
     <header id="overview" className={styles.header}><h1>Helping families turn a shared cue<br/>into their next question.</h1><p>A family conversation app that suggests questions from photos or shared topics and connects stories about the people mentioned.</p></header>
-    <MemorythreadHero/>
+    <ProjectTransition id="memorythread"><MemorythreadHero/></ProjectTransition>
     <div className={styles.intro}><div className={styles.lede}><p>I built an AI-connected prototype, then redesigned how both family members could shape the conversation.</p></div><dl className={styles.metadata}><div><dt>Timeline</dt><dd>December · 2 weeks<br/>February–March · 4 weeks<br/>May · 2 weeks</dd></div><div><dt>My role</dt><dd>Solo product designer<br/>Interaction design, AI-assisted implementation, physical tile prototype</dd></div><div><dt>Build</dt><dd>V1 · Claude, React, OpenAI API, Vercel<br/>V2–V3 · Lovable</dd></div><div><dt>Status</dt><dd>Working web prototype<br/>Physical sensing board is a concept</dd></div></dl></div>
     <Section id="background" label="Background"><div className={styles.reading}><h2>A family wanted to hear more.<br/>Where could the conversation begin?</h2><p>A Korean-American learner I tutored wanted to hear about their mother’s life before immigration. Their mother was living with dementia, and they didn’t know enough about her life or her home country to know what to ask. The conversation kept circling the little they already knew.</p></div><aside className={styles.callout}><span className={styles.eyebrow}>My starting hypothesis</span><p>A family photo could give them something concrete to talk about. AI could help the family find a first question and a follow-up.</p></aside></Section>
     <Section id="first-build" label="First build"><h2>I built the whole loop with Claude.</h2><p className={styles.reading}>Upload a photo, generate a question, capture an answer, and build a memory map.</p><span className={styles.diagramLabel}>How it works · Illustrative</span><MemorythreadCarousel label="How it works" slides={[

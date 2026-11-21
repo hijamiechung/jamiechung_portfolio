@@ -50,3 +50,25 @@ html { scroll-behavior: smooth; }
 body { line-height: var(--line-height-default); font-size: var(--font-size-intro); transition: background var(--duration-slow) ease; }
 button { color: inherit; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+.skip-link { position: fixed; left: 16px; top: 16px; z-index: 1000; padding: var(--space-3) var(--space-4); background: var(--color-surface-popover); color: var(--color-text-primary); border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm); transform: translateY(-200%); }
+.skip-link:focus { transform: none; }
+/* Reading preferences apply to core UI even when visual experiments are off. */
+:root[data-text-size="large"] main :is(h1, h2, h3, p),
+:root[data-text-size="larger"] main :is(h1, h2, h3, p) { white-space: normal; overflow-wrap: anywhere; }
+:root[data-contrast="high"] main { background: var(--color-surface-app); color: var(--color-text-primary); }
+:root[data-contrast="high"] main :is(h1, h2, h3) { color: var(--color-text-primary); }
+
+/* The same thumbnail moves between a card and its detail hero (projects and archive). */
+::view-transition-group(.thumbnail-expand) {
+  animation-duration: 440ms;
+  animation-timing-function: cubic-bezier(.22, 1, .36, 1);
+}
+::view-transition-image-pair(.thumbnail-expand) { isolation: auto; }
+::view-transition-old(.thumbnail-expand),
+::view-transition-new(.thumbnail-expand) { mix-blend-mode: normal; height: 100%; object-fit: cover; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(.thumbnail-expand),
+  ::view-transition-old(.thumbnail-expand),
+  ::view-transition-new(.thumbnail-expand) { animation-duration: 0s !important; animation-delay: 0s !important; }
+}

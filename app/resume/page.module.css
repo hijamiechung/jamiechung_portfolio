@@ -1,4 +1,13 @@
 .page {
+  --color-resume-accent: var(--color-text-primary);
+  --tracking-resume-body: var(--tracking-body);
+  --font-size-resume-section: calc(22px * var(--text-scale));
+  --font-size-resume-title: calc(18px * var(--text-scale));
+  --font-size-resume-meta: calc(14px * var(--text-scale));
+  --font-weight-resume-section: var(--font-weight-medium);
+  --space-resume-heading-gap: 6px;
+  --space-resume-entry: 32px;
+  --font-size-resume-body: calc(16px * var(--text-scale));
   display: flex;
   justify-content: center;
   padding: 40px 56px 120px;
@@ -7,7 +16,7 @@
 .body {
   flex: 1;
   min-width: 0;
-  max-width: 720px;
+  max-width: 940px;
 }
 
 .back {
@@ -27,16 +36,55 @@
   border-color: var(--color-border-strong);
 }
 
-.card {
+.document {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: start;
   margin-top: var(--space-6);
-  padding: var(--space-6) var(--space-6) var(--space-8);
-  border-radius: var(--radius-image);
-  background: color-mix(in srgb, var(--color-surface-card) 65%, transparent);
 }
 
-.card > .section:first-child {
-  margin-top: 0;
+.card {
+  min-width: 0;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) var(--radius-sm);
+  background: var(--color-surface-popover);
 }
+
+.fileNavigation {
+  position: sticky;
+  top: var(--space-6);
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  isolation: isolate;
+}
+
+.fileTab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-resume-heading-gap);
+  min-height: 44px;
+  padding: 10px;
+  border: 1px solid var(--color-border-subtle);
+  border-right: 0;
+  border-radius: var(--radius-xs) 0 0 var(--radius-xs);
+  background: color-mix(in srgb, var(--color-surface-card) 50%, var(--color-surface-app));
+  color: var(--color-resume-accent);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-display);
+  transition: background var(--duration-fast) var(--ease-standard);
+}
+
+.fileTab:hover { background: var(--color-surface-hover); }
+.fileTab[aria-current="location"] {
+  background: var(--color-surface-popover);
+  box-shadow: 1px 0 var(--color-surface-popover);
+}
+.fileTab:focus-visible { z-index: 11 !important; outline-offset: -4px; }
 
 .header {
   display: flex;
@@ -47,13 +95,18 @@
 }
 
 .identity {
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: flex-start;
   gap: var(--space-4);
 }
 
 .nameBlock {
-  padding-top: 4px;
+  display: grid;
+  grid-template-rows: 52px auto;
+  align-items: center;
+  row-gap: 6px;
 }
 
 .header h1 {
@@ -61,12 +114,6 @@
   font-weight: var(--font-weight-semibold);
   letter-spacing: var(--tracking-display-lg);
   line-height: 1.1;
-}
-
-.role {
-  margin-top: 2px;
-  font-size: var(--font-size-intro);
-  color: var(--color-text-secondary);
 }
 
 .download {
@@ -88,100 +135,93 @@
   opacity: .85;
 }
 
-.contact {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2) var(--space-5);
-  margin-top: var(--space-5);
-  padding-left: 68px;
-  font-size: var(--font-size-body);
-}
-
-.contact a {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--color-text-secondary);
-  text-decoration-color: transparent;
-  text-underline-offset: 3px;
-  transition: color var(--duration-fast) ease, text-decoration-color var(--duration-fast) ease;
-}
-
-.contact a svg {
-  color: var(--color-text-detail);
-  transition: color var(--duration-fast) ease;
-}
-
-.contact a:hover {
-  color: var(--color-text-primary);
-  text-decoration: underline;
-  text-decoration-color: currentColor;
-}
-
-.contact a:hover svg {
-  color: var(--color-text-primary);
-}
-
 .section {
-  margin-top: 40px;
+  padding: var(--space-8) var(--space-7);
+}
+
+.sectionBody {
+  scroll-margin-top: 20px;
 }
 
 .section h2 {
-  font-size: var(--font-size-label-sm);
-  font-weight: var(--font-weight-medium);
-  letter-spacing: 0.045em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-resume-heading-gap);
+  margin-bottom: var(--space-5);
+  font-size: var(--font-size-resume-section);
+  font-weight: var(--font-weight-resume-section);
+  letter-spacing: var(--tracking-display);
+  line-height: 1.25;
+  color: var(--color-resume-accent);
+}
+
+.sectionBody > .entry:first-child,
+.sectionBody > .skillRow:first-child { margin-top: 0; }
+
+.sectionIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--color-resume-accent);
 }
 
 .entry {
-  margin-top: var(--space-6);
+  margin-top: var(--space-resume-entry);
 }
 
 .entry:first-of-type {
-  margin-top: var(--space-5);
+  margin-top: var(--space-4);
 }
 
 .entryHeader {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--space-1) var(--space-3);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
 }
 
 .entry h3 {
-  font-size: var(--font-size-card-title);
+  font-size: var(--font-size-resume-title);
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--tracking-display);
 }
 
 .meta {
-  font-size: var(--font-size-detail);
-  color: var(--color-text-detail);
+  font-size: var(--font-size-resume-meta);
+  white-space: nowrap;
+  color: var(--color-text-secondary);
 }
 
 .entry p {
-  max-width: 64ch;
+  max-width: none;
   margin-top: var(--space-2);
-  font-size: var(--font-size-prose);
-  line-height: 1.62;
-  color: var(--color-text-secondary);
+  font-size: var(--font-size-resume-body);
+  letter-spacing: var(--tracking-resume-body);
+  line-height: 1.5;
+  color: var(--color-text-primary);
   text-wrap: pretty;
 }
 
+.entry .topic {
+  margin-top: var(--space-2);
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
 .entry ul {
-  max-width: 64ch;
+  max-width: none;
   margin-top: var(--space-2);
   padding-left: 16px;
   list-style: square;
 }
 
 .entry ul li {
-  font-size: var(--font-size-prose);
-  line-height: 1.62;
-  color: var(--color-text-secondary);
+  font-size: var(--font-size-resume-body);
+  letter-spacing: var(--tracking-resume-body);
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  /* pretty avoids a stranded last word without stretching word spacing */
   text-wrap: pretty;
-  padding-left: 2px;
 }
 
 .entry ul li::marker {
@@ -189,10 +229,11 @@
 }
 
 .entry ul li + li {
-  margin-top: var(--space-2);
+  margin-top: var(--space-3);
 }
 
-.plainList {
+.entry .plainList {
+  max-width: none;
   list-style: none;
   padding-left: 0;
 }
@@ -201,7 +242,7 @@
   color: var(--color-text-primary);
 }
 
-.plainList li + li {
+.entry .plainList li + li {
   margin-top: 3px;
 }
 
@@ -223,7 +264,7 @@
 }
 
 .skillLabel {
-  color: var(--color-text-detail);
+  color: var(--color-text-secondary);
 }
 
 .pills {
@@ -237,8 +278,27 @@
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-pill);
   background: var(--color-surface-card);
-  font-size: var(--font-size-label-sm);
+  font-size: var(--font-size-body);
+  color: var(--color-text-primary);
+}
+
+.availability {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-top: 0;
+  min-height: 18px;
   color: var(--color-text-secondary);
+  font-size: var(--font-size-intro);
+  letter-spacing: var(--tracking-display);
+  line-height: 18px;
+}
+
+.availabilityLabel {
+  color: var(--color-resume-accent);
+  font-size: inherit;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: inherit;
 }
 
 @media (max-width: 1024px) {
@@ -252,9 +312,8 @@
     padding: 24px 16px 64px;
   }
 
-  .card {
-    margin-top: var(--space-5);
-    padding: var(--space-5) var(--space-4) var(--space-7);
+  .fileNavigation {
+    overflow-x: auto;
   }
 
   .header {
@@ -266,12 +325,42 @@
     justify-content: center;
   }
 
-  .contact {
-    padding-left: 0;
-  }
-
   .skillRow {
     grid-template-columns: 1fr;
     gap: var(--space-1);
   }
 }
+
+.projectLink {
+  position: relative;
+  display: inline;
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* The arrow is hidden until hover/focus (absolutely positioned, so no layout shift) —
+   it only signals that the link leaves the page once you're pointing at it. */
+.projectLink svg {
+  position: absolute;
+  top: -0.2em;
+  right: -0.75em;
+  width: 9px;
+  height: 9px;
+  opacity: 0;
+  transition: opacity var(--duration-fast) ease, transform var(--duration-fast) steps(2, end);
+}
+
+.projectLink:hover svg, .projectLink:focus-visible svg {
+  opacity: 1;
+  transform: translate(1.5px, -1.5px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projectLink:hover svg, .projectLink:focus-visible svg {
+    transform: none;
+  }
+}
+
+/* Keeps a date range on one line so it never breaks between the dash and the end date. */
+.nowrap { white-space: nowrap; }

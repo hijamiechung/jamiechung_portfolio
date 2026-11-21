@@ -5,4 +5,7 @@
   background-repeat: no-repeat;
 }
 
-.memorythread { background-image: url("/images/memorythread/background.webp"); background-position: center; background-size: cover; background-repeat: no-repeat; }
+.memorythread { background-image: url("/images/backgrounds/memorythread.png"); background-position: center; background-size: cover; background-repeat: no-repeat; }
+
+.squiggle { background-image: url("/images/backgrounds/squiggle.png"); background-position: center; background-size: cover; background-repeat: no-repeat; }
+.mellon { background-image: url("/images/backgrounds/mellon.png"); background-position: center; background-size: cover; background-repeat: no-repeat; }

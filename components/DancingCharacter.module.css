@@ -1,9 +1,89 @@
 .character {
+  --dance-beat: 1120ms;
+  --dance-phase: -240ms;
+  --dance-hop: -3px;
+  --dance-turn: 7deg;
+  --dance-arm: 28deg;
+  --dance-step: 15deg;
+  --dance-easing: steps(4, end);
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   color: var(--color-text-primary);
+}
+
+.character[data-dancer="cap"] {
+  --dance-beat: 920ms;
+  --dance-phase: -620ms;
+  --dance-hop: -8px;
+  --dance-turn: 3deg;
+  --dance-arm: 16deg;
+  --dance-step: 24deg;
+}
+
+.character[data-dancer="mohawk"] {
+  --dance-beat: 740ms;
+  --dance-phase: -160ms;
+  --dance-hop: -5px;
+  --dance-turn: 12deg;
+  --dance-arm: 55deg;
+}
+
+.character[data-dancer="roundGlasses"] {
+  --dance-beat: 1480ms;
+  --dance-phase: -1080ms;
+  --dance-hop: -1px;
+  --dance-turn: 9deg;
+  --dance-arm: 12deg;
+  --dance-step: 8deg;
+}
+
+.character[data-dancer="spoonSunglasses"] {
+  --dance-beat: 1240ms;
+  --dance-phase: -820ms;
+  --dance-hop: -4px;
+  --dance-turn: 14deg;
+  --dance-arm: 38deg;
+  --dance-step: 22deg;
+}
+
+.character[data-dancer="headphones"] {
+  --dance-beat: 1000ms;
+  --dance-phase: -420ms;
+  --dance-hop: -6px;
+  --dance-turn: 4deg;
+  --dance-arm: 65deg;
+  --dance-step: 10deg;
+}
+
+@keyframes bounce {
+  0%, 50%, 100% { translate: 0 0; }
+  25%, 75% { translate: 0 var(--dance-hop); }
+}
+
+@keyframes groove {
+  0%, 100% { rotate: calc(-1 * var(--dance-turn)); }
+  50% { rotate: var(--dance-turn); }
+}
+
+@keyframes wave {
+  0%, 100% { rotate: calc(-1 * var(--dance-arm)); }
+  50% { rotate: var(--dance-arm); }
+}
+
+@keyframes step {
+  0%, 100% { rotate: calc(-1 * var(--dance-step)); }
+  50% { rotate: var(--dance-step); }
+}
+
+/* Individual rotate/translate compose with the held-arrow poses below. */
+@media (prefers-reduced-motion: no-preference) {
+  .character { animation: bounce var(--dance-beat) var(--dance-easing) var(--dance-phase) infinite; }
+  .body { animation: groove var(--dance-beat) var(--dance-easing) var(--dance-phase) infinite; }
+  .armLeft, .armRight { animation: wave var(--dance-beat) var(--dance-easing) var(--dance-phase) infinite; }
+  .legLeft, .legRight { animation: step var(--dance-beat) var(--dance-easing) var(--dance-phase) infinite; }
+  .armRight, .legRight { animation-delay: calc(var(--dance-phase) - var(--dance-beat) / 2); }
 }
 
 .body {

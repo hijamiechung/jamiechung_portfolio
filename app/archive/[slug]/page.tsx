@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { archive } from "@/lib/archive";
 import { BackPixelIcon } from "@/components/BackPixelIcon";
 import { ProjectContents } from "@/components/ProjectContents";
+import { ProjectTransition } from "@/components/ProjectTransition";
 import styles from "./page.module.css";
 
 export function generateStaticParams() { return archive.map(a => ({ slug: a.id })); }
@@ -20,7 +21,7 @@ export default async function ArchivePage({ params }: { params: Promise<{ slug: 
   const next = archive[(index + 1) % archive.length];
   const sections = [{ id: "overview", label: "Overview" }, ...entry.sections.map((s, i) => ({ id: `section-${i}`, label: s.label }))];
 
-  return <section className={styles.page}><div className={styles.body}>
+  return <section className={styles.page}><div className={styles.body} data-reading-content>
     <Link className={styles.back} href="/"><BackPixelIcon/>Archive</Link>
     <div className={styles.overview} id="overview">
       <span className={styles.label}>{entry.tag}</span>
@@ -28,9 +29,9 @@ export default async function ArchivePage({ params }: { params: Promise<{ slug: 
       <p className={styles.lede}>{entry.lede}</p>
     </div>
     <dl className={styles.metadata}>{entry.meta.map(m => <div key={m.k}><dt>{m.k}</dt><dd>{m.v}</dd></div>)}</dl>
-    <div className={styles.hero}>
+    <ProjectTransition id={`archive-${entry.id}`}><div className={styles.hero}>
       <Image src={entry.hero.src} alt={entry.hero.alt} fill sizes="(max-width: 1024px) 100vw, 860px" style={{ objectFit: "cover" }}/>
-    </div>
+    </div></ProjectTransition>
     <p className={styles.caption}>Coursework and personal work from Carnegie Mellon, originally published on a separate Framer site.</p>
     <div className={styles.sections}>{entry.sections.map((s, i) => <section key={s.label} id={`section-${i}`} className={styles.section}>
       <span className={styles.label}>{s.label}</span>

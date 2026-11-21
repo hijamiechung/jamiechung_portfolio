@@ -214,10 +214,34 @@ and the project-detail thumbnail pattern; don't reach for `--color-dot` in
 new foreground UI — it's the one token in this system not drawn from the
 warm-neutral family.
 
+## Memorythread background (Browser implementation)
+
+The home card and detail hero use a static `background.webp`, matching the
+Guidelight background treatment. The image is a 1600×1200 lossless WebP rendered
+with `@shadergradient/react` from the user-supplied waterPlane settings at
+`uTime=0`, including the requested grain. Colors are `#FFB4A8`, `#DBB3A2`,
+and `#D0BCE1`. Exact settings and export provenance live beside the asset in
+`public/images/memorythread/background.settings.json`. The background video is
+not mounted; the product-screen demo retains its existing playback controls.
+
+## Small blue accents (Browser prototype)
+
+A restrained cobalt accent is being tried across the site: `--color-interactive-accent`
+is `#3458EB` in Light and `#8CA8FF` in Dark. It colors the identity mark’s two
+pixel dots, small project-card arrows from the shared LineIcon family, active navigation indicators, keyboard
+focus rings, and navigation/Connect icons on interaction. Card arrows move 2px
+in two steps on hover or keyboard focus, with movement disabled under reduced
+motion. Resume uses a compact availability label and internship timing on one line; graduation timing
+lives in Education. Its content surface has a defined neutral border and raised
+background, with 22px/600 section headings without adjacent icons. Navigation bookmarks use blue 16px outline icons from the shared LineIcon family. Resume inline
+external links use the same family’s arrow, sized to 10px with a 1px gap. Resume body line-height is 1.5,
+with 24px spacing around section dividers and between entries. Large surfaces, headings, and the monochrome button accent remain
+unchanged. This is a visual trial awaiting review, not a final brand palette.
+
 ## Sound (Removed)
 
-Removed by request on 2026-09-09: no Sound control, stored sound preference
-subscription, AudioContext, or click-to-play handler remains in the application.
+Interface sound effects remain removed. User-initiated spoken reading is available
+through the separate accessibility feature below; it never autoplays.
 
 ## Identity — `:J` / J glyph (Experimental)
 
@@ -233,6 +257,16 @@ mark, so it disappears from both places together if the experiment is turned
 off.
 
 ## Environment controls and magnetic-dot background (Experimental)
+
+**Current implementation, verified 2026-10-20:** `AtmosphereExperience`
+mounts `createPixelField` on the homepage. The continuous glass field described
+below is retained code, not the active renderer. Clear uses isolated white pixels within the top 160px, fading downward.
+Positions stay fixed while brightness rises and falls independently over 6.5–12
+seconds. Each 3×3-cell tile has at most one candidate, avoiding clusters or rays.
+White pixels remain white in both themes, directly over the existing page
+background with no backing gradient. Clear has no cursor
+brightening, and reduced motion freezes the pattern. The weather
+selection popup has a fixed 240px width independent of the current condition.
 
 **Environmental light field, 2026-09-09 (experimental; awaiting visual review):**
 the homepage uses one continuous viewport-scale field in
@@ -306,6 +340,16 @@ experiment, not a permanent feature decision.
 **Revised 2026-09-08:** the manual Dots on/off control was removed from the
 footer — the selected background renderer runs without a visitor toggle
 (still respecting `prefers-reduced-motion`). The remaining footer controls are the Light/Dark appearance toggle.
+
+**Revised 2026-11-16 — motion pause control (accessibility, WCAG 2.2.2):** a
+32px circular pause/play button (44px hit area, label swaps between "Pause" and
+"Play background animation") sits beside the Light/Dark toggle in the sidebar
+footer, including the collapsed rail. Pausing freezes the background field on
+its static pattern, reusing the reduced-motion render path. The choice persists
+in `localStorage` (`jc-motion`). When the OS reports `prefers-reduced-motion`,
+the field is always frozen and the button is shown disabled with an explanatory
+label. This supersedes the 2026-09-08 removal of the Dots on/off control, which
+had no accessible way to stop the motion. Lives in `PrototypeExperience`.
 
 **Revised 2026-09-09:** weather and source selection share one 44px-high click
 target with a 32px-high translucent pill surface, 16px SVG weather icon,
@@ -427,8 +471,88 @@ whatever sits behind the glass.
   light background.
 - Dark reproduces the canonical dark palette. System theme selection is not yet implemented.
 
+## Reading accessibility (Settled behavior)
+
+Aa opens a keyboard-accessible settings dialog in the sidebar, independently of
+visual experiments. Text size has Default / 125% / 150% choices; High contrast is
+separate and supports Light and Dark. Choices persist locally across navigation
+and reloads. Text controls grow through their text and padding; compact Aa and appearance
+controls retain their original dimensions at every reading size. High contrast gives the main
+reading area an opaque theme surface so atmospheric visuals cannot reduce contrast.
+A skip-to-content link supports keyboard navigation.
+
+Project and archive pages offer “Listen to this page” near their opening text.
+Browser speech reads written content with pause, resume, and stop controls; leaving
+the page cancels speech. There is no autoplay or added backend. Voice availability
+and quality depend on the browser and installed voices; unsupported playback shows
+a text explanation. Videos are not narrated by this feature.
+
+## Footer stroll (Experimental)
+
+The homepage ends with a 56px character matching the offline cast, including
+pixel arms and segmented legs. All six accessory variants cycle one at a time.
+The track spans the main area's full width, outside the project content inset;
+characters enter and leave beyond its edges. Unattended walking moves at 14px/s.
+A visible mouse attracts the character toward the position below it at 22px/s;
+the whole face shifts toward the pointer and the eyes use the Resume face's
+normalized gaze. Without a pointer, facial features sit 4px toward the walking
+direction. Proximity triggers a 30px reaching jump with a
+2.6-second cooldown. A shared gait phase couples each 14px footfall to torso travel, leg swing,
+opposing arms and a small foot lift. Travel slows at each foot plant rather than
+gliding at a constant speed. Subpixel travel avoids visible snapping.
+The footer replaces the mouse cursor with a theme-aware 6px square dot.
+Motion pauses when the footer leaves view or the tab is hidden; reduced motion
+hides the decoration. There is no sound.
+Clicking or keyboard-activating the character opens a compact activity chooser:
+Dance, Coffee, and Sit down. Walking and proximity jumps stop during selection
+and activities. Each activity lasts 6.5 seconds before walking resumes. Dance
+uses the offline cast's existing variations; coffee adds a lifting cup, and
+sitting adds a chair and gently swinging feet. Escape dismisses the chooser
+and restores character focus; outside clicks and leaving the chooser by Tab
+also dismiss it. Choices appear only after activation.
+The self-contained module is gated by `ENABLE_FOOTER_STROLL` in `app/page.tsx`.
+This is a prototype pending browser review.
+
+## Not-found character
+
+The 404 page pairs the number with the footer's round, pixel-limbed character.
+The character stands in a separate footer area at the bottom of the viewport
+and looks up at the centrally placed 404, with one hand held over its mouth; the old
+surprised glyph and exclamation marks are removed. Arms and legs are separate 5px square pixels matching the footer cast. The pose
+is static and uses semantic theme colors. Existing explanatory copy and the Back home link remain.
+Implementation: `components/LostCharacter.tsx`.
+
+## Offline screen
+
+While an already loaded page is open, the browser's offline state displays the
+existing dancing-character scene automatically. Reconnecting restores the same
+page and its state without navigation. The underlying interface is inert while
+offline, and keyboard focus returns on reconnection. `/offline-preview` uses the
+same scene. Each character dances in place with a different tempo, bounce height,
+body sway and alternating arm/foot movement; held arrow keys add a shared
+directional pose and sideways travel. This motion revision is a prototype pending
+browser review. Reduced motion disables the idle dance and keyboard-driven travel.
+This does not provide an offline cold-start or reload cache.
+
 ## Content review layer
 
 Deferred. Will be introduced as a separate guideline when real case-study
 content is added (narrative clarity, evidence vs. unsupported claims,
 recruiter scanability, etc.) — not built now.
+
+## Resume file navigation
+
+Resume content is one continuous document surface. A sticky column of blue
+category links attaches to its left edge, with 4px gaps between tabs. Initially,
+the Education bookmark is centered on the Education heading. Selecting a bookmark
+scrolls its section heading into alignment with that bookmark's center, keeping
+the heading visible. At the page end the rail shifts down to meet the heading
+rather than adding blank space to the document. The selected tab's right edge
+opens into the document. Tabs use centered 16px outline icons from the shared
+LineIcon family; section headings have no adjacent icons. Accessible labels and
+hover titles retain each category name. The navigation rail is 44px wide with
+a minimum 24px viewport inset. Selection follows scrolling. Resume Projects
+is omitted; other project pages are unchanged. Entries have 32px gaps and
+internal divider lines are removed. Tabs retain 44px minimum targets, 5px outer
+corner radii and subtle borders. Reduced motion disables smooth scrolling and
+transitions.
