@@ -70,7 +70,7 @@
 }
 
 .header h1 {
-  font-size: var(--font-size-detail-heading);
+  font-size: calc(28px * var(--text-scale));
   font-weight: var(--font-weight-semibold);
   letter-spacing: var(--tracking-display-lg);
   line-height: 1.1;
