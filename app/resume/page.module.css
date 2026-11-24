@@ -36,12 +36,7 @@
   border-color: var(--color-border-strong);
 }
 
-.document {
-  display: grid;
-  grid-template-columns: 44px minmax(0, 1fr);
-  align-items: start;
-  margin-top: var(--space-6);
-}
+.document { margin-top: var(--space-6); }
 
 .card {
   min-width: 0;
@@ -50,41 +45,6 @@
   background: var(--color-surface-popover);
 }
 
-.fileNavigation {
-  position: sticky;
-  top: var(--space-6);
-  z-index: 12;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  isolation: isolate;
-}
-
-.fileTab {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-resume-heading-gap);
-  min-height: 44px;
-  padding: 10px;
-  border: 1px solid var(--color-border-subtle);
-  border-right: 0;
-  border-radius: var(--radius-xs) 0 0 var(--radius-xs);
-  background: color-mix(in srgb, var(--color-surface-card) 50%, var(--color-surface-app));
-  color: var(--color-resume-accent);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-medium);
-  letter-spacing: var(--tracking-display);
-  transition: background var(--duration-fast) var(--ease-standard);
-}
-
-.fileTab:hover { background: var(--color-surface-hover); }
-.fileTab[aria-current="location"] {
-  background: var(--color-surface-popover);
-  box-shadow: 1px 0 var(--color-surface-popover);
-}
-.fileTab:focus-visible { z-index: 11 !important; outline-offset: -4px; }
 
 .header {
   display: flex;
@@ -157,13 +117,6 @@
 
 .sectionBody > .entry:first-child,
 .sectionBody > .skillRow:first-child { margin-top: 0; }
-
-.sectionIcon {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-  color: var(--color-resume-accent);
-}
 
 .entry {
   margin-top: var(--space-resume-entry);
@@ -282,25 +235,6 @@
   color: var(--color-text-primary);
 }
 
-.availability {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-2);
-  margin-top: 0;
-  min-height: 18px;
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-intro);
-  letter-spacing: var(--tracking-display);
-  line-height: 18px;
-}
-
-.availabilityLabel {
-  color: var(--color-resume-accent);
-  font-size: inherit;
-  font-weight: var(--font-weight-medium);
-  letter-spacing: inherit;
-}
-
 @media (max-width: 1024px) {
   .page {
     padding: 32px 32px 88px;
@@ -310,10 +244,6 @@
 @media (max-width: 640px) {
   .page {
     padding: 24px 16px 64px;
-  }
-
-  .fileNavigation {
-    overflow-x: auto;
   }
 
   .header {
@@ -364,3 +294,92 @@
 
 /* Keeps a date range on one line so it never breaks between the dash and the end date. */
 .nowrap { white-space: nowrap; }
+
+/* Open layout: no enclosing card. Each entry is organization (logo slot, name, dates, place)
+   on the left and role details on the right, separated by hairlines. */
+.card { border: 0; border-radius: 0; background: none; }
+.section { padding: var(--space-7) 0; }
+.section h2 { margin-bottom: var(--space-3); }
+
+.sectionBody > .entry {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  column-gap: var(--space-6);
+  margin-top: 0;
+  padding: var(--space-4) 0;
+}
+.sectionBody > .entry:first-child { margin-top: 0; }
+
+.entryOrg { display: flex; align-items: flex-start; gap: var(--space-4); min-width: 0; }
+.orgText { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.orgText .meta { white-space: normal; }
+.orgText h3 { margin-bottom: 4px; }
+
+/* Empty tile reserved for an organization logo. */
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-card);
+}
+.logo img { width: 100%; height: 100%; object-fit: cover; }
+.logo img[data-fit="contain"], .logo img[data-fit="inset"] { object-fit: contain; }
+.logo img[data-fit="inset"] { padding: 6px; }
+
+.entryRole { min-width: 0; }
+.entry .entryRole > :first-child { margin-top: 0; }
+.entry .roleTitle { font-size: var(--font-size-resume-title); font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-display); line-height: 1.3; }
+
+@media (max-width: 640px) {
+  .sectionBody > .entry { grid-template-columns: 1fr; row-gap: var(--space-3); }
+}
+
+/* Tighter bullet rhythm in the open layout. */
+.entry ul li { line-height: 1.4; }
+.entry ul li + li { margin-top: var(--space-2); }
+
+/* Collapsible detail: the whole row opens it (the toggle stretches over the entry),
+   while links inside the opened panel stay clickable above that layer. */
+.sectionBody > .entry { position: relative; }
+.entryRole .entryToggle {
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.entryToggle::after { content: ""; position: absolute; inset: 0; }
+.entryToggle:focus-visible { outline: none; }
+.entryToggle:focus-visible::after { outline: 2px solid var(--color-text-primary); outline-offset: -2px; border-radius: var(--radius-xs); }
+.chevron { flex-shrink: 0; color: var(--color-text-secondary); transition: transform var(--duration-fast) ease; }
+.entryToggle:hover .chevron { color: var(--color-text-primary); }
+.entry[data-open] .chevron { transform: rotate(180deg); }
+/* Height animates through the grid-row trick (0fr -> 1fr) so the panel's natural height never needs measuring. */
+.entryPanel {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows var(--duration-standard) var(--ease-standard), opacity var(--duration-standard) var(--ease-standard);
+}
+.entry[data-open] .entryPanel { grid-template-rows: 1fr; opacity: 1; }
+.entryPanelInner { min-height: 0; overflow: hidden; }
+@media (prefers-reduced-motion: reduce) { .chevron, .entryPanel { transition: none; } }

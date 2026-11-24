@@ -1,15 +1,11 @@
-/* Body stays centered on its own; the contents rail sits in the left gutter instead of shifting the body.
-   Below 1700px there is no spare gutter to mirror on the right, so the body takes that space instead of
-   being squeezed against the rail. */
+/* The page contents live in the sidebar now, so nothing reserves a left gutter: the body is simply centered. */
 .page {
   display: grid;
-  grid-template-columns: minmax(252px, 1fr) minmax(0, var(--layout-detail-max-width)) 0;
+  grid-template-columns: minmax(0, 1fr) minmax(0, var(--layout-detail-max-width)) minmax(0, 1fr);
   align-items: start;
   padding: 40px 56px 120px;
 }
 .page > article { grid-column: 2; }
-.page > nav { grid-column: 1; grid-row: 1; justify-self: end; margin-right: 72px; }
-@media (min-width: 1700px) { .page { grid-template-columns: minmax(252px, 1fr) minmax(0, var(--layout-detail-max-width)) minmax(252px, 1fr); } }
 
 .body {
   flex: 1;

@@ -1,16 +1,23 @@
 "use client";
-import {useEffect,useState} from "react";
-import {ReadAloud} from "./ReadAloud";
-import styles from "./ProjectContents.module.css";
+import {useEffect,useMemo} from "react";
+import {publishPageContents,setActivePageSection} from "@/lib/pageContents";
+
+/* Renders nothing itself: publishes this page's sections to the sidebar tree and tracks which one is being read.
+   The "Next project" link is a page-to-page jump, not a section, so it stays out of the tree. */
 export function ProjectContents({sections}: {sections:{id:string;label:string}[]}) {
-  const [active,setActive]=useState("overview");
+  const tree=useMemo(()=>sections.filter(s=>s.id!=="next-project"),[sections]);
+  const key=tree.map(s=>s.id).join("|");
   useEffect(()=>{
+    publishPageContents({sections:tree,active:tree[0].id});
     const track=()=>{
-      let next=sections[0].id;
-      for(const section of sections) if((document.getElementById(section.id)?.getBoundingClientRect().top ?? Infinity)<=160) next=section.id;
-      setActive(next);
+      let next=tree[0].id;
+      for(const section of tree) if((document.getElementById(section.id)?.getBoundingClientRect().top ?? Infinity)<=window.innerHeight*0.4) next=section.id;
+      setActivePageSection(next);
     };
-    window.addEventListener("scroll",track,{passive:true});return ()=>window.removeEventListener("scroll",track);
-  },[sections]);
-  return <nav className={styles.toc} aria-label="On this page"><ul>{sections.map(s=><li key={s.id}><a href={`#${s.id}`} aria-current={active===s.id ? "location" : undefined}>{s.label}</a></li>)}</ul><ReadAloud/></nav>;
+    track();
+    window.addEventListener("scroll",track,{passive:true});
+    return ()=>{window.removeEventListener("scroll",track);publishPageContents(null);};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[key]);
+  return null;
 }

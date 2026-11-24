@@ -3,10 +3,17 @@ import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {useState} from "react";
 import {projects} from "@/lib/projects";
+import {usePageContents,type PageContents} from "@/lib/pageContents";
 import {LineIcon} from "./LineIcon";
+import {ReadAloud} from "./ReadAloud";
 import styles from "./SidebarNavSection.module.css";
 
+function SectionTree({contents}: {contents: NonNullable<PageContents>}) {
+  return <ul className={styles.sections} aria-label="On this page">{contents.sections.map(s=><li key={s.id}><a href={`#${s.id}`} aria-current={contents.active===s.id ? "location" : undefined}>{s.label}</a></li>)}</ul>;
+}
+
 export function SidebarNavSection() {
+  const contents = usePageContents();
   const [expanded,setExpanded] = useState(true);
   const pathname = usePathname();
   return <>
@@ -15,10 +22,12 @@ export function SidebarNavSection() {
       <button className={styles.chevronButton} aria-label={expanded ? "Collapse Projects" : "Expand Projects"} aria-expanded={expanded} aria-controls="project-navigation" onClick={()=>setExpanded(!expanded)}><LineIcon name="chevron" className={expanded ? styles.chevronExpanded : undefined}/></button>
     </div>
     <div className={styles.childrenWrapper} data-expanded={expanded} inert={!expanded} id="project-navigation">
-      <ul className={styles.children}>{projects.map(p=><li key={p.id}><Link href={`/projects/${p.id}`} aria-current={pathname===`/projects/${p.id}` ? "page" : undefined}>{p.title}</Link></li>)}</ul>
+      <ul className={styles.children}>{projects.map(p=><li key={p.id}><Link href={`/projects/${p.id}`} aria-current={pathname===`/projects/${p.id}` ? "page" : undefined}>{p.title}</Link>{contents && pathname===`/projects/${p.id}` && <SectionTree contents={contents}/>}</li>)}</ul>
     </div>
     <div className={styles.row}>
       <Link href="/archive" className={styles.rowLink} aria-current={pathname.startsWith("/archive") ? "page" : undefined}><span className={styles.icon}><LineIcon name="archive"/></span><span className={styles.label}>Archive</span></Link>
     </div>
+    {contents && pathname.startsWith("/archive/") && <div className={styles.childrenWrapper} data-expanded="true"><div className={styles.children}><SectionTree contents={contents}/></div></div>}
+    {contents && <ReadAloud/>}
   </>;
 }

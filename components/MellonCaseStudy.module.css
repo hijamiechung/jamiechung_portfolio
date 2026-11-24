@@ -370,7 +370,7 @@
 
 /* Summary statement sits right under the title, with the category chips beneath it; both centred. */
 .body .header > div > .statementText { max-width: 44ch; margin: 40px auto 0; color: var(--color-text-primary); font-size: calc(26px * var(--text-scale)); font-weight: var(--font-weight-medium); line-height: 1.45; letter-spacing: var(--tracking-display); text-align: center; text-wrap: balance; }
-.body .header .tags { justify-content: center; margin-top: 28px; }
+.body .header ul { justify-content: center; margin-top: 28px; }
 
 /* Research intro: the supporting line sits close under its heading. */
 .section[id="research"] .researchLead { gap: 10px; }
@@ -384,3 +384,7 @@
 /* Survey figures in the insight body read as evidence, set a step above the sentence around them. */
 .section[id="insights"] .insightIntro p strong { color: var(--color-text-primary); font-weight: 500; }
 .section[id="insights"] .insightIntro p small { display: block; margin-top: 12px; color: var(--color-text-muted); font-size: calc(14px * var(--text-scale)); line-height: 1.4; }
+
+.section[id="insights"] .insight:nth-child(n) .insightIntro p.source { margin-top: 14px; color: var(--color-text-muted); font-size: calc(14px * var(--text-scale)); line-height: 1.4; }
+.section[id="insights"] .insightIntro p.source strong { color: var(--color-text-secondary); }
+.section[id="insights"] .insight:nth-child(n) > .advisorQuote > .bubble > cite { margin-bottom: 8px; }
